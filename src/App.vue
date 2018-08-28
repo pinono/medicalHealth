@@ -1,13 +1,17 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
+    <div class="test"></div>
     <router-view/>
   </div>
 </template>
 
 <script>
+import { Toast } from 'mint-ui';
+Toast('提示信息');
 export default {
-  name: 'App'
+  name: 'App',
+  
 }
 </script>
 
