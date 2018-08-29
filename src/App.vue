@@ -1,14 +1,12 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <div class="test"></div>
+    <!-- <img src="./assets/logo.png">
+    <div class="test"></div> -->
     <router-view/>
   </div>
 </template>
 
 <script>
-import { Toast } from 'mint-ui';
-Toast('提示信息');
 export default {
   name: 'App',
   
@@ -20,8 +18,5 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
