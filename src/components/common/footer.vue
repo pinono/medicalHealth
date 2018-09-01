@@ -40,19 +40,20 @@ export default {
         position:fixed;
         bottom:0;
         ul{
+            border-top: 1px solid #eee;
             display: flex;
             width:100%;
             height:98px;
             background:#fff;
-            flex-flow: nowrap row; 
+            flex-flow: nowrap row;
             justify-content: space-around;
             li{
                 font-size: 22px;
                 color:#888;
                 b{
-                    display: block;  
+                    display: block;
                     width :48px;
-                    height:48px; 
+                    height:48px;
                     margin:0 auto;
                     margin-top:.1rem;
 
@@ -75,7 +76,7 @@ export default {
                     }
             }
         }
-        
+
     }
 </style>
 
