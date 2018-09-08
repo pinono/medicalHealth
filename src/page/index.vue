@@ -1,5 +1,6 @@
 <template>
     <div class="Train">
+        <header-top :title="title"></header-top>
         <div class="banner">
             <div class="top">
                 <span class="date">
@@ -16,83 +17,103 @@
         <section>
             <ul>
                 <li>
-                    <p>
-                        <span class="icon move"></span>
-                        <span class="name">训练</span><span class="minName">(完整度)</span>
-                        <span class="datanum">90</span>
-                        <span class="zanNum right"></span>
-                    </p>
-                    <p>
-                        <span class="data">时长：00时25分</span>
-                        <span class="arrow right"></span>
-                    </p>
+                    <a href="/train?color=blue">
+                        <p>
+                            <span class="icon move"></span>
+                            <span class="name">训练</span><span class="minName">(完整度)</span>
+                            <span class="datanum">90</span>
+                            <span class="zanNum right"></span>
+                        </p>
+                        <p>
+                            <span class="data">时长：00时25分</span>
+                            <span class="arrow right"></span>
+                        </p>
+                    </a>
                 </li>
                 <li>
-                    <p>
-                        <span class="icon brain"></span>
-                        <span class="name">脑氧</span><span class="minName">(完整度)</span>
-                        <span class="datanum">90</span>
-                        <span class="zanNum right"></span>
-                    </p>
-                    <p>
-                        <span class="data">时长：00时25分</span>
-                        <span class="arrow right"></span>
-                    </p>
+                    <a href="/train?color=lessblue">
+                        <p>
+                            <span class="icon brain"></span>
+                            <span class="name">脑氧</span><span class="minName">(完整度)</span>
+                            <span class="datanum">90</span>
+                            <span class="zanNum right"></span>
+                        </p>
+                        <p>
+                            <span class="data">时长：00时25分</span>
+                            <span class="arrow right"></span>
+                        </p>
+                    </a>
+                        
                 </li>
                 <li>
-                    <p>
-                        <span class="icon blood"></span>
-                        <span class="name">血压</span><span class="minName">(完整度)</span>
-                        <span class="datanum">90</span>
-                        <span class="zanNum right"></span>
-                    </p>
-                    <p>
-                        <span class="data">时长：00时25分</span>
-                        <span class="arrow right"></span>
-                    </p>
+                    <a href="/train?color=green">
+                        <p>
+                            <span class="icon blood"></span>
+                            <span class="name">血压</span><span class="minName">(完整度)</span>
+                            <span class="datanum">90</span>
+                            <span class="zanNum right"></span>
+                        </p>
+                        <p>
+                            <span class="data">时长：00时25分</span>
+                            <span class="arrow right"></span>
+                        </p>
+                    </a>
                 </li>
                 <li>
-                    <p>
-                        <span class="icon heart"></span>
-                        <span class="name">心率</span><span class="minName">(完整度)</span>
-                        <span class="datanum">90</span>
-                        <span class="zanNum right"></span>
-                    </p>
-                    <p>
-                        <span class="data">时长：00时25分</span>
-                        <span class="arrow right"></span>
-                    </p>
+                    <a href="/train?color=red">
+                        <p>
+                            <span class="icon heart"></span>
+                            <span class="name">心率</span><span class="minName">(完整度)</span>
+                            <span class="datanum">90</span>
+                            <span class="zanNum right"></span>
+                        </p>
+                        <p>
+                            <span class="data">时长：00时25分</span>
+                            <span class="arrow right"></span>
+                        </p>
+                    </a>
                 </li>
                 <li>
-                    <p>
-                        <span class="icon yang"></span>
-                        <span class="name">指氧</span><span class="minName">(完整度)</span>
-                        <span class="datanum">90</span>
-                        <span class="zanNum right"></span>
-                    </p>
-                    <p>
-                        <span class="data">时长：00时25分</span>
-                        <span class="arrow right"></span>
-                    </p>
+                    <a href="/train?color=yellow">
+                        <p>
+                            <span class="icon yang"></span>
+                            <span class="name">指氧</span><span class="minName">(完整度)</span>
+                            <span class="datanum">90</span>
+                            <span class="zanNum right"></span>
+                        </p>
+                        <p>
+                            <span class="data">时长：00时25分</span>
+                            <span class="arrow right"></span>
+                        </p>
+                    </a>
+                    
                 </li>
             </ul>
         </section>
         <div class=""></div>
-        <Footer></Footer>
+        <Footer :nowStatus="nowStatus"></Footer>
     </div>
 </template>
 <script>
 import Footer from '@/components/common/footer.vue'
+import HeaderTop from '@/components/common/header.vue'
 
+import { Header } from 'mint-ui';
 export default {
     components : {
-        Footer
+        Footer,HeaderTop
     },
+    data () {
+        return {
+            nowStatus : 'home',
+            title : '训练',
+        }
+    }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
     .Train{
-        color:#333;
+        a{color:#333;}
         .banner{
             width:100%;
             height:405px;

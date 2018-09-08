@@ -1,5 +1,6 @@
 <template>
     <div>
+        <header-top :title="title"></header-top>
         <date-line></date-line>
         <div class="cycle-data">
             <ul class="dateBar">
@@ -32,10 +33,22 @@
 </template>
 <script>
 import dateLine from '@/components/Home/swiper.vue'
+import HeaderTop from '@/components/common/header.vue'
 
 export default {
     components : {
-        dateLine
+        dateLine,HeaderTop
+    },
+    data () {
+        return {
+            // bgColor : '',
+            title: '训练'
+            
+        }
+    },
+    mounted () {
+        // this.bgColor = this.$route.query.color;
+        // console.log(this.bgColor)
     }
 }
 </script>

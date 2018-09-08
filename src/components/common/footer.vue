@@ -1,27 +1,37 @@
 <template>
     <div class="footer">
         <ul>
-            <li @click="changeTab()">
-                <b class="home"></b>
-                缺血训练
-            </li>
-            <li @click="changeTab()">
-                <b class="manage"></b>
-                慢病管理
-            </li>
-            <li @click="changeTab()">
-                <b class="share"></b>
-                医患分享
-            </li>
-            <li @click="changeTab()">
-                <b class="member"></b>
-                个人中心
-            </li>
+            <a href="/home">
+                <li @click="changeTab()" :class="nowStatus == 'home' ? 'on' : ''">
+                    <b class="home"></b>
+                    缺血训练
+                </li>
+            </a>
+            <a href="">
+                <li @click="changeTab()" :class="nowStatus == 'sick' ? 'on' : ''">
+                    <b class="manage"></b>
+                    慢病管理
+                </li>
+            </a>
+            <a href="">
+                <li @click="changeTab()" :class="nowStatus == 'share' ? 'on' : ''">
+                    <b class="share"></b>
+                    医患分享
+                </li>
+            </a>
+            <a href="">
+                <li @click="changeTab()" :class="nowStatus == 'member' ? 'on' : ''">
+                    <b class="member"></b>
+                    个人中心
+                </li>
+            </a>
+           
         </ul>
     </div>
 </template>
 <script>
 export default {
+    props :['nowStatus'],
     data () {
         return {
 
@@ -57,23 +67,48 @@ export default {
                     margin:0 auto;
                     margin-top:.1rem;
 
-                    }
-                    .home{
-                        background:url('../../assets/images/common/homeA.png') no-repeat;
-                        background-size:100%;
-                    }
-                    .manage{
-                        background:url('../../assets/images/common/manageA.png') no-repeat;
-                        background-size:100%;
-                    }
-                    .share{
-                        background:url('../../assets/images/common/shareA.png') no-repeat;
-                        background-size:100%;
-                    }
-                    .member{
-                        background:url('../../assets/images/common/memberA.png') no-repeat;
-                        background-size:100%;
-                    }
+                }
+                .home{
+                    background:url('../../assets/images/common/homeA.png') no-repeat;
+                    background-size:100%;
+                }
+                .manage{
+                    background:url('../../assets/images/common/manageA.png') no-repeat;
+                    background-size:100%;
+                }
+                .share{
+                    background:url('../../assets/images/common/shareA.png') no-repeat;
+                    background-size:100%;
+                }
+                .member{
+                    background:url('../../assets/images/common/memberA.png') no-repeat;
+                    background-size:100%;
+                }
+            }
+            li.on{
+                font-size:30px;
+                color:#2B8CFF;
+                b{
+                    width :38px;
+                    height:38px; 
+                    margin-top:.15rem;
+                }
+                .home{
+                    background:url('../../assets/images/common/homeB.png') no-repeat;
+                    background-size:100%;
+                }
+                .manage{
+                    background:url('../../assets/images/common/manageB.png') no-repeat;
+                    background-size:100%;
+                }
+                .share{
+                    background:url('../../assets/images/common/shareB.png') no-repeat;
+                    background-size:100%;
+                }
+                .member{
+                    background:url('../../assets/images/common/memberB.png') no-repeat;
+                    background-size:100%;
+                }
             }
         }
 
