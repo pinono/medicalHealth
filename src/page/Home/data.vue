@@ -2,7 +2,7 @@
     <div>
         <header-top :title="title"></header-top>
         <date-line></date-line>
-        <div class="cycle-data">
+        <div class="cycle-data" :class="bgColor">
             <ul class="dateBar">
                 <li>日</li>
                 <li class="act">周</li>
@@ -41,18 +41,60 @@ export default {
     },
     data () {
         return {
-            // bgColor : '',
+            bgColor : '',
             title: '训练'
             
         }
     },
     mounted () {
-        // this.bgColor = this.$route.query.color;
-        // console.log(this.bgColor)
+        this.bgColor = this.$route.query.type;
+        switch ( this.bgColor ) {
+            case 'train' :
+                this.title = '训练';
+                break;
+            case 'brain' :
+                this.title = '脑氧';
+                break;
+            case 'blood' :
+                this.title = '血压';
+                break;
+            case 'heart' :
+                this.title = '心率';
+                break;
+            case 'oxygen' :
+                this.title = '指氧';
+                break;
+        }
+
     }
 }
 </script>
 <style lang="scss" scoped>
+        .cycle-data.train {
+            .dateBar li.act,.trainData li .times{
+                color:#2B8CFF;
+            }
+        }
+        .cycle-data.brain {
+            .dateBar li.act,.trainData li .times{
+                color:#3AD7E8;
+            }
+        }
+        .cycle-data.blood {
+            .dateBar li.act,.trainData li .times{
+                color:#77CB53;
+            }
+        }
+        .cycle-data.heart {
+            .dateBar li.act,.trainData li .times{
+                color:#FA816B;
+            }
+        }
+        .cycle-data.oxygen {
+            .dateBar li.act,.trainData li .times{
+                color:#E6B917;
+            }
+        }
     .cycle-data{
         .dateBar{
             display: flex;

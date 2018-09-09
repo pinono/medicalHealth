@@ -110,7 +110,7 @@ export default {
     mounted() {
         console.log("每次切换都会触发我");
         console.log(this.$refs.mySwiperA.swiper)
-        this.bgColor = this.$route.query.color;
+        this.bgColor = this.$route.query.type;
         console.log(this.bgColor)
         this.mySwiperA = this.$refs.mySwiperA.swiper;
         this.mySwiperB = this.$refs.mySwiperB.swiper;
@@ -122,19 +122,19 @@ export default {
 }
 </script>
 <style lang="scss">
-    .swiper.blue{
+    .swiper.train{
         background: #2B8CFF;
     }
-    .swiper.lessblue{
+    .swiper.brain{
         background: #3AD7E8;
     }
-    .swiper.green{
+    .swiper.blood{
         background: #77CB53;
     }
-    .swiper.red{
+    .swiper.heart{
         background: #FA816B;
     }
-    .swiper.yellow{
+    .swiper.oxygen{
         background: #E6B917;
     }
     .date-wrap{
