@@ -9,6 +9,7 @@ import cen_index from '@/page/myCenter/cen_index'
 import caseReport from '@/page/myCenter/caseReport'
 import share from '@/page/Share/data.vue'
 import shareDetail from '@/page/Share/detail.vue'
+import login from '@/page/Login/index.vue'
 
 
 
@@ -26,6 +27,7 @@ var router =  new Router({
     {path: '/caseReport',name: 'cen_index',component: caseReport},
     {path: '/share',name: 'share',component: share},
     {path: '/shareDetail',name: 'shareDetail',component: shareDetail},
+    {path: '/login',name: 'login',component: login},
   ]
 })
 export default router
