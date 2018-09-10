@@ -7,82 +7,40 @@
     <div class="familyList">
       <ul>
         <li>
-          <img class="listImg" src="../../assets/images/common/manageB.png" alt="">
+          <div class="listImg">
+            <img  src="" alt="">
+          </div>
           <div class="listInfo">
             <p>某某某</p>
             <p>13718345029</p>
           </div>
-          <img class="listIcon" src="../../assets/images/manage/addmanageItem.png" alt="">
+          <img class="listIcon" src="../../assets/images/center/familyData.png" alt="">
         </li>
         <li>
-          <img class="listImg" src="../../assets/images/common/manageB.png" alt="">
+          <div class="listImg">
+            <img  src="" alt="">
+          </div>
           <div class="listInfo">
             <p>某某某</p>
             <p>13718345029</p>
           </div>
-          <img class="listIcon" src="../../assets/images/manage/addmanageItem.png" alt="">
+          <img class="listIcon" src="../../assets/images/center/familyData.png" alt="">
         </li>
         <li>
-          <img class="listImg" src="../../assets/images/common/manageB.png" alt="">
+          <div class="listImg">
+            <img  src="" alt="">
+          </div>
           <div class="listInfo">
             <p>某某某</p>
             <p>13718345029</p>
           </div>
-          <img class="listIcon" src="../../assets/images/manage/addmanageItem.png" alt="">
-        </li>
-        <li>
-          <img class="listImg" src="../../assets/images/common/manageB.png" alt="">
-          <div class="listInfo">
-            <p>某某某</p>
-            <p>13718345029</p>
-          </div>
-          <img class="listIcon" src="../../assets/images/manage/addmanageItem.png" alt="">
-        </li>
-        <li>
-          <img class="listImg" src="../../assets/images/common/manageB.png" alt="">
-          <div class="listInfo">
-            <p>某某某</p>
-            <p>13718345029</p>
-          </div>
-          <img class="listIcon" src="../../assets/images/manage/addmanageItem.png" alt="">
-        </li>
-        <li>
-          <img class="listImg" src="../../assets/images/common/manageB.png" alt="">
-          <div class="listInfo">
-            <p>某某某</p>
-            <p>13718345029</p>
-          </div>
-          <img class="listIcon" src="../../assets/images/manage/addmanageItem.png" alt="">
-        </li>
-        <li>
-          <img class="listImg" src="../../assets/images/common/manageB.png" alt="">
-          <div class="listInfo">
-            <p>某某某</p>
-            <p>13718345029</p>
-          </div>
-          <img class="listIcon" src="../../assets/images/manage/addmanageItem.png" alt="">
-        </li>
-        <li>
-          <img class="listImg" src="../../assets/images/common/manageB.png" alt="">
-          <div class="listInfo">
-            <p>某某某</p>
-            <p>13718345029</p>
-          </div>
-          <img class="listIcon" src="../../assets/images/manage/addmanageItem.png" alt="">
-        </li>
-        <li>
-          <img class="listImg" src="../../assets/images/common/manageB.png" alt="">
-          <div class="listInfo">
-            <p>某某某</p>
-            <p>13718345029</p>
-          </div>
-          <img class="listIcon" src="../../assets/images/manage/addmanageItem.png" alt="">
+          <img class="listIcon" src="../../assets/images/center/familyData.png" alt="">
         </li>
 
       </ul>
     </div>
     <div class="footer">
-      <span class="addBtn">新增家属</span>
+      <span class="addBtn" @click="toAddFamily">新增家属</span>
     </div>
   </div>
 </template>
@@ -93,6 +51,13 @@ export default {
    data(){
        return{}
    },
+  mounted(){},
+  methods:{
+    //添加新家属
+    toAddFamily(){
+      this.$router.push({path: 'addFamily'})
+    },
+  }
 }
 </script>
 
@@ -137,6 +102,12 @@ export default {
           width: 162px;
           height: 162px;
           margin-right: 20px;
+          background: #ccc;
+          border-radius: 4px;
+          img{
+            width: 100%;
+            height: 100%;
+          }
         }
         .listInfo{
           flex: 1;

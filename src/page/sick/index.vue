@@ -72,14 +72,19 @@ export default {
     box-sizing: border-box;
   }
   .addItemBtn{
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
+    text-align: center;
+    background: rgba(43,140,255,0.1);
+    border-radius: 60px;
     position: fixed;
     bottom: 168px;
     right: 34px;
     z-index: 5;
     img{
-      width: 100%;
+      width: 100px;
+      height: 100px;
+      margin-top: 10px;
     }
   }
 </style>

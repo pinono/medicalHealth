@@ -2,18 +2,19 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Home from '@/page/index'
-import manageIndex from '@/page/manage/index'
-import manageFrom from '@/page/manage/from'
+import sickIndex from '@/page/sick/index'
+import sickFrom from '@/page/sick/from'
 import Train from '@/page/Home/data'
-import enterIndex from '@/page/myCenter/index'
-import caseReport from '@/page/myCenter/caseReport'
-import familyIndex from '@/page/myCenter/familyIndex'
-import deviceInfo from '@/page/myCenter/deviceInfo'
-import addNewFamily from '@/page/myCenter/addNewFamily'
-import personalInfo from '@/page/myCenter/personalInfo'
-import showProblem from '@/page/myCenter/showProblem'
-import followUpInfo from '@/page/myCenter/followUpInfo'
-import forgetPassword from '@/page/member/forgetPassword'
+import memberIndex from '@/page/member/index'
+import caseReport from '@/page/member/caseReport'
+import familyIndex from '@/page/member/familyIndex'
+import deviceInfo from '@/page/member/deviceInfo'
+import addFamily from '@/page/member/addFamily'
+import basicInfo from '@/page/member/basicInfo'
+import problem from '@/page/member/problem'
+import followUpInfo from '@/page/member/followUpInfo'
+import trainingReport from '@/page/member/trainingReport'
+import forgetPassword from '@/page/Login/forgetPassword'
 import share from '@/page/Share/data.vue'
 import shareDetail from '@/page/Share/detail.vue'
 import login from '@/page/Login/index.vue'
@@ -24,17 +25,18 @@ var router =  new Router({
   mode: 'history',
   routes: [
     {path: '/home',name: 'home',component: Home},
-    {path: '/manageIndex',name: 'manageIndex',component: manageIndex},
-    {path: '/manageFrom',name: 'manageFrom',component: manageFrom},
+    {path: '/sickIndex',name: 'sickIndex',component: sickIndex},
+    {path: '/sickFrom',name: 'sickFrom',component: sickFrom},
     {path: '/train',name: 'home',component: Train},
-    {path: '/enterIndex',name: 'enterIndex',component: enterIndex},
+    {path: '/memberIndex',name: 'memberIndex',component: memberIndex},
     {path: '/caseReport',name: 'cen_index',component: caseReport},
     {path: '/familyIndex',name: 'familyIndex',component: familyIndex},
     {path: '/deviceInfo',name: 'deviceInfo',component: deviceInfo},
-    {path: '/addNewFamily',name: 'addNewFamily',component: addNewFamily},
-    {path: '/personalInfo',name: 'personalInfo',component: personalInfo},
-    {path: '/showProblem',name: 'showProblem',component: showProblem},
+    {path: '/addFamily',name: 'addFamily',component: addFamily},
+    {path: '/basicInfo',name: 'basicInfo',component: basicInfo},
+    {path: '/problem',name: 'problem',component: problem},
     {path: '/followUpInfo',name: 'followUpInfo',component: followUpInfo},
+    {path: '/trainingReport',name: 'trainingReport',component: trainingReport},
     {path: '/forgetPassword',name: 'forgetPassword',component: forgetPassword},
     {path: '/share',name: 'share',component: share},
     {path: '/shareDetail',name: 'shareDetail',component: shareDetail},

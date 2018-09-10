@@ -1,57 +1,59 @@
 <template>
     <div class="center_indexPage">
       <div class="c_indexBanner">
-        <img class="bannerLogo" src="../../assets/images/manage/addmanageItem.png" alt="">
+        <div class="bannerLogo">
+          <img  src="../../assets/images/manage/addmanageItem.png" alt="">
+        </div>
         <div class="bannerInfo">
           <p>用户名称</p>
           <p>ID：123456789</p>
           <p>某某的家属</p>
         </div>
-        <img class="addFamily" src="../../assets/images/home/zan.png" alt="">
+        <img class="addFamily" @click="toFamilyIndex" src="../../assets/images/home/zan.png" alt="">
       </div>
       <div class="c_indexTap">
         <div class="tapNav">
           <img src="../../assets/images/center/bingliTapIcon.png" alt="">
           <div>
             <p class="tapTitle">病历报告</p>
-            <span class="tapclick">点击查看>></span>
+            <span class="tapclick" @click="toCaseReport">点击查看&gt;&gt;</span>
           </div>
         </div>
         <div class="tapNav">
           <img src="../../assets/images/center/bingliTapIcon.png" alt="">
           <div>
             <p class="tapTitle">训练报告</p>
-            <span class="tapclick">点击查看>></span>
+            <span class="tapclick" @click="toTrainingReport">点击查看&gt;&gt;</span>
           </div>
         </div>
       </div>
       <div class="c_indexList">
         <ul>
-          <li class="indexListItem">
+          <li class="indexListItem" @click="toListItem(1)">
             <img src="../../assets/images/center/jibenxinxiListIcon.png" alt="">
             <p>基本信息</p>
           </li>
-          <li class="indexListItem">
+          <li class="indexListItem" @click="toListItem(2)">
             <img src="../../assets/images/center/huanbinglishiListIcon.png" alt="">
             <p>患病历史</p>
           </li>
-          <li class="indexListItem">
+          <li class="indexListItem" @click="toListItem(3)">
             <img src="../../assets/images/center/saixuanListIcon.png" alt="">
             <p>脑卒中筛查</p>
           </li>
-          <li class="indexListItem">
+          <li class="indexListItem" @click="toListItem(4)">
             <img src="../../assets/images/center/shebeiListIcon.png" alt="">
             <p>设备信息</p>
           </li>
-          <li class="indexListItem">
+          <li class="indexListItem" @click="toListItem(5)">
             <img src="../../assets/images/center/changwentiListIcon.png" alt="">
             <p>常见问题</p>
           </li>
-          <li class="indexListItem">
+          <li class="indexListItem" @click="toListItem(6)">
             <img src="../../assets/images/center/caozuozhinanListIcon.png" alt="">
             <p>操作指南</p>
           </li>
-          <li class="indexListItem">
+          <li class="indexListItem" @click="toListItem(7)">
             <img src="../../assets/images/center/fangdaoxinxiListIcon.png" alt="">
             <p>随访信息</p>
           </li>
@@ -68,6 +70,57 @@ export default {
     components : {
         Footer
     },
+  data(){
+        return{
+
+        }
+  },
+  mounted(){
+
+  },
+  methods:{
+    //功能块跳转
+    toListItem(flag){
+        switch (flag){
+          case 1://基本信息
+            this.$router.push({path: 'basicInfo'})
+            break;
+          case 2://患病历史
+            this.$router.push({path: ''})
+            break;
+          case 3://脑卒中筛查
+            this.$router.push({path: ''})
+            break;
+          case 4://设备信息
+            this.$router.push({path: 'deviceInfo'})
+            break;
+          case 5://常见问题
+            this.$router.push({path: 'problem'})
+            break;
+          case 6://操作指南
+            this.$router.push({path: ''})
+            break;
+          case 7://随访信息
+            this.$router.push({path: 'followUpInfo'})
+            break;
+
+        }
+    },
+
+    //病例报告
+    toCaseReport(){
+      this.$router.push({path: 'caseReport'})
+    },
+    //训练报告
+    toTrainingReport(){
+      this.$router.push({path: 'trainingReport'})
+    },
+    //家属信息
+    toFamilyIndex(){
+      this.$router.push({path: 'familyIndex'})
+    },
+
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -82,12 +135,18 @@ export default {
         display: flex;
         align-items: center;
           .bannerLogo{
-            width: 138px;
-            height: 138px;
-            background: #FFF;
+            width: 160px;
+            height: 160px;
+            background: rgba(255,255,255,0.1);
             border-radius: 100px;
             margin-left: 37px;
             margin-right: 45px;
+            text-align: center;
+            img{
+              width: 138px;
+              height: 138px;
+              margin-top: 11px;
+            }
           }
           .bannerInfo{
             font-family: PingFangSC-Medium;
