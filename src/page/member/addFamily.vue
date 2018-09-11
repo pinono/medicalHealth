@@ -16,7 +16,8 @@
         <p class="shareTitle">数据分享</p>
         <div class="shareContent">
           <span>数据分享</span>
-          <img src="../../assets/images/common/manageB.png" alt="">
+          <!--<img class="switch" src="../../assets/images/common/manageB.png" alt="">-->
+          <mt-switch class="switch" v-model="switchVal">开关</mt-switch>
         </div>
       </div>
     </div>
@@ -30,10 +31,15 @@
 </template>
 
 <script>
-
+  import { Switch } from 'mint-ui';
 export default {
+    component:{
+      Switch
+    },
    data(){
-       return{}
+       return{
+         switchVal : false,
+       }
    },
 }
 </script>
@@ -98,7 +104,7 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        img{
+        .switch {
           width: 102px;
           height: 62px;
         }
