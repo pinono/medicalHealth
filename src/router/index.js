@@ -14,6 +14,8 @@ import basicInfo from '@/page/member/basicInfo'
 import problem from '@/page/member/problem'
 import followUpInfo from '@/page/member/followUpInfo'
 import trainingReport from '@/page/member/trainingReport'
+import history from '@/page/member/history'
+import stroke from '@/page/member/stroke'
 import forgetPassword from '@/page/Login/forgetPassword'
 import share from '@/page/Share/data.vue'
 import shareDetail from '@/page/Share/detail.vue'
@@ -37,6 +39,8 @@ var router =  new Router({
     {path: '/problem',name: 'problem',component: problem},
     {path: '/followUpInfo',name: 'followUpInfo',component: followUpInfo},
     {path: '/trainingReport',name: 'trainingReport',component: trainingReport},
+    {path: '/history',name: 'history',component: history},
+    {path: '/stroke',name: 'stroke',component: stroke},
     {path: '/forgetPassword',name: 'forgetPassword',component: forgetPassword},
     {path: '/share',name: 'share',component: share},
     {path: '/shareDetail',name: 'shareDetail',component: shareDetail},

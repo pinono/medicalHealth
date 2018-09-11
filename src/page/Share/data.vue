@@ -12,7 +12,7 @@
             <manage-list></manage-list>
         </section>
         <Footer :nowStatus="nowStatus"></Footer>
-        
+
     </div>
 </template>
 <script>
@@ -60,7 +60,7 @@ export default {
                 line-height: 88px;
                 text-align: center;
                 flex-grow: 1;
-                
+
             }
             li.on{
                 color: #2B8CFF;

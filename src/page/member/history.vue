@@ -1,5 +1,5 @@
 <template>
-  <div class="personalInfo_page">
+  <div class="historyPage">
     <!--表单组件-->
     <mem-from></mem-from>
   </div>
@@ -25,7 +25,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .personalInfo_page{
+  .historyPage{
     height: 1334px;
     background: #fff;
   }

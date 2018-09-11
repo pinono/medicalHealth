@@ -16,8 +16,7 @@
         <p class="shareTitle">数据分享</p>
         <div class="shareContent">
           <span>数据分享</span>
-          <!--<img class="switch" src="../../assets/images/common/manageB.png" alt="">-->
-          <mt-switch class="switch" v-model="switchVal">开关</mt-switch>
+          <mt-switch class="switch" v-model="switchVal"></mt-switch>
         </div>
       </div>
     </div>
@@ -31,20 +30,48 @@
 </template>
 
 <script>
-  import { Switch } from 'mint-ui';
 export default {
     component:{
-      Switch
+
     },
    data(){
        return{
-         switchVal : false,
+         switchVal : true,
        }
    },
 }
 </script>
+<style lang="scss">
+  .mint-switch-core {
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+  }
+  .mint-switch-core::before {
+    width: 96%;
+    height: 96%;
+    background-color: #d9d9d9;
+    border-radius: 100px;
+    margin: 2px;
+  }
+  .mint-switch-core::after {
+    width: 56px;
+    height: 56px;
+    margin-top: 2px;
+    background-color: #fff;
+    -webkit-box-shadow: 0 0.013333rem 0.04rem rgba(0, 0, 0, .4);
+    box-shadow: 0 0.013333rem 0.04rem rgba(0, 0, 0, .4);
+    border-radius: 100%;
+  }
+  .mint-switch-input:checked + .mint-switch-core::after {
+    -webkit-transform: translateX(0.59rem);
+    transform: translateX(0.59rem);
+  }
+  .mint-switch-input:checked + .mint-switch-core {
+    border-color: #09BB07;
+    background-color: #09BB07;
 
-<style lang="scss" scoped>
+  }
   .addNewFamilyPage{
     width: 100%;
     height:100%;

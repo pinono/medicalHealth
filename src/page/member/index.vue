@@ -2,28 +2,28 @@
     <div class="center_indexPage">
       <div class="c_indexBanner">
         <div class="bannerLogo">
-          <img  src="../../assets/images/manage/addmanageItem.png" alt="">
+          <img  src="" alt="">
         </div>
         <div class="bannerInfo">
           <p>用户名称</p>
           <p>ID：123456789</p>
           <p>某某的家属</p>
         </div>
-        <img class="addFamily" @click="toFamilyIndex" src="../../assets/images/home/zan.png" alt="">
+        <img class="addFamily" @click="toFamilyIndex" src="../../assets/images/center/addFamily.png" alt="">
       </div>
       <div class="c_indexTap">
         <div class="tapNav">
-          <img src="../../assets/images/center/bingliTapIcon.png" alt="">
+          <img src="../../assets/images/center/caseIcon.png" alt="">
           <div>
             <p class="tapTitle">病历报告</p>
-            <span class="tapclick" @click="toCaseReport">点击查看&gt;&gt;</span>
+            <span class="tapclick" @click="toReportCut(1)">点击查看&gt;&gt;</span>
           </div>
         </div>
         <div class="tapNav">
           <img src="../../assets/images/center/bingliTapIcon.png" alt="">
           <div>
             <p class="tapTitle">训练报告</p>
-            <span class="tapclick" @click="toTrainingReport">点击查看&gt;&gt;</span>
+            <span class="tapclick" @click="toReportCut(2)">点击查看&gt;&gt;</span>
           </div>
         </div>
       </div>
@@ -60,11 +60,12 @@
         </ul>
       </div>
       <!--底部Strip-->
-      <Footer></Footer>
+      <Footer :nowStatus="nowStatus"></Footer>
     </div>
 </template>
 <script>
-import Footer from '@/components/common/footer.vue'
+  import Footer from '@/components/common/footer.vue'
+  import HeaderTop from '@/components/common/header.vue'
 
 export default {
     components : {
@@ -72,7 +73,7 @@ export default {
     },
   data(){
         return{
-
+          nowStatus : 'member',
         }
   },
   mounted(){
@@ -86,10 +87,10 @@ export default {
             this.$router.push({path: 'basicInfo'})
             break;
           case 2://患病历史
-            this.$router.push({path: ''})
+            this.$router.push({path: 'history'})
             break;
           case 3://脑卒中筛查
-            this.$router.push({path: ''})
+            this.$router.push({path: 'stroke'})
             break;
           case 4://设备信息
             this.$router.push({path: 'deviceInfo'})
@@ -106,15 +107,14 @@ export default {
 
         }
     },
-
-    //病例报告
-    toCaseReport(){
-      this.$router.push({path: 'caseReport'})
-    },
-    //训练报告
-    toTrainingReport(){
-      this.$router.push({path: 'trainingReport'})
-    },
+    //报告切换
+    toReportCut(flag){
+        if(flag==1){//病例报告
+          this.$router.push({path: 'caseReport'})
+        }else{//训练报告
+          this.$router.push({path: 'trainingReport'})
+        }
+  },
     //家属信息
     toFamilyIndex(){
       this.$router.push({path: 'familyIndex'})
@@ -177,8 +177,8 @@ export default {
       .tapNav{
         display: flex;
         img{
-          width: 60px;
-          height: 70px;
+          width: 76px;
+          height: 76px;
           margin-right: 20px;
         }
         .tapTitle{

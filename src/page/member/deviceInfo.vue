@@ -1,7 +1,7 @@
 <template>
   <div class="deviceInfoPage">
     <div class="deviceHead">
-      <img src="../../assets/images/center/bingliTapIcon.png" alt="">
+      <img src="../../assets/images/center/deviceImg.png" alt="">
     </div>
     <div class="deviceContent">
       <ul>
@@ -48,7 +48,7 @@ export default {
       display: flex;
       justify-content: center;
       img{
-        width: 221px;
+        width: 315px;
         height: 315px;
       }
     }

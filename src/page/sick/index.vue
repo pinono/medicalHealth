@@ -12,7 +12,7 @@
     <!--列表组件-->
     <manage-list></manage-list>
     <!--底部Strip-->
-    <Footer></Footer>
+    <Footer :nowStatus="nowStatus"></Footer>
   </div>
 </template>
 <script>
@@ -27,6 +27,7 @@ export default {
   data(){
     return {
       navTapStatu : 1,//导航的切换状态
+      nowStatus : 'sick',
     }
   },
   mounted(){},
@@ -37,7 +38,7 @@ export default {
     },
     //添加管理事件
     addManItemFn(){
-
+      this.$router.push({path: 'sickFrom'})
     },
   },
 

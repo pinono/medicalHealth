@@ -4,17 +4,13 @@
     <manage-form></manage-form>
     <!--提交按钮-->
     <div class="subFormBtn">提交</div>
-    <!--底部Strip-->
-    <Footer></Footer>
   </div>
 </template>
 <script>
-import Footer from '@/components/common/footer.vue'
 import manageForm from '@/components/common/manageForm.vue'
 
 export default {
     components : {
-      Footer,
       manageForm,
     },
   data(){

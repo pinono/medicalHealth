@@ -7,7 +7,7 @@
                     缺血训练
                 </li>
             </a>
-            <a href="">
+            <a href="/sickIndex">
                 <li @click="changeTab()" :class="nowStatus == 'sick' ? 'on' : ''">
                     <b class="manage"></b>
                     慢病管理
@@ -19,13 +19,13 @@
                     医患分享
                 </li>
             </a>
-            <a href="">
+            <a href="memberIndex">
                 <li @click="changeTab()" :class="nowStatus == 'member' ? 'on' : ''">
                     <b class="member"></b>
                     个人中心
                 </li>
             </a>
-           
+
         </ul>
     </div>
 </template>
@@ -90,7 +90,7 @@ export default {
                 color:#2B8CFF;
                 b{
                     width :38px;
-                    height:38px; 
+                    height:38px;
                     margin-top:.15rem;
                 }
                 .home{
