@@ -1,12 +1,12 @@
 <template>
     <div>
         <header-top :title="title"></header-top>
-        <date-line></date-line>
+        <date-line :dateType='curDate'></date-line>
         <div class="cycle-data" :class="bgColor">
             <ul class="dateBar">
-                <li>日</li>
-                <li class="act">周</li>
-                <li>月</li>
+                <li @click="tabCut('day')" :class="curDate == 'day' ? 'act': ''">日</li>
+                <li @click="tabCut('week')" :class="curDate == 'week' ? 'act': ''">周</li>
+                <li @click="tabCut('month')" :class="curDate == 'month' ? 'act': ''">月</li>
             </ul>
             <ul class="trainData">
                 <li>
@@ -42,7 +42,8 @@ export default {
     data () {
         return {
             bgColor : '',
-            title: '训练'
+            title: '训练',
+            curDate : 'day',
             
         }
     },
@@ -65,7 +66,14 @@ export default {
                 this.title = '指氧';
                 break;
         }
-
+    },
+    methods : {
+        /**
+         * *  Tab切换
+         * */ 
+        tabCut (data) {
+            this.curDate = data;
+        }
     }
 }
 </script>
