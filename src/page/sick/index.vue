@@ -1,5 +1,6 @@
 <template>
   <div class="manxingbing_page">
+    <header-top :title="title"></header-top>
     <!--tap切换-->
     <div class="mxb_headeNav">
       <div class="mxb_navItem" :class="[navTapStatu==1 ? 'navChecke' : '']" @click="navTapCut(1)">异常事件</div>
@@ -16,6 +17,7 @@
   </div>
 </template>
 <script>
+import HeaderTop from '@/components/common/header.vue'
 import Footer from '@/components/common/footer.vue'
 import manageList from '@/components/common/manageIndexList.vue'
 
@@ -23,11 +25,13 @@ export default {
     components : {
       Footer,
       manageList,
+      HeaderTop,
     },
   data(){
     return {
       navTapStatu : 1,//导航的切换状态
       nowStatus : 'sick',
+      title : '慢病管理',
     }
   },
   mounted(){},
@@ -60,7 +64,7 @@ export default {
     font-size: 32px;
     color: #333333;
     justify-content: space-around;
-    position: fixed;
+    // position: fixed;
     background: #fff;
     z-index: 2;
     border-bottom: 1px solid #eee;

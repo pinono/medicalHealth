@@ -11,8 +11,10 @@ import echarts from 'echarts'
 import '@/assets/css/reset.css'
 import 'mint-ui/lib/style.css'
 import 'lib-flexible'
+// 引入echarts
+import echarts from 'echarts'
 
-
+Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
 Vue.use(Mint)
 Vue.use(router)
