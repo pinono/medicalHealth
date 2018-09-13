@@ -153,9 +153,9 @@ export default {
          **  绘制图表
          **/ 
         drawLine(){
-            // alert(111)
+            console.log(this)
             var myChartArr = [];
-            for ( let i = 0; i < 8; i++ ) {
+            for ( let i = 0; i < 7; i++ ) {
                 myChartArr[i] = this.$echarts.init(document.getElementById('myChart'+ i))
                 // 绘制图表
                 myChartArr[i].setOption({

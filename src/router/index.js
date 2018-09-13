@@ -16,10 +16,10 @@ import followUpInfo from '@/page/member/followUpInfo'
 import trainingReport from '@/page/member/trainingReport'
 import history from '@/page/member/history'
 import stroke from '@/page/member/stroke'
-import forgetPassword from '@/page/Login/forgetPassword'
+import forgetPassword from '@/page/login/forgetPassword'
 import share from '@/page/Share/data.vue'
-import shareDetail from '@/page/Share/detail.vue'
-import login from '@/page/Login/index.vue'
+import shareDetail from '@/page/share/detail.vue'
+import login from '@/page/Login/index.vue'  
 
 Vue.use(Router)
 

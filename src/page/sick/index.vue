@@ -17,6 +17,7 @@
   </div>
 </template>
 <script>
+import HeaderTop from '@/components/common/header.vue'
 import Footer from '@/components/common/footer.vue'
 import HeaderTop from '@/components/common/header.vue'
 import manageList from '@/components/common/manageIndexList.vue'
@@ -26,12 +27,18 @@ export default {
       Footer,
       HeaderTop,
       manageList,
+      HeaderTop,
     },
   data(){
     return {
       navTapStatu : 1,//导航的切换状态
+<<<<<<< HEAD
       nowStatus : 'sickIndex',//底部组件跳转地址
       title : '慢病管理',//头部组件title名
+=======
+      nowStatus : 'sick',
+      title : '慢病管理',
+>>>>>>> 9fa384eff812b2f8faffb963527742fb6b296c92
     }
   },
   mounted(){},
@@ -64,8 +71,12 @@ export default {
     font-size: 32px;
     color: #333333;
     justify-content: space-around;
+<<<<<<< HEAD
     position: fixed;
     top: 80px;
+=======
+    // position: fixed;
+>>>>>>> 9fa384eff812b2f8faffb963527742fb6b296c92
     background: #fff;
     z-index: 2;
     border-bottom: 1px solid #eee;

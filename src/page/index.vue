@@ -6,10 +6,11 @@
                 <span class="date">
                     2018-09-12 14:00
                 </span>
-                <span class="right mode">模式：中级</span>
+                <span class="right mode">模式：<b>中级</b></span>
             </div>
             <div class="zan">
                 <p>
+                    <span class="zanNo2"></span>
                     训练效果非常棒！
                 </p>
             </div>
@@ -87,7 +88,22 @@
                         </p>
                     </a>
                 </li>
+                
             </ul>
+            <a href="">
+                <div class="goNews">
+                    <span class="check-icon"></span>
+                    国家脑卒中筛查
+                    <span class="tip right">点击查看<b class="arrow"></b></span>
+                </div>
+            </a>
+            <a href="">
+                <div class="goNews userNews">
+                    <span class="check-icon"></span>
+                    用户健康档案
+                    <span class="tip right">点击查看<b class="arrow"></b></span>
+                </div>
+            </a>
         </section>
         <div class=""></div>
         <Footer :nowStatus="nowStatus"></Footer>
@@ -122,10 +138,62 @@ export default {
                 .date{
                     font-size:30px;
                 }
+                .mode{
+                    position: relative;
+                    bottom:7px;
+                    b{
+                        font-size:34px;
+                        font-weight: normal;
+                        vertical-align: middle;
+                    }
+                }
             }
             .zan{
                 color:#fff;
                 text-align: center;
+                p{
+                    font-size: 28px;
+                }
+                .zanNo1{
+                    width:90px;
+                    height:90px;
+                    display: block;
+                    background:url('../assets/images/home/zan-white.png') no-repeat;
+                    background-size:100%;
+                    margin:50px auto 30px;
+                }
+                .zanNo2{
+                    width:180px;
+                    height:90px;
+                    display: block;
+                    background:url('../assets/images/home/zan-white2.png') no-repeat;
+                    background-size:100%;
+                    margin:50px auto 30px;
+                }
+                .zanNo3{
+                    width:90px;
+                    height:90px;
+                    display: block;
+                    background:url('../assets/images/home/zan-white3.png') no-repeat;
+                    background-size:100%;
+                    margin:50px auto 30px;
+                }
+                .zanNo4{
+                    width:90px;
+                    height:90px;
+                    display: block;
+                    background:url('../assets/images/home/zan-white4.png') no-repeat;
+                    background-size:100%;
+                    margin:50px auto 30px;
+                }
+                .zanNo5{
+                    width:90px;
+                    height:90px;
+                    display: block;
+                    background:url('../assets/images/home/zan-white5.png') no-repeat;
+                    background-size:100%;
+                    margin:50px auto 30px;
+                }
             }
         }
         section{
@@ -196,6 +264,51 @@ export default {
                     margin-right:6px;
                 }
             }
+        }
+        .goNews{
+            font-size:32px;
+            height:130px;font-weight: bold;
+            line-height: 130px;
+            background:#fff;
+            margin-top:10px;
+            .check-icon{
+                display: inline-block;
+                width:34px;height:44px;
+                background:url('../assets/images/home/check.png') no-repeat;
+                background-size:100%;
+                vertical-align: middle;
+                margin:0 5px 0 28px;
+            }
+            .tip{
+                font-size: 26px;
+                color: #888888;
+                .arrow{
+                    display: inline-block;
+                    width:24px;height:24px;
+                    background:url('../assets/images/home/arrow-right.png') no-repeat;
+                    background-size:100%;
+                    margin-right:26px;
+                    position: relative;
+                    top:2px;
+                }
+            }
+
+        }
+        .goNews.userNews{
+            margin-bottom:98px;
+            background:url('../assets/images/home/userBg.png') no-repeat;
+            background-size:100%;
+            color:#fff;
+            .check-icon{
+                width:60px;height:58px;
+                background:url('../assets/images/home/yao-bag.png') no-repeat;
+                background-size:100%;
+                vertical-align: middle;
+                margin:0 5px 0 28px;
+                position: relative;
+                bottom: 4px;
+            }
+            .tip{color:#fff;}
         }
     }
 </style>

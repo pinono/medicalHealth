@@ -12,7 +12,6 @@ import '@/assets/css/reset.css'
 import 'mint-ui/lib/style.css'
 import 'lib-flexible'
 
-
 Vue.config.productionTip = false
 Vue.use(Mint)
 Vue.use(router)
