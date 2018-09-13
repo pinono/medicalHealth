@@ -1,5 +1,6 @@
 <template>
     <div class="center_indexPage">
+      <header-top :title="title"></header-top>
       <div class="c_indexBanner">
         <div class="bannerLogo">
           <img  src="" alt="">
@@ -69,11 +70,13 @@
 
 export default {
     components : {
-        Footer
+        Footer,
+      HeaderTop
     },
   data(){
         return{
-          nowStatus : 'member',
+          nowStatus : 'memberIndex',
+          title: '个人中心'
         }
   },
   mounted(){
@@ -126,6 +129,7 @@ export default {
 <style lang="scss" scoped>
   .center_indexPage{
     width: 100%;
+    padding-top: 80px;
     .c_indexBanner{
         position: relative;
         width: 100%;

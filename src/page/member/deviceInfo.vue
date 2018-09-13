@@ -1,5 +1,6 @@
 <template>
   <div class="deviceInfoPage">
+    <header-top :title="title"></header-top>
     <div class="deviceHead">
       <img src="../../assets/images/center/deviceImg.png" alt="">
     </div>
@@ -27,11 +28,16 @@
 </template>
 
 <script>
-
+  import HeaderTop from '@/components/common/header.vue'
 export default {
-   data(){
-       return{}
-   },
+  components : {
+    HeaderTop
+  },
+  data(){
+    return {
+      title: '设备信息'
+    }
+  },
 }
 </script>
 
@@ -40,6 +46,7 @@ export default {
     width: 100%;
     height:100%;
     position: relative;
+    padding-top: 80px;
     .deviceHead{
       width: 100%;
       height: 500px;

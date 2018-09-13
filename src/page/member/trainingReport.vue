@@ -1,21 +1,22 @@
 <template>
   <div class="trainReport">
+    <header-top :title="title"></header-top>
     <section class="item">
         <div class="title">
           <p>总体训练报告</p>
           <p>上一次训练时间：2018.08.04 11:11:11</p>
         </div>
         <ul class="navCut">
-          <li class="checkLi">近1个月</li>
-          <li>近3个月</li>
-          <li>近6个月</li>
-          <li>近1年</li>
+          <li @click="checkNavFn(1)" :class="[ checkNav==1 ? 'checkLi':'']">近1个月</li>
+          <li @click="checkNavFn(3)" :class="[ checkNav==3 ? 'checkLi':'']">近3个月</li>
+          <li @click="checkNavFn(6)" :class="[ checkNav==6 ? 'checkLi':'']">近6个月</li>
+          <li @click="checkNavFn(12)" :class="[ checkNav==12 ? 'checkLi':'']">近1年</li>
         </ul>
         <div class="myChart" id="myChart">
 
         </div>
       </section>
-    <section class="item">
+    <!--<section class="item">
       <div class="title">
         <p>总体训练报告</p>
       </div>
@@ -42,23 +43,32 @@
       <div class="myChart" id="myChart2">
 
       </div>
-    </section>
+    </section>-->
   </div>
 </template>
 
 <script>
-
+  import HeaderTop from '@/components/common/header.vue'
   export default {
-
+    components : {
+      HeaderTop
+    },
     data(){
       return {
-
+        xAxisData : [], //图表时间轴
+        seriesData : [],//图表数据
+        checkNav : 1,//导航切换为1,3,6,12个月
+        title: '训练报告',
       }
     },
     mounted(){
       this.detailsDataChartFn();
     },
     methods:{
+      //导航切换
+      checkNavFn(month){
+        this.checkNav=month;
+      },
       //详情条形图
       detailsDataChartFn(){
         // 基于准备好的dom，初始化echarts实例
@@ -100,6 +110,7 @@
         })
 
       },
+
     }
 
   }
@@ -109,6 +120,7 @@
 
   .trainReport{
     width: 100%;
+    padding-top: 80px;
     .item{
       width: 100%;
       margin-bottom: 10px;

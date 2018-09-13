@@ -1,5 +1,6 @@
 <template>
   <div class="caseReportPage">
+    <header-top :title="title"></header-top>
     <ul class="caseReportList">
       <li class="caseReportItem">
         <h2>基本信息</h2>
@@ -57,11 +58,16 @@
 </template>
 
 <script>
-
+  import HeaderTop from '@/components/common/header.vue'
 export default {
-   data(){
-       return{}
-   },
+  components : {
+    HeaderTop
+  },
+  data(){
+    return {
+      title: '病历报告'
+    }
+  },
 }
 </script>
 
@@ -69,7 +75,9 @@ export default {
   .caseReportPage{
     width: 100%;
     height: auto;
+    padding-top: 80px;
     .caseReportList{
+      border-top: 2px solid #eee;
       .caseReportItem{
         width: 100%;
         height: 258px;

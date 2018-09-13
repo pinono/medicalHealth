@@ -216,12 +216,16 @@ export default {
   .picker-slot {
     font-size: 34px;
   }
+  .picker-items {
+    height: 400px;
+  }
 
   .myManForm{
     width: 100%;
     background: #fff;
+    padding-top: 80px;
       .formList{
-          li{
+        li{
             display: flex;
             align-items: center;
             flex-direction: row;
@@ -262,6 +266,9 @@ export default {
                 margin-left: 30px;
               }
           }
+        li:nth-child(1){
+          border-top: 1px solid #eee;
+        }
       }
       .pop_background{
         width: 100%;

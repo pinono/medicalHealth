@@ -1,5 +1,6 @@
 <template>
   <div class="manxingbing_page">
+    <header-top :title="title"></header-top>
     <!--表单组件-->
     <manage-form></manage-form>
     <!--提交按钮-->
@@ -7,15 +8,17 @@
   </div>
 </template>
 <script>
-import manageForm from '@/components/sick/manageForm.vue'
+  import HeaderTop from '@/components/common/header.vue'
+  import manageForm from '@/components/sick/manageForm.vue'
 
 export default {
     components : {
+      HeaderTop,
       manageForm,
     },
   data(){
     return {
-
+      title : '异常事件填写',//头部组件title名
     }
   },
   mounted(){

@@ -1,5 +1,6 @@
 <template>
   <div class="showProblem_page">
+    <header-top :title="title"></header-top>
     <div class="proTapbar">
       <p @click="checkedTapFn(1)" :class="[tapStatus==1? 'checkedTap':'']">医护随访</p>
       <p @click="checkedTapFn(2)" :class="[tapStatus==2? 'checkedTap':'']">设备问题</p>
@@ -47,11 +48,16 @@
   </div>
 </template>
 <script>
+  import HeaderTop from '@/components/common/header.vue'
 export default {
+  components : {
+    HeaderTop
+  },
   data(){
     return {
       arrowsIcon : 0,
       tapStatus : 1,
+      title: '随访信息'
     }
   },
   mounted(){
@@ -78,12 +84,14 @@ export default {
     width: 100%;
     height: 100%;
     background: #fff;
+    padding-top: 80px;
     .proTapbar{
       height: 88px;
       line-height: 88px;
       width: 100%;
       display: flex;
       justify-content: space-around;
+      border-top: 1px solid #eee;
       border-bottom: 1px solid #eee;
       p{
         width: 186px;

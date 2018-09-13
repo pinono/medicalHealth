@@ -1,5 +1,6 @@
 <template>
   <div class="showProblem_page">
+    <header-top :title="title"></header-top>
     <!--表单组件-->
     <div class="proList">
       <div class="listTitle" @click="titleChecked(1)">
@@ -31,10 +32,15 @@
   </div>
 </template>
 <script>
+  import HeaderTop from '@/components/common/header.vue'
 export default {
+  components : {
+    HeaderTop
+  },
   data(){
     return {
       arrowsIcon : 0,
+      title: '常见问题'
     }
   },
   mounted(){
@@ -53,6 +59,7 @@ export default {
     width: 100%;
     height: 100%;
     background: #fff;
+    padding-top: 80px;
     .proList{
       .listTitle{
       display: flex;
@@ -83,6 +90,9 @@ export default {
           height: 14px;
         }
     }
+      div:nth-child(1){
+        border-top: 1px solid #eee;
+      }
       .listContent{
         width: 100%;
         padding: 20px 45px;

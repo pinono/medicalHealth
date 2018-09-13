@@ -7,9 +7,13 @@
 </template>
 <style lang="scss">
     .mint-header{
+        width: 100%;
         height:80px;font-size: 37px;
         background:#fff;
         color:#333;
+        position: fixed;
+        top: 0px;
+        z-index: 100;
     }
 </style>
 

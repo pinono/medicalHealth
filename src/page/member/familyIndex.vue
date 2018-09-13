@@ -1,5 +1,6 @@
 <template>
   <div class="addFamilyPage">
+    <header-top :title="title"></header-top>
     <div class="topNav">
       <img src="" alt="">
       <p>与家人试试分享病情</p>
@@ -46,10 +47,15 @@
 </template>
 
 <script>
-
+  import HeaderTop from '@/components/common/header.vue'
 export default {
+  components : {
+    HeaderTop
+  },
    data(){
-       return{}
+       return{
+         title: '我的家属'
+       }
    },
   mounted(){},
   methods:{
@@ -66,6 +72,7 @@ export default {
     width: 100%;
     height:auto;
     position: relative;
+    padding-top: 80px;
     .topNav{
       width: 100%;
       height: 400px;

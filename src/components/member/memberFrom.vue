@@ -132,6 +132,9 @@ export default {
             margin-left: 50px;
           }
         }
+        li:nth-child(1){
+          border-top: 1px solid #eee;
+        }
       }
       .subFormBtn{
         width: 700px;

@@ -1,5 +1,6 @@
 <template>
   <div class="addNewFamilyPage">
+    <header-top :title="title"></header-top>
     <div class="topNav">
       <div class="navImg">
         <img src="" alt="">
@@ -30,13 +31,15 @@
 </template>
 
 <script>
+  import HeaderTop from '@/components/common/header.vue'
 export default {
-    component:{
-
-    },
+  components : {
+    HeaderTop
+  },
    data(){
        return{
          switchVal : true,
+         title: '新增家属'
        }
    },
 }
@@ -55,17 +58,16 @@ export default {
     margin: 2px;
   }
   .mint-switch-core::after {
-    width: 56px;
-    height: 56px;
-    margin-top: 2px;
+    width: 58px;
+    height: 58px;
     background-color: #fff;
     -webkit-box-shadow: 0 0.013333rem 0.04rem rgba(0, 0, 0, .4);
     box-shadow: 0 0.013333rem 0.04rem rgba(0, 0, 0, .4);
     border-radius: 100%;
   }
   .mint-switch-input:checked + .mint-switch-core::after {
-    -webkit-transform: translateX(0.59rem);
-    transform: translateX(0.59rem);
+    -webkit-transform: translateX(0.57rem);
+    transform: translateX(0.57rem);
   }
   .mint-switch-input:checked + .mint-switch-core {
     border-color: #09BB07;
@@ -76,10 +78,12 @@ export default {
     width: 100%;
     height:100%;
     position: relative;
+    padding-top: 80px;
     .topNav{
       width: 100%;
       background: #fff;
       padding-top: 80px;
+      border-top: 1px solid  #F2F4F5;
       .navImg{
         width: 162px;
         height: 162px;
