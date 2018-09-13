@@ -17,7 +17,6 @@
   </div>
 </template>
 <script>
-import HeaderTop from '@/components/common/header.vue'
 import Footer from '@/components/common/footer.vue'
 import HeaderTop from '@/components/common/header.vue'
 import manageList from '@/components/common/manageIndexList.vue'
@@ -25,7 +24,6 @@ import manageList from '@/components/common/manageIndexList.vue'
 export default {
     components : {
       Footer,
-      HeaderTop,
       manageList,
       HeaderTop,
     },
