@@ -16,7 +16,7 @@ Vue.config.productionTip = false
 Vue.use(Mint)
 Vue.use(router)
 Vue.use(VueAwesomeSwiper)
-Vue.use(moment);
+Vue.use(moment)
 Vue.prototype.$echarts = echarts
 
 /* eslint-disable no-new */

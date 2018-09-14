@@ -73,7 +73,7 @@ export default {
     },
     //添加管理事件
     addManItemFn(){
-
+      this.$router.push({path: 'addFollowUp'})
     },
   },
 
