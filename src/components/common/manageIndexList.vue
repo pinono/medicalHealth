@@ -110,7 +110,7 @@ export default {
       bottom: 0px;
     }
   }
-  
+
 </style>
 
 
