@@ -1,30 +1,22 @@
 <template>
     <div class="footer">
         <ul>
-            <a href="/home">
-                <li @click="changeTab()" :class="nowStatus == 'home' ? 'on' : ''">
-                    <b class="home"></b>
-                    缺血训练
-                </li>
-            </a>
-            <a href="/sickIndex">
-                <li @click="changeTab()" :class="nowStatus == 'sickIndex' ? 'on' : ''">
-                    <b class="manage"></b>
-                    慢病管理
-                </li>
-            </a>
-            <a href="/shareList">
-                <li @click="changeTab()" :class="nowStatus == 'share' ? 'on' : ''">
-                    <b class="share"></b>
-                    医患分享
-                </li>
-            </a>
-            <a href="/memberCenter">
-                <li @click="changeTab()" :class="nowStatus == 'memberCenter' ? 'on' : ''">
-                    <b class="member"></b>
-                    个人中心
-                </li>
-            </a>
+            <li @click="changeTab('home')" :class="nowStatus == 'home' ? 'on' : ''">
+                <b class="home"></b>
+                缺血训练
+            </li>
+            <li @click="changeTab('sickIndex')" :class="nowStatus == 'sickIndex' ? 'on' : ''">
+                <b class="manage"></b>
+                慢病管理
+            </li>
+            <li @click="changeTab('shareList')" :class="nowStatus == 'share' ? 'on' : ''">
+                <b class="share"></b>
+                医患分享
+            </li>
+            <li @click="changeTab('memberCenter')" :class="nowStatus == 'memberCenter' ? 'on' : ''">
+                <b class="member"></b>
+                个人中心
+            </li>
 
         </ul>
     </div>
@@ -38,8 +30,21 @@ export default {
         }
     },
     methods : {
-        changeTab () {
-            console.log(111)
+        changeTab (purpose) {
+            switch (purpose) {
+                case 'home' :
+                    this.$router.push({path: '/home'})
+                    break;
+                case 'sickIndex' :
+                    this.$router.push({path: '/sickIndex'})
+                    break;
+                case 'shareList' :
+                    this.$router.push({path: '/shareList'})
+                    break;
+                case 'memberCenter' :
+                    this.$router.push({path: '/memberCenter'})
+                    break;
+            }
         }
     }
 }

@@ -20,8 +20,7 @@
         
         <section>
             <ul>
-                <li>
-                    <a href="/train?type=train">
+                <li @click="goTrain('train')">
                         <p>
                             <span class="icon move"></span>
                             <span class="name">训练</span><span class="minName">(完整度)</span>
@@ -32,10 +31,8 @@
                             <span class="data">时长：00时25分</span>
                             <span class="arrow right"></span>
                         </p>
-                    </a>
                 </li>
-                <li>
-                    <a href="/train?type=brain">
+                <li @click="goTrain('brain')">
                         <p>
                             <span class="icon brain"></span>
                             <span class="name">脑氧</span><span class="minName">(完整度)</span>
@@ -46,11 +43,9 @@
                             <span class="data">时长：00时25分</span>
                             <span class="arrow right"></span>
                         </p>
-                    </a>
                         
                 </li>
-                <li>
-                    <a href="/train?type=blood">
+                <li @click="goTrain('blood')">
                         <p>
                             <span class="icon blood"></span>
                             <span class="name">血压</span><span class="minName">(完整度)</span>
@@ -61,10 +56,8 @@
                             <span class="data">时长：00时25分</span>
                             <span class="arrow right"></span>
                         </p>
-                    </a>
                 </li>
-                <li>
-                    <a href="/train?type=heart">
+                <li @click="goTrain('heart')">
                         <p>
                             <span class="icon heart"></span>
                             <span class="name">心率</span><span class="minName">(完整度)</span>
@@ -75,38 +68,30 @@
                             <span class="data">时长：00时25分</span>
                             <span class="arrow right"></span>
                         </p>
-                    </a>
                 </li>
-                <li>
-                    <a href="/train?type=oxygen">
-                        <p>
-                            <span class="icon yang"></span>
-                            <span class="name">指氧</span><span class="minName">(完整度)</span>
-                            <span class="datanum">90</span>
-                            <span class="zanNum right"></span>
-                        </p>
-                        <p>
-                            <span class="data">时长：00时25分</span>
-                            <span class="arrow right"></span>
-                        </p>
-                    </a>
+                <li @click="goTrain('oxygen')">
+                    <p>
+                        <span class="icon yang"></span>
+                        <span class="name">指氧</span><span class="minName">(完整度)</span>
+                        <span class="datanum">90</span>
+                        <span class="zanNum right"></span>
+                    </p>
+                    <p>
+                        <span class="data">时长：00时25分</span>
+                        <span class="arrow right"></span>
+                    </p>
                 </li>
-                
             </ul>
-            <a href="/stroke">
-                <div class="goNews">
-                    <span class="check-icon"></span>
-                    国家脑卒中筛查
-                    <span class="tip right">点击查看<b class="arrow"></b></span>
-                </div>
-            </a>
-            <a href="/memberCenter">
-                <div class="goNews userNews">
-                    <span class="check-icon"></span>
-                    用户健康档案
-                    <span class="tip right">点击查看<b class="arrow"></b></span>
-                </div>
-            </a>
+            <div class="goNews" @click="goTrain('stroke')">
+                <span class="check-icon"></span>
+                国家脑卒中筛查
+                <span class="tip right">点击查看<b class="arrow"></b></span>
+            </div>
+            <div class="goNews userNews" @click="goTrain('memberCenter')">
+                <span class="check-icon"></span>
+                用户健康档案
+                <span class="tip right">点击查看<b class="arrow"></b></span>
+            </div>
         </section>
         <div class=""></div>
         <Footer :nowStatus="nowStatus"></Footer>
@@ -124,6 +109,33 @@ export default {
         return {
             nowStatus : 'home',
             title : '首页',
+        }
+    },
+    methods : {
+        goTrain (purpose) {
+            switch (purpose) {
+                case 'train' : 
+                    this.$router.push({path: '/train?type=train'})
+                    break;
+                case 'brain' : 
+                    this.$router.push({path: '/train?type=brain'})
+                    break;
+                case 'blood' : 
+                    this.$router.push({path: '/train?type=blood'})
+                    break;
+                case 'heart' : 
+                    this.$router.push({path: '/train?type=heart'})
+                    break;
+                case 'oxygen' : 
+                    this.$router.push({path: '/train?type=oxygen'})
+                    break;
+                case 'stroke' : 
+                    this.$router.push({path: '/stroke'})
+                    break;
+                case 'memberCenter' : 
+                    this.$router.push({path: '/memberCenter'})
+                    break;
+            }
         }
     }
 }

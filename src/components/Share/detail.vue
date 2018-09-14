@@ -2,7 +2,7 @@
     <div>
         <div class="news-wrap">
             <section class="video">
-
+                <video src="../../assets/images/share/movie.ogg" width="100%;" controls="controls"></video>
             </section>
             <section class="top">
                 <h3>缺血预适应训练仪简介</h3>
@@ -38,7 +38,12 @@ export default {
 </script>
 <style lang="scss" scoped>
     .news-wrap{
+        margin-top:80px;
         background:#fff;
+        .video video{
+            width:100%;
+            // height:440px;
+        }
         .top{
             padding:25px;
             border-bottom:1px solid #ddd;
