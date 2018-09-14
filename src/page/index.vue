@@ -1,20 +1,23 @@
 <template>
     <div class="Train">
         <header-top :title="title"></header-top>
-        <div class="banner">
-            <div class="top">
-                <span class="date">
-                    2018-09-12 14:00
-                </span>
-                <span class="right mode">模式：<b>中级</b></span>
-            </div>
-            <div class="zan">
-                <p>
-                    <span class="zanNo2"></span>
-                    训练效果非常棒！
-                </p>
+        <div class="banner-wrap">
+            <div class="banner">
+                <div class="top">
+                    <span class="date">
+                        2018-09-12 14:00
+                    </span>
+                    <span class="right mode">模式：<b>中级</b></span>
+                </div>
+                <div class="zan">
+                    <p>
+                        <span class="zanNo2"></span>
+                        训练效果非常棒！
+                    </p>
+                </div>
             </div>
         </div>
+        
         <section>
             <ul>
                 <li>
@@ -97,7 +100,7 @@
                     <span class="tip right">点击查看<b class="arrow"></b></span>
                 </div>
             </a>
-            <a href="">
+            <a href="/memberCenter">
                 <div class="goNews userNews">
                     <span class="check-icon"></span>
                     用户健康档案
@@ -128,10 +131,13 @@ export default {
 <style lang="scss">
     .Train{
         a{color:#333;}
+        .banner-wrap{background:#fff;}
         .banner{
             width:100%;
             height:405px;
-            background:linear-gradient(90deg, #4D9DFF 0%, #3ABFE8 100%);
+            // background:linear-gradient(90deg, #4D9DFF 0%, #3ABFE8 100%);
+            background: url('../assets/images/home/banner.png') no-repeat;
+            background-size:100%;
             .top{
                 padding:30px;
                 color:#fff;
@@ -206,7 +212,7 @@ export default {
                     display: inline-block;
                     width:44px;
                     height:44px;
-                    vertical-align: sub;
+                    vertical-align: bottom;
                     margin-right:15px;
                 }
                 .move{

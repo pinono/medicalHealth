@@ -9,9 +9,14 @@
             </ul>
         </div>
         <form v-if="status=='register'" class="register-wrap form-wrap">
-            <mt-field  placeholder="购买设备预留手机号" type="tel" v-model="phone"  >
+            <span class="checkPhone" @click="checkPhone()">系统检测</span>
+            <mt-field  placeholder="购买设备预留手机号" type="tel" v-model="phone" :class="wrongTip == true ? 'on' : ''"  >
                 <span class="icon-phone icon"></span>
             </mt-field>
+            <div class="wrong-tip" v-if="wrongTip">
+                <p>*为保障您的数据安全，请填写购买设备时登记手机号；</p>
+                <p>*若是忘记手机号，请拨打客服电话。</p>
+            </div>
             <mt-field  placeholder="请输入密码" type="password" v-model="password">
                 <span class="icon-psw icon"></span>
                 
@@ -31,8 +36,10 @@
             <mt-field  placeholder="请输入密码" type="password" v-model="password">
                 <span class="icon-psw icon"></span>
             </mt-field>
-            <p class="registerBtn">登录</p>
-            <a href="" class="tip">忘记登录密码？</a>
+            <a href="/home">
+                <p class="registerBtn">登录</p>
+            </a>
+            <a href="/forgetPassword" class="tip">忘记登录密码？</a>
         </form>
     </div>
 </template>
@@ -52,12 +59,26 @@ export default {
             againPassword : '' ,  //再次输入密码
             goodsNum : '' , //设备号
             status:'register',
+            wrongTip : false,   //设备错误提示
         }
+    },
+    mounted () {
+        this.status == 'register' ? this.title = '注册' : this.title = '登录'; 
     },
     methods : {
         tabCut (status) {
             this.$set(this,'status',status);
+            this.status == 'register' ? this.title = '注册' : this.title = '登录'; 
         },
+        checkPhone () {
+            this.wrongTip = true;
+        }
+
+    },
+    watch : {
+        wrongTip () {
+            // alert(1)
+        }
     }
 }
 </script>
@@ -108,6 +129,14 @@ body{
         .form-wrap{
             padding:75px;
             background:#fff;
+            .checkPhone{
+                position: absolute;
+                right:80px;
+                z-index: 2;
+                font-size:34px;
+                color: #2B8CFF;
+                line-height: 60px;
+            }
             .icon{
                 display: inline-block;
                 width:34px;height:34px;
@@ -123,10 +152,12 @@ body{
                 padding-left:50px;
             }
             .mint-field-other{
+                width:34px;
                 position: absolute;
                 top:12px;
                 left:0;
             }
+            
             .registerBtn{
                 width:600px;
                 height:88px;
@@ -144,8 +175,19 @@ body{
                 color: #888888;
                 margin-top:30px;
             }
+            .wrong-tip{
+                font-size: 24px;
+                color: #FA3B19;
+                margin-bottom:24px;
+            }
             
         }
+        .register-wrap{
+            .mint-cell.on:first-of-type .mint-cell-wrapper {
+                margin-bottom: 0;
+            }
+        }
+        
     }
 </style>
 

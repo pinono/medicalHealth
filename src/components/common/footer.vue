@@ -13,13 +13,13 @@
                     慢病管理
                 </li>
             </a>
-            <a href="/share">
+            <a href="/shareList">
                 <li @click="changeTab()" :class="nowStatus == 'share' ? 'on' : ''">
                     <b class="share"></b>
                     医患分享
                 </li>
             </a>
-            <a href="memberIndex">
+            <a href="/memberCenter">
                 <li @click="changeTab()" :class="nowStatus == 'member' ? 'on' : ''">
                     <b class="member"></b>
                     个人中心

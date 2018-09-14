@@ -59,41 +59,72 @@
                 <swiper :options="swiperOption3" ref="mySwiperC">
                     <!-- slides -->
                     <swiper-slide>
-                            <div id="myChart0" :style="{width: '300px', height: '300px'}"></div>
+                            <div id="myChart0" :style="{width: '300px', height: '250px',margin:'0 auto'}"></div>
                     </swiper-slide>
                     <swiper-slide>
                         <p>123123</p>
-                            <div id="myChart1" :style="{width: '300px', height: '300px'}"></div>
+                            <div id="myChart1" :style="{width: '300px', height: '250px',margin:'0 auto'}"></div>
                     </swiper-slide>
                     <swiper-slide>
-                            <div id="myChart2" :style="{width: '300px', height: '300px'}"></div>
+                            <div id="myChart2" :style="{width: '300px', height: '250px',margin:'0 auto'}"></div>
                     </swiper-slide>
                     <swiper-slide>
-                            <div id="myChart3" :style="{width: '300px', height: '300px'}"></div>
+                            <div id="myChart3" :style="{width: '300px',  height: '250px',margin:'0 auto'}"></div>
                     </swiper-slide>
                     <swiper-slide>
-                            <div id="myChart4" :style="{width: '300px', height: '300px'}"></div>
+                            <div id="myChart4" :style="{width: '300px', height: '250px',margin:'0 auto'}"></div>
                     </swiper-slide>
                     <swiper-slide>
-                            <div id="myChart5" :style="{width: '300px', height: '300px'}"></div>
+                            <div id="myChart5" :style="{width: '300px', height: '250px',margin:'0 auto'}"></div>
                     </swiper-slide>
                     <swiper-slide>
-                            <div id="myChart6" :style="{width: '300px', height: '300px'}"></div>
+                            <div id="myChart6" :style="{width: '300px', height: '250px',margin:'0 auto'}"></div>
                     </swiper-slide>
                     <swiper-slide>
-                            <div id="myChart7" :style="{width: '300px', height: '300px'}"></div>
+                            <div id="myChart7" :style="{width: '300px', height: '250px',margin:'0 auto'}"></div>
                     </swiper-slide>
                     <!-- Optional controls -->
                     <div class="swiper-button-prev" slot="button-prev"></div>
                     <div class="swiper-button-next" slot="button-next"></div>
                 </swiper>
             </section>
-            
+            <section class="detail-wrap" v-show="dateType == 'month'">
+                <swiper :options="swiperOption4" ref="mySwiperD">
+                    <!-- slides -->
+                    <swiper-slide>
+                            <div id="myChart8" :style="{width: '300px', height: '250px',margin:'0 auto'}"></div>
+                    </swiper-slide>
+                    <swiper-slide>
+                        <p>123123</p>
+                            <div id="myChart9" :style="{width: '300px', height: '250px',margin:'0 auto'}"></div>
+                    </swiper-slide>
+                    <swiper-slide>
+                            <div id="myChart10" :style="{width: '300px', height: '250px',margin:'0 auto'}"></div>
+                    </swiper-slide>
+                    <swiper-slide>
+                            <div id="myChart11" :style="{width: '300px',  height: '250px',margin:'0 auto'}"></div>
+                    </swiper-slide>
+                    <swiper-slide>
+                            <div id="myChart12" :style="{width: '300px', height: '250px',margin:'0 auto'}"></div>
+                    </swiper-slide>
+                    <swiper-slide>
+                            <div id="myChart13" :style="{width: '300px', height: '250px',margin:'0 auto'}"></div>
+                    </swiper-slide>
+                    <swiper-slide>
+                            <div id="myChart14" :style="{width: '300px', height: '250px',margin:'0 auto'}"></div>
+                    </swiper-slide>
+                    <swiper-slide>
+                            <div id="myChart15" :style="{width: '300px', height: '250px',margin:'0 auto'}"></div>
+                    </swiper-slide>
+                    <!-- Optional controls -->
+                    <div class="swiper-button-prev" slot="button-prev"></div>
+                    <div class="swiper-button-next" slot="button-next"></div>
+                </swiper>
+            </section>
         </div>
     </div>
 </template>
 <script>
-import chartMap from '@/components/Home/echarts.vue'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
@@ -101,7 +132,6 @@ export default {
     components: {
         swiper,
         swiperSlide,
-        chartMap
     },
     props :['dateType'],
     data() {
@@ -136,6 +166,15 @@ export default {
                     control: this.mySwiperA, //控制Swiper1
                 },
             },
+            swiperOption4: {
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                controller: {
+                    control: this.mySwiperA, //控制Swiper1
+                },
+            },
         }
     },
     computed: {
@@ -144,7 +183,7 @@ export default {
         }
     },
     mounted() {
-
+        console.log(this.dateType)
         this.bgColor = this.$route.query.type;   //背景颜色
         this.BindSwiper();   //绑定swiper
     },
@@ -155,22 +194,23 @@ export default {
         drawLine(){
             console.log(this)
             var myChartArr = [];
-            for ( let i = 0; i < 7; i++ ) {
+            for ( let i = 0; i < 15; i++ ) {
                 myChartArr[i] = this.$echarts.init(document.getElementById('myChart'+ i))
                 // 绘制图表
-                myChartArr[i].setOption({
-                    title: { text: '在Vue中使用echarts' },
-                    tooltip: {},
+                var option = {
                     xAxis: {
-                        data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+                        type: 'category',
+                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
                     },
-                    yAxis: {},
+                    yAxis: {
+                        type: 'value'
+                    },
                     series: [{
-                        name: '销量',
-                        type: 'bar',
-                        data: [5, 20, 36, 10, 10, 20]
+                        data: [1, 2, 3, 4, 5, 6, 7],
+                        type: 'line'
                     }]
-                });
+                };
+                myChartArr[i].setOption(option);
             }
         },
         /**
@@ -180,10 +220,10 @@ export default {
             this.mySwiperA = this.$refs.mySwiperA.swiper;
             this.mySwiperB = this.$refs.mySwiperB.swiper;
             this.mySwiperC = this.$refs.mySwiperC.swiper;
-            this.mySwiperA.controller.control = this.mySwiperB;//Swiper1控制Swiper2，需要在Swiper2初始化后
+            this.mySwiperD = this.$refs.mySwiperD.swiper;
             this.mySwiperB.controller.control = this.mySwiperA;//Swiper2控制Swiper1，需要在Swiper1初始化后
-            this.mySwiperA.controller.control = this.mySwiperC;//Swiper2控制Swiper1，需要在Swiper1初始化后
             this.mySwiperC.controller.control = this.mySwiperA;//Swiper2控制Swiper1，需要在Swiper1初始化后
+            this.mySwiperD.controller.control = this.mySwiperA;//Swiper2控制Swiper1，需要在Swiper1初始化后
         },
     },
     /**
@@ -192,7 +232,7 @@ export default {
     watch : {
         dateType (val,oldval) {
             console.log(val,oldval)
-            if( val == 'week' ) {
+            if( val == 'week' || val == 'month' ) {
                 this.drawLine();   
             }
         }
