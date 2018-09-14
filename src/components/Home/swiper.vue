@@ -145,6 +145,7 @@ export default {
                 centeredSlides : true,
                 slidesOffsetBefore : 0,
                 slidesOffsetAfter : 0,
+                
             },
             swiperOption2: {
                 navigation: {
@@ -183,14 +184,14 @@ export default {
     mounted() {
         console.log(this.dateType)
         this.bgColor = this.$route.query.type;   //背景颜色
-        this.BindSwiper();   //绑定swiper
+        this.BindSwiper(); //绑定swiper
     },
     methods : {
         /**
          **  绘制图表
          **/ 
         drawLine(){
-            console.log(this)
+            this.BindSwiper();   //绑定swiper
             var myChartArr = [];
             for ( let i = 0; i < 15; i++ ) {
                 myChartArr[i] = this.$echarts.init(document.getElementById('myChart'+ i))
@@ -219,6 +220,15 @@ export default {
             this.mySwiperB = this.$refs.mySwiperB.swiper;
             this.mySwiperC = this.$refs.mySwiperC.swiper;
             this.mySwiperD = this.$refs.mySwiperD.swiper;
+            if( this.dateType == 'day' ) {
+                this.mySwiperA.controller.control = this.mySwiperB;
+            }
+            if( this.dateType == 'week' ) {
+            this.mySwiperA.controller.control = this.mySwiperC;
+            }
+            if( this.dateType == 'month' ) {
+            this.mySwiperA.controller.control = this.mySwiperD;
+            }
             this.mySwiperB.controller.control = this.mySwiperA;//Swiper2控制Swiper1，需要在Swiper1初始化后
             this.mySwiperC.controller.control = this.mySwiperA;//Swiper2控制Swiper1，需要在Swiper1初始化后
             this.mySwiperD.controller.control = this.mySwiperA;//Swiper2控制Swiper1，需要在Swiper1初始化后
