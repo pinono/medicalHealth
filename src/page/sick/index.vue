@@ -93,7 +93,6 @@ export default {
     bottom: 168px;
     right: 34px;
     z-index: 5;
-    padding-top: 168px;
     img{
       width: 100px;
       height: 100px;

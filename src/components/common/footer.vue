@@ -8,7 +8,7 @@
                 </li>
             </a>
             <a href="/sickIndex">
-                <li @click="changeTab()" :class="nowStatus == 'sick' ? 'on' : ''">
+                <li @click="changeTab()" :class="nowStatus == 'sickIndex' ? 'on' : ''">
                     <b class="manage"></b>
                     慢病管理
                 </li>
@@ -20,7 +20,7 @@
                 </li>
             </a>
             <a href="/memberCenter">
-                <li @click="changeTab()" :class="nowStatus == 'member' ? 'on' : ''">
+                <li @click="changeTab()" :class="nowStatus == 'memberCenter' ? 'on' : ''">
                     <b class="member"></b>
                     个人中心
                 </li>

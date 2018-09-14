@@ -75,7 +75,7 @@ export default {
     },
   data(){
         return{
-          nowStatus : 'memberIndex',
+          nowStatus : 'memberCenter',
           title: '个人中心'
         }
   },
