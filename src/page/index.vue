@@ -135,6 +135,7 @@ export default {
         .banner{
             width:100%;
             height:405px;
+            margin-top:80px;
             // background:linear-gradient(90deg, #4D9DFF 0%, #3ABFE8 100%);
             background: url('../assets/images/home/banner.png') no-repeat;
             background-size:100%;

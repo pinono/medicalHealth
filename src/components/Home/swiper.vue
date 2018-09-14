@@ -62,7 +62,6 @@
                             <div id="myChart0" :style="{width: '300px', height: '250px',margin:'0 auto'}"></div>
                     </swiper-slide>
                     <swiper-slide>
-                        <p>123123</p>
                             <div id="myChart1" :style="{width: '300px', height: '250px',margin:'0 auto'}"></div>
                     </swiper-slide>
                     <swiper-slide>
@@ -95,7 +94,6 @@
                             <div id="myChart8" :style="{width: '300px', height: '250px',margin:'0 auto'}"></div>
                     </swiper-slide>
                     <swiper-slide>
-                        <p>123123</p>
                             <div id="myChart9" :style="{width: '300px', height: '250px',margin:'0 auto'}"></div>
                     </swiper-slide>
                     <swiper-slide>
@@ -255,6 +253,9 @@ export default {
     }
     .swiper.oxygen{
         background: #E6B917;
+    }
+    .wrap{
+        margin-top:80px;
     }
     .date-wrap{
         .swiper-wrapper{
