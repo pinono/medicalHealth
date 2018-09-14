@@ -1,6 +1,5 @@
 <template>
     <div class="share-wrap">
-        <header-top :title="title"></header-top>
         <div class="headNav">
           <div class="banner">
           </div>
@@ -18,17 +17,16 @@
 </template>
 <script>
 import Footer from '@/components/common/footer.vue'
-import HeaderTop from '@/components/common/header.vue'
 import manageList from '@/components/common/manageIndexList.vue'
 
 export default {
     components : {
-        Footer,HeaderTop,manageList
+        Footer,
+      manageList
     },
     data () {
         return {
             nowStatus : 'share',
-            title : '医院分享',
             curIndex : 1,
         }
     },
@@ -42,11 +40,11 @@ export default {
 </script>
 <style lang="scss" scoped>
     .share-wrap{
-      padding-top: 450px;
+      padding-top: 370px;
       .headNav{
         width: 100%;
         position: fixed;
-        top: 80px;
+        top: 0px;
         z-index: 10;
         .banner{
           width:100%;

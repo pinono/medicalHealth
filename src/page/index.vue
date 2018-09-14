@@ -1,6 +1,5 @@
 <template>
     <div class="Train">
-        <header-top :title="title"></header-top>
         <div class="banner-wrap">
             <div class="banner">
                 <div class="top">
@@ -17,7 +16,7 @@
                 </div>
             </div>
         </div>
-        
+
         <section>
             <ul>
                 <li @click="goTrain('train')">
@@ -43,7 +42,7 @@
                             <span class="data">时长：00时25分</span>
                             <span class="arrow right"></span>
                         </p>
-                        
+
                 </li>
                 <li @click="goTrain('blood')">
                         <p>
@@ -99,40 +98,38 @@
 </template>
 <script>
 import Footer from '@/components/common/footer.vue'
-import HeaderTop from '@/components/common/header.vue'
 
 export default {
     components : {
-        Footer,HeaderTop
+        Footer
     },
     data () {
         return {
             nowStatus : 'home',
-            title : '首页',
         }
     },
     methods : {
         goTrain (purpose) {
             switch (purpose) {
-                case 'train' : 
+                case 'train' :
                     this.$router.push({path: '/train?type=train'})
                     break;
-                case 'brain' : 
+                case 'brain' :
                     this.$router.push({path: '/train?type=brain'})
                     break;
-                case 'blood' : 
+                case 'blood' :
                     this.$router.push({path: '/train?type=blood'})
                     break;
-                case 'heart' : 
+                case 'heart' :
                     this.$router.push({path: '/train?type=heart'})
                     break;
-                case 'oxygen' : 
+                case 'oxygen' :
                     this.$router.push({path: '/train?type=oxygen'})
                     break;
-                case 'stroke' : 
+                case 'stroke' :
                     this.$router.push({path: '/stroke'})
                     break;
-                case 'memberCenter' : 
+                case 'memberCenter' :
                     this.$router.push({path: '/memberCenter'})
                     break;
             }
@@ -147,7 +144,6 @@ export default {
         .banner{
             width:100%;
             height:405px;
-            margin-top:80px;
             // background:linear-gradient(90deg, #4D9DFF 0%, #3ABFE8 100%);
             background: url('../assets/images/home/banner.png') no-repeat;
             background-size:100%;
