@@ -16,9 +16,9 @@
 
         </div>
       </section>
-    <!--<section class="item">
+    <section class="item">
       <div class="title">
-        <p>总体训练报告</p>
+        <p>脑氧报告</p>
       </div>
       <ul class="navCut">
         <li class="checkLi">近1个月</li>
@@ -43,7 +43,7 @@
       <div class="myChart" id="myChart2">
 
       </div>
-    </section>-->
+    </section>
   </div>
 </template>
 
@@ -72,8 +72,80 @@
       //详情条形图
       detailsDataChartFn(){
         // 基于准备好的dom，初始化echarts实例
-        let myChart = this.$echarts.init(document.getElementById('myChart'));
-        myChart.setOption({
+        let myChart1 = this.$echarts.init(document.getElementById('myChart'));
+        let myChart2 = this.$echarts.init(document.getElementById('myChart1'));
+        let myChart3 = this.$echarts.init(document.getElementById('myChart2'));
+        myChart1.setOption({
+          tooltip : {
+            trigger: 'axis'
+          },
+          legend: {
+            data:['训练报告'],
+          },
+          calculable : true,
+          dataZoom : {
+            show : true,
+            realtime : true,
+            start : 0,
+            end : 100
+          },
+          xAxis : [
+            {
+              type : 'category',
+              boundaryGap : false,
+              data : ["2018-09-06", "2018-09-07", "2018-09-08", "2018-09-09", "2018-09-10", "2018-09-11", "2018-09-12","2018-09-06", "2018-09-07", "2018-09-08", "2018-09-09", "2018-09-10", "2018-09-11", "2018-09-12"]
+            }
+          ],
+          yAxis : [
+            {
+              type : 'value'
+            }
+          ],
+          series : [
+            {
+              name:'训练报告',
+              type:'line',
+              itemStyle : {color:'#6b4ccf'},
+              data: [2, 3, 441, 33, 43, 44, 0,422, 3, 441, 33, 43, 44, 0]
+            }
+          ]
+        })
+        myChart2.setOption({
+          tooltip : {
+            trigger: 'axis'
+          },
+          legend: {
+            data:['训练报告'],
+          },
+          calculable : true,
+          dataZoom : {
+            show : true,
+            realtime : true,
+            start : 0,
+            end : 100
+          },
+          xAxis : [
+            {
+              type : 'category',
+              boundaryGap : false,
+              data : ["2018-09-06", "2018-09-07", "2018-09-08", "2018-09-09", "2018-09-10", "2018-09-11", "2018-09-12","2018-09-06", "2018-09-07", "2018-09-08", "2018-09-09", "2018-09-10", "2018-09-11", "2018-09-12"]
+            }
+          ],
+          yAxis : [
+            {
+              type : 'value'
+            }
+          ],
+          series : [
+            {
+              name:'训练报告',
+              type:'line',
+              itemStyle : {color:'#6b4ccf'},
+              data: [2, 322, 4, 33, 43, 414, 0,422, 3, 40, 33, 432, 44, 550]
+            }
+          ]
+        })
+        myChart3.setOption({
           tooltip : {
             trigger: 'axis'
           },

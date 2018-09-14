@@ -11,7 +11,7 @@
       </div>
       <div class="inputbox">
         <span>家属手机</span>
-        <input type="text" name="" placeholder="请输入家属手机号">
+        <input type="number" name="" placeholder="请输入家属手机号">
       </div>
       <div class="shareBox">
         <p class="shareTitle">数据分享</p>
@@ -102,7 +102,7 @@ export default {
         line-height: 110px;
         display: flex;
         border-bottom: 1px solid  #F2F4F5;
-        padding-bottom: 1px;
+        padding-bottom: 2px;
         span{
           text-align: center;
           font-size: 34px;
