@@ -93,7 +93,7 @@
                 </li>
                 
             </ul>
-            <a href="">
+            <a href="/stroke">
                 <div class="goNews">
                     <span class="check-icon"></span>
                     国家脑卒中筛查
