@@ -17,7 +17,6 @@
                 <b class="member"></b>
                 个人中心
             </li>
-
         </ul>
     </div>
 </template>

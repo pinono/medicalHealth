@@ -18,7 +18,10 @@
                    <p class="name">有效次数</p>
                 </li>
                 <li>
-                   <p class="times">32</p> 
+                   <p class="result">
+                       <span class="zan"></span>
+                       <span class="num">+3</span>
+                    </p> 
                    <p class="name">训练效果</p>
                 </li>
             </ul>
@@ -148,6 +151,20 @@ export default {
                    line-height: 80px;
                    font-size:28px;
                    color:#888;
+               }
+               .result{
+                   line-height: 10px;
+                   .zan{
+                       display: inline-block;
+                        width:35px;height:35px;
+                        background:url('../../assets/images/home/zan.png') no-repeat;
+                        background-size:100%;
+                        vertical-align: sub;
+                   }
+                   .num{
+                       position: relative;top:3px;
+                       font-size:40px;color:#FAC919;
+                   }
                }
             }
         }
