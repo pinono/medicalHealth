@@ -11,6 +11,7 @@
       <img src="../../assets/images/manage/addmanageItem.png" alt="">
     </div>
     <!--列表组件-->
+    <div class="emptyBlock"></div>
     <manage-list></manage-list>
     <!--底部Strip-->
     <Footer :nowStatus="nowStatus"></Footer>
@@ -57,6 +58,10 @@ export default {
   .manxingbing_page{
     width: 100%;
     height: 100%;
+  }
+  .emptyBlock{
+    width:100%;
+    height:168px;
   }
   .mxb_headeNav{
     width: 100%;

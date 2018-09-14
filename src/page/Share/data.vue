@@ -45,6 +45,7 @@ export default {
             width:100%;
             height:282px;
             background:#ccc;
+            margin-top:82px;
         }
         .tab{
             width:100%;
@@ -69,7 +70,7 @@ export default {
                 content: '';
                 display: block;
                 width:50%;
-                height:3px;
+                height:4px;
                 background: #2B8CFF;
                 margin: auto;
 

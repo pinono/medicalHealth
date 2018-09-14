@@ -74,7 +74,6 @@ export default {
 </script>
 <style lang="scss" scoped>
   .contList{
-    padding-top: 88px;
     padding-bottom: 98px;
     background: #fff;
     .item{
