@@ -96,7 +96,7 @@ export default {
           supplementText : '',//补充说明表单内容
           supplementPopText : '',//补充说明弹窗内容
           popStatus : 0,//弹窗显示与隐藏(0是隐藏,1是时间,2是先兆,3说明)
-          dateTime: new Date(), //发作的时间值
+          dateTime: '', //发作的时间值
           startDate: new Date('1807'),//设置开始时间根据自己的需要
           //endDate: new Date('2018'),//设置结束时间
           options:[],//复选框的选项
@@ -126,6 +126,7 @@ export default {
       //打开发作时间组件
       openPicker () {
         this.$refs.picker.open()
+        this.dateTime=new Date()
       },
       //发作时间组件确定回调
       handleConfirm (data) {
@@ -218,6 +219,9 @@ export default {
   }
   .picker-items {
     height: 400px;
+  }
+  .mint-datetime-cancel {
+    color: #333;
   }
 
   .myManForm{

@@ -1,7 +1,7 @@
 <template>
     <div class="login-wrap">
         <header-top :title="title"></header-top>
-        
+
         <div class="ban">
             <ul class="tabCut">
                 <li :class="status == 'register' ? 'on' : ''" @click="tabCut('register')">注册</li>
@@ -10,7 +10,7 @@
         </div>
         <form v-if="status=='register'" class="register-wrap form-wrap">
             <span class="checkPhone" @click="checkPhone()">系统检测</span>
-            <mt-field  placeholder="购买设备预留手机号" type="tel" v-model="phone" :class="wrongTip == true ? 'on' : ''"  >
+            <mt-field  placeholder="购买设备预留手机号" type="number" v-model="phone" :class="wrongTip == true ? 'on' : ''"  >
                 <span class="icon-phone icon"></span>
             </mt-field>
             <div class="wrong-tip" v-if="wrongTip">
@@ -19,18 +19,18 @@
             </div>
             <mt-field  placeholder="请输入密码" type="password" v-model="password">
                 <span class="icon-psw icon"></span>
-                
+
             </mt-field>
             <mt-field  placeholder="再输一遍6位密码" type="password" v-model="againPassword">
                 <span class="icon-psw icon"></span>
             </mt-field>
-            <mt-field  placeholder="设备SN号" type="number" v-model="goodsNum">
+            <mt-field  placeholder="设备SN号" type="text" v-model="goodsNum" readonly="readonly">
                 <span class="icon-goods icon"></span>
             </mt-field>
             <p class="registerBtn">注册</p>
         </form>
         <form v-else class="login-wrap form-wrap">
-            <mt-field  placeholder="购买设备预留手机号" type="tel" v-model="phone"  >
+            <mt-field  placeholder="购买设备预留手机号" type="number" v-model="phone"  >
                 <span class="icon-phone icon"></span>
             </mt-field>
             <mt-field  placeholder="请输入密码" type="password" v-model="password">
@@ -39,7 +39,7 @@
             <a href="/home">
                 <p class="registerBtn">登录</p>
             </a>
-            <a href="/forgetPassword" class="tip">忘记登录密码？</a>
+            <a class="tip" @click="forgetPassword">忘记登录密码？</a>
         </form>
     </div>
 </template>
@@ -58,21 +58,26 @@ export default {
             password : '' , //密码
             againPassword : '' ,  //再次输入密码
             goodsNum : '' , //设备号
-            status:'register',
+            status:'login',
             wrongTip : false,   //设备错误提示
         }
     },
     mounted () {
-        this.status == 'register' ? this.title = '注册' : this.title = '登录'; 
+        this.status == 'register' ? this.title = '注册' : this.title = '登录';
     },
     methods : {
         tabCut (status) {
             this.$set(this,'status',status);
-            this.status == 'register' ? this.title = '注册' : this.title = '登录'; 
+            this.status == 'register' ? this.title = '注册' : this.title = '登录';
         },
         checkPhone () {
             this.wrongTip = true;
+        },
+        //忘记密码
+        forgetPassword(){
+          this.$router.push({path: 'forgetPassword'})
         }
+
 
     },
     watch : {
@@ -157,7 +162,7 @@ body{
                 top:12px;
                 left:0;
             }
-            
+
             .registerBtn{
                 width:600px;
                 height:88px;
@@ -180,14 +185,14 @@ body{
                 color: #FA3B19;
                 margin-bottom:24px;
             }
-            
+
         }
         .register-wrap{
             .mint-cell.on:first-of-type .mint-cell-wrapper {
                 margin-bottom: 0;
             }
         }
-        
+
     }
 </style>
 

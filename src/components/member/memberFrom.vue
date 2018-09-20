@@ -53,7 +53,7 @@ export default {
 
     data () {
         return {
-          dateTime: new Date(), //时间值
+          dateTime: '', //时间值
           startDate: new Date('1807'),//设置开始时间根据自己的需要
           //endDate: new Date('2018'),//设置结束时间
         }
@@ -63,6 +63,7 @@ export default {
       //打开时间组件
       openPicker () {
         this.$refs.picker.open()
+        this.dateTime=new Date()
       },
       //时间组件确定回调
       handleConfirm (data) {
@@ -83,6 +84,9 @@ export default {
   }
   .picker-slot {
     font-size: 34px;
+  }
+  .mint-datetime-cancel {
+    color: #333;
   }
 
     .memFrom{

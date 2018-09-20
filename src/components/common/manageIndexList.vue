@@ -1,63 +1,63 @@
 <template>
   <div class="contList">
     <div class="item" @click="goDetail('shareDetail')">
-      <img class="img" src="images/aaaa.jpg">
+      <img class="img" src="../../assets/images/goodsImg.png">
       <div class="text">
         <p>中国人民解放军第302医院体检中心</p>
         <p>2018-08-11  21:35:59</p>
       </div>
     </div>
     <div class="item" @click="goDetail('shareDetail')">
-      <img class="img" src="images/aaaa.jpg">
+      <img class="img" src="../../assets/images/goodsImg.png">
       <div class="text">
         <p>中国人民解放军第302医院体检中心</p>
         <p>2018-08-11  21:35:59</p>
       </div>
     </div>
     <div class="item" @click="goDetail('shareDetail')">
-      <img class="img" src="images/aaaa.jpg">
+      <img class="img" src="../../assets/images/goodsImg.png">
       <div class="text">
         <p>中国人民解放军第302医院体检中心</p>
         <p>2018-08-11  21:35:59</p>
       </div>
     </div>
     <div class="item" @click="goDetail('shareDetail')">
-      <img class="img" src="images/aaaa.jpg">
+      <img class="img" src="../../assets/images/goodsImg.png">
       <div class="text">
         <p>中国人民解放军第302医院体检中心</p>
         <p>2018-08-11  21:35:59</p>
       </div>
     </div>
     <div class="item" @click="goDetail('shareDetail')">
-      <img class="img" src="images/aaaa.jpg">
+      <img class="img" src="../../assets/images/goodsImg.png">
       <div class="text">
         <p>中国人民解放军第302医院体检中心</p>
         <p>2018-08-11  21:35:59</p>
       </div>
     </div>
     <div class="item" @click="goDetail('shareDetail')">
-      <img class="img" src="images/aaaa.jpg">
+      <img class="img" src="../../assets/images/goodsImg.png">
       <div class="text">
         <p>中国人民解放军第302医院体检中心</p>
         <p>2018-08-11  21:35:59</p>
       </div>
     </div>
     <div class="item" @click="goDetail('shareDetail')">
-      <img class="img" src="images/aaaa.jpg">
+      <img class="img" src="../../assets/images/goodsImg.png">
       <div class="text">
         <p>中国人民解放军第302医院体检中心</p>
         <p>2018-08-11  21:35:59</p>
       </div>
     </div>
     <div class="item" @click="goDetail('shareDetail')">
-      <img class="img" src="images/aaaa.jpg">
+      <img class="img" src="../../assets/images/goodsImg.png">
       <div class="text">
         <p>中国人民解放军第302医院体检中心</p>
         <p>2018-08-11  21:35:59</p>
       </div>
     </div>
     <div class="item" @click="goDetail('shareDetail')">
-      <img class="img" src="images/aaaa.jpg">
+      <img class="img" src="../../assets/images/goodsImg.png">
       <div class="text">
         <p>中国人民解放军第302医院体检中心</p>
         <p>2018-08-11  21:35:59</p>
@@ -75,7 +75,7 @@ export default {
     methods : {
         goDetail (purpose) {
             switch (purpose) {
-                case 'shareDetail' : 
+                case 'shareDetail' :
                     this.$router.push({path: '/shareDetail'})
                     break;
             }

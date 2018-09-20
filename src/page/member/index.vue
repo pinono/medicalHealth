@@ -1,6 +1,5 @@
 <template>
     <div class="center_indexPage">
-      <header-top :title="title"></header-top>
       <div class="c_indexBanner">
         <div class="bannerLogo">
           <img  src="" alt="">
@@ -66,17 +65,14 @@
 </template>
 <script>
   import Footer from '@/components/common/footer.vue'
-  import HeaderTop from '@/components/common/header.vue'
 
 export default {
     components : {
         Footer,
-      HeaderTop
     },
   data(){
         return{
           nowStatus : 'memberCenter',
-          title: '个人中心'
         }
   },
   mounted(){
@@ -129,7 +125,6 @@ export default {
 <style lang="scss" scoped>
   .center_indexPage{
     width: 100%;
-    padding-top: 80px;
     .c_indexBanner{
         position: relative;
         width: 100%;
