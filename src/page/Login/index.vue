@@ -36,9 +36,9 @@
             <mt-field  placeholder="请输入密码" type="password" v-model="password">
                 <span class="icon-psw icon"></span>
             </mt-field>
-            <a href="/home">
-                <p class="registerBtn">登录</p>
-            </a>
+            <!-- <a href="/home"> -->
+                <p class="registerBtn" @click="goLogin()">登录</p>
+            <!-- </a> -->
             <a class="tip" @click="forgetPassword">忘记登录密码？</a>
         </form>
     </div>
@@ -72,6 +72,10 @@ export default {
         },
         checkPhone () {
             this.wrongTip = true;
+        },
+        goLogin () {
+            this.$router.push({path: '/home'})
+
         },
         //忘记密码
         forgetPassword(){

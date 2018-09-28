@@ -25,7 +25,7 @@ import login from '@/page/Login/index.vue'     //登录、注册
 Vue.use(Router)
 
 var router =  new Router({
-  mode: 'history',
+  // mode: 'history',
   routes: [
     {path: '/home',name: 'home',component: Home},
     {path: '/sickIndex',name: 'sickIndex',component: sickIndex},
