@@ -217,9 +217,6 @@ export default {
   .picker-slot {
     font-size: 34px;
   }
-  .picker-items {
-    height: 400px;
-  }
   .mint-datetime-cancel {
     color: #333;
   }
@@ -261,7 +258,9 @@ export default {
                 text-overflow: ellipsis;
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
+                /*! autoprefixer: off */
                 -webkit-box-orient: vertical;
+                /* autoprefixer: on */
                 text-align: right;
               }
               img{
