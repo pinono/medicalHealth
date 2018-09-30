@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import 'mint-ui/lib/style.css'
 import router from './router'
 import Mint from 'mint-ui'
 import VueAwesomeSwiper from 'vue-awesome-swiper/dist/ssr'
@@ -9,7 +10,6 @@ import moment from 'vue-moment'
 import echarts from 'echarts'
 
 import '@/assets/css/reset.css'
-import 'mint-ui/lib/style.css'
 import 'lib-flexible'
 
 Vue.config.productionTip = false
