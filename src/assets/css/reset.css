@@ -41,7 +41,7 @@ footer, header, nav, section, audio, video {
 table {
     border-collapse: separate;
     border-spacing: 0;
-    
+
 }
 caption, th, td {
     text-align: left;
@@ -68,7 +68,7 @@ textarea{
     -webkit-appearance: none;
 }
 input{
-    -webkit-appearance: none;
+    /*-webkit-appearance: none;*/
     border:none;
 }
 select {

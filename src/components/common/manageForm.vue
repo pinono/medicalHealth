@@ -1,9 +1,9 @@
 <template>
   <div class="myManForm">
       <!--表单列表-->
-      <ul>
-        <li>
-          <span @click="showOrClosePop(1)">发作时间</span>
+      <ul class="formList">
+        <li @click="showOrClosePop(1)">
+          <span>发作时间</span>
           <input type="time" />
           <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
         </li>
@@ -12,8 +12,8 @@
           <input type="text" />
           <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
         </li>
-        <li>
-          <span @click="showOrClosePop(2)">发作先兆</span>
+        <li @click="showOrClosePop(2)">
+          <span>发作先兆</span>
           <p></p>
           <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
         </li>
@@ -48,17 +48,71 @@
       <div class="pop_supplement" v-if="popStatus==3">
         <p class="popsup_title">补充说明</p>
         <textarea placeholder="请填写补充说明" v-model="supplementPopText"></textarea>
-        <div class="popsup_btn">
+        <div class="popsup_btn pop_btn">
           <span @click="showOrClosePop(0)">取消</span>
           <span @click="supplementFn">确定</span>
         </div>
       </div>
       <!--发作先兆-弹窗-->
-      <div class="pop_omen">
+      <div class="pop_omen" v-if="popStatus==2">
+        <ul>
+          <li>
+            <input type="checkbox" id="popOmen1">
+            <label for="popOmen1">心慌1</label>
+          </li>
+          <li>
+            <input type="checkbox" id="popOmen2">
+            <label for="popOmen2">心慌2</label>
+          </li>
+          <li>
+            <input type="checkbox" id="popOmen3">
+            <label for="popOmen3">心慌3</label>
+          </li>
+          <li>
+            <input type="checkbox" id="popOmen4">
+            <label for="popOmen4">心慌4</label>
+          </li>
+          <li>
+            <input type="checkbox" id="popOmen5">
+            <label for="popOmen5">心慌5</label>
+          </li>
+          <li>
+            <input type="checkbox" id="popOmen6">
+            <label for="popOmen6">心慌6</label>
+          </li>
 
+          <li>
+            <input type="checkbox" id="popOmen6">
+            <label for="popOmen6">心慌6</label>
+          </li>
+          <li>
+            <input type="checkbox" id="popOmen6">
+            <label for="popOmen6">心慌6</label>
+          </li>
+          <li>
+            <input type="checkbox" id="popOmen6">
+            <label for="popOmen6">心慌6</label>
+          </li>
+          <li>
+            <input type="checkbox" id="popOmen6">
+            <label for="popOmen6">心慌6</label>
+          </li>
+          <li>
+            <input type="checkbox" id="popOmen6">
+            <label for="popOmen6">心慌6</label>
+          </li>
+          <li>
+            <input type="checkbox" id="popOmen6">
+            <label for="popOmen6">心慌6</label>
+          </li>
+        </ul>
+        <div class="popOmen_btn pop_btn">
+          <span @click="showOrClosePop(0)">取消</span>
+          <span @click="supplementFn">确定</span>
+        </div>
       </div>
       <!--发作时间-弹窗-->
-      <div class="pop_time"></div>
+      <div class="pop_time" v-if="popStatus==1"></div>
   </div>
 </template>
 <script>
@@ -73,10 +127,11 @@ export default {
     methods : {
       //显示隐藏弹窗
       showOrClosePop(popFlag){
-        if(popFlag==1){
+        if(popFlag == 3){
           this.supplementPopText=this.supplementText;
         }
         this.popStatus=popFlag;
+        console.log(this.popStatus)
       },
       //说明弹窗的内容赋值给表单
       supplementFn(){
@@ -94,8 +149,7 @@ export default {
   .myManForm{
     width: 100%;
     background: #fff;
-      ul{
-
+      .formList{
           li{
             display: flex;
             flex-direction: row;
@@ -148,7 +202,6 @@ export default {
         top: 0;
       }
       .pop_supplement{
-        position: relative;
         width: 600px;
         height: 460px;
         background: #FFFFFF;
@@ -175,23 +228,59 @@ export default {
             font-size: 34px;
             color: #333333;
           }
-          .popsup_btn{
+      }
+      .pop_omen{
+        position: fixed;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        top: 0px;
+        margin: auto;
+        width: 600px;
+        height: 948px;
+        background: #FFF;
+        border-radius: 10px;
+        padding-top: 54px;
+          ul{
             width: 100%;
-            height: 88px;
-            line-height: 88px;
-            display: flex;
-            justify-content: space-around;
-            border-top: 1px solid #eee;
-            position: absolute;
-            bottom: 0px;
-              span{
-                text-align: center;
-              }
-              span:nth-child(2){
-                color: #2B8CFF;
+            height: 806px;
+            overflow-y: auto;
+              li{
+                width: 100%;
+                padding-bottom: 48px;
+                input{
+                  width: 40px;
+                  height: 40px;
+                  margin-left: 70px;
+                  margin-right: 15px;
+                  vertical-align: sub;
+                }
+                label{
+                  font-size: 34px;
+                  color: #333333;
+                }
               }
           }
+
       }
+      .pop_btn{
+      width: 100%;
+      height: 88px;
+      line-height: 88px;
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid #eee;
+      position: absolute;
+      bottom: 0px;
+      background: #fff;
+      z-index: 2;
+      span{
+        text-align: center;
+      }
+      span:nth-child(2){
+        color: #2B8CFF;
+      }
+    }
   }
 </style>
 
