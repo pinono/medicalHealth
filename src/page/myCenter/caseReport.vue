@@ -82,10 +82,11 @@ export default {
           padding: 20px 0px;
         }
         .contentInfo{
-          font-size: 30px;
           color: #777777;
-          letter-spacing: 0;
           line-height: 50px;
+          p{
+            font-size: 30px;
+          }
         }
       }
     }

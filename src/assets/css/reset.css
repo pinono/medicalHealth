@@ -4,6 +4,8 @@ html, body {
     line-height: 1.5;
     margin: 0;
     padding: 0;
+    width: 100%;
+    height: 100%;
 }
 /* 通用及框架重写样式 */
 body{
