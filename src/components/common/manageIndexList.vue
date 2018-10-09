@@ -103,7 +103,7 @@ export default {
 </script>
 <style lang="scss" scoped>
   .mxb_ContentList{
-    padding-top: 88px;
+    // padding-top: 88px;
     padding-bottom: 98px;
     background: #fff;
   }

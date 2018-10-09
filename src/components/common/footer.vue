@@ -13,7 +13,7 @@
                     慢病管理
                 </li>
             </a>
-            <a href="">
+            <a href="/share">
                 <li @click="changeTab()" :class="nowStatus == 'share' ? 'on' : ''">
                     <b class="share"></b>
                     医患分享

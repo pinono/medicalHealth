@@ -17,7 +17,7 @@
         <section>
             <ul>
                 <li>
-                    <a href="/train?color=blue">
+                    <a href="/train?type=train">
                         <p>
                             <span class="icon move"></span>
                             <span class="name">训练</span><span class="minName">(完整度)</span>
@@ -31,7 +31,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/train?color=lessblue">
+                    <a href="/train?type=brain">
                         <p>
                             <span class="icon brain"></span>
                             <span class="name">脑氧</span><span class="minName">(完整度)</span>
@@ -46,7 +46,7 @@
                         
                 </li>
                 <li>
-                    <a href="/train?color=green">
+                    <a href="/train?type=blood">
                         <p>
                             <span class="icon blood"></span>
                             <span class="name">血压</span><span class="minName">(完整度)</span>
@@ -60,7 +60,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/train?color=red">
+                    <a href="/train?type=heart">
                         <p>
                             <span class="icon heart"></span>
                             <span class="name">心率</span><span class="minName">(完整度)</span>
@@ -74,7 +74,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/train?color=yellow">
+                    <a href="/train?type=oxygen">
                         <p>
                             <span class="icon yang"></span>
                             <span class="name">指氧</span><span class="minName">(完整度)</span>
@@ -86,7 +86,6 @@
                             <span class="arrow right"></span>
                         </p>
                     </a>
-                    
                 </li>
             </ul>
         </section>
@@ -98,7 +97,6 @@
 import Footer from '@/components/common/footer.vue'
 import HeaderTop from '@/components/common/header.vue'
 
-import { Header } from 'mint-ui';
 export default {
     components : {
         Footer,HeaderTop
@@ -106,7 +104,7 @@ export default {
     data () {
         return {
             nowStatus : 'home',
-            title : '训练',
+            title : '首页',
         }
     }
 }
