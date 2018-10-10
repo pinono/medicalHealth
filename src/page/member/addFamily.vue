@@ -16,7 +16,7 @@
         <p class="shareTitle">数据分享</p>
         <div class="shareContent">
           <span>数据分享</span>
-          <img src="../../assets/images/common/manageB.png" alt="">
+          <img src="../../assets/images/center/dataOpen.png" alt="">
         </div>
       </div>
     </div>
