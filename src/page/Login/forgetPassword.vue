@@ -3,15 +3,21 @@
     <section>
       <ul>
         <li>
-          <span class="icon"></span>
+          <span class="icon">
+            <img src="../../assets/images/login/phone.png" alt="">
+          </span>
           <input class="inp" type="text" placeholder="购买设备预留手机号" >
         </li>
         <li>
-          <span class="icon"></span>
+          <span class="icon">
+            <img src="../../assets/images/login/password.png" alt="">
+          </span>
           <input class="inp" type="text" placeholder="6位密码" >
         </li>
         <li>
-          <span class="icon"></span>
+          <span class="icon">
+            <img src="../../assets/images/login/password.png" alt="">
+          </span>
           <input class="inp" type="text" placeholder="再输一遍6位密码" >
         </li>
       </ul>
@@ -48,8 +54,11 @@ export default {
             width: 28px;
             height: 34px;
             margin-right: 15px;
-            background: url(../../assets/images/home/zan.png) no-repeat;
             background-size: 100%;
+            img{
+              width: 100%;
+              height: 100%;
+            }
           }
           .inp{
             height: 100%;

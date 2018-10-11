@@ -14,7 +14,7 @@
         </li>
         <li @click="showOrClosePop(2)">
           <span>发作先兆</span>
-          <p></p>
+          <p>{{checkListStr}}</p>
           <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
         </li>
         <li>
@@ -55,20 +55,6 @@
       </div>
       <!--发作先兆-弹窗-->
       <div class="pop_omen" v-if="popStatus==2">
-        <!--<ul>
-          <li>
-            <input type="checkbox" id="popOmen1">
-            <label for="popOmen1">心慌1</label>
-          </li>
-          <li>
-            <input type="checkbox" id="popOmen2">
-            <label for="popOmen2">心慌2</label>
-          </li>
-          <li>
-            <input type="checkbox" id="popOmen3">
-            <label for="popOmen3">心慌3</label>
-          </li>
-        </ul>-->
         <mt-checklist
           v-model="checkListVal"
           :options="options">
@@ -107,6 +93,7 @@ export default {
           endDate: new Date('2018'),//设置结束时间*/
           options:[],//复选框的选项
           checkListVal:[],//复选框选中的值
+          checkListStr: '',
         }
     },
     mounted(){
@@ -125,6 +112,7 @@ export default {
       supplementFn(){
         this.supplementText=this.supplementPopText;
         this.popStatus=0;
+        this.checkListStr =this.checkListVal.join(",");
       },
       //打开时间组件
       openPicker () {
