@@ -32,9 +32,9 @@
           <input type="text" />
           <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
         </li>
-        <li>
+        <li @click="openPickerLength">
           <span>发作时长</span>
-          <input type="text" />
+          <p>{{timeLength}}</p>
           <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
         </li>
         <li @click="showOrClosePop(3)">
@@ -64,7 +64,7 @@
           <span @click="supplementFn">确定</span>
         </div>
       </div>
-      <!--时间组件-->
+      <!--发作时间组件-->
       <mt-datetime-picker
         ref="picker"
         type="datetime"
@@ -77,6 +77,15 @@
         @confirm="handleConfirm"
         :startDate="startDate">
       </mt-datetime-picker>
+      <!--发作时长组件-->
+      <mt-datetime-picker
+        ref="picker1"
+        type="time"
+        v-model="timeLength"
+        hour-format="{value}时"
+        minute-format="{value}分"
+        @confirm="handleConfirmLength">
+      </mt-datetime-picker>
   </div>
 </template>
 <script>
@@ -87,13 +96,13 @@ export default {
           supplementText : '',//补充说明表单内容
           supplementPopText : '',//补充说明弹窗内容
           popStatus : 0,//弹窗显示与隐藏(0是隐藏,1是时间,2是先兆,3说明)
-          dateTime: '', //时间值
-          startDate: new Date(),  //从当前时间开始
-          /*startDate: new Date('1807'),//设置开始时间根据自己的需要
-          endDate: new Date('2018'),//设置结束时间*/
+          dateTime: new Date(), //发作的时间值
+          startDate: new Date('1807'),//设置开始时间根据自己的需要
+          //endDate: new Date('2018'),//设置结束时间
           options:[],//复选框的选项
           checkListVal:[],//复选框选中的值
-          checkListStr: '',
+          checkListStr: '',//发作先兆的值
+          timeLength: '',//发作时长值
         }
     },
     mounted(){
@@ -114,16 +123,23 @@ export default {
         this.popStatus=0;
         this.checkListStr =this.checkListVal.join(",");
       },
-      //打开时间组件
+      //打开发作时间组件
       openPicker () {
         this.$refs.picker.open()
       },
-      //时间组件确定回调
+      //发作时间组件确定回调
       handleConfirm (data) {
         let date = moment(data).format("YYYY-MM-DD HH:mm")
         this.dateTime = date
       },
-      //
+      //发作时长
+      openPickerLength(){
+        this.$refs.picker1.open()
+      },
+      handleConfirmLength(data){
+        this.timeLength = data
+      },
+      //复选框组件
       checkList(){
         this.options = [
           {
@@ -189,6 +205,7 @@ export default {
 }
 </script>
 <style lang="scss">
+  /*时间组件样式*/
   .picker-toolbar {
     height: 88px;
   }

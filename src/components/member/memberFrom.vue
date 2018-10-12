@@ -11,9 +11,9 @@
           <input type="text" />
           <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
         </li>
-        <li>
+        <li @click="openPicker">
           <span>*出生日期</span>
-          <input type="text" />
+          <p>{{dateTime}}</p>
           <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
         </li>
         <li>
@@ -33,23 +33,58 @@
         </li>
       </ul>
       <!--提交按钮-->
-      <div class="subFormBtn">保存</div>
+      <div class="subFormBtn" @click="subFormBtn">保存</div>
+      <!--时间组件-->
+      <mt-datetime-picker
+        ref="picker"
+        type="date"
+        v-model="dateTime"
+        year-format="{value} 年"
+        month-format="{value} 月"
+        date-format="{value} 日"
+        @confirm="handleConfirm"
+        :startDate="startDate">
+      </mt-datetime-picker>
     </div>
 </template>
 <script>
+  import moment from 'moment'// 格式化时间
 export default {
 
     data () {
         return {
-
+          dateTime: new Date(), //时间值
+          startDate: new Date('1807'),//设置开始时间根据自己的需要
+          //endDate: new Date('2018'),//设置结束时间
         }
     },
     methods : {
       subFormBtn(){},
+      //打开时间组件
+      openPicker () {
+        this.$refs.picker.open()
+      },
+      //时间组件确定回调
+      handleConfirm (data) {
+        let date = moment(data).format("YYYY-MM-DD")
+        this.dateTime = date
+      },
     }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
+  /*时间组件样式*/
+  .picker-toolbar {
+    height: 88px;
+  }
+  .mint-datetime-action {
+    line-height: 88px;
+    font-size: 34px;
+  }
+  .picker-slot {
+    font-size: 34px;
+  }
+
     .memFrom{
       width:100%;
       .formList{
@@ -82,7 +117,7 @@ export default {
             font-size: 34px;
             color: #888888;
             border:none;
-            line-height: 52px;
+            text-align: right;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;

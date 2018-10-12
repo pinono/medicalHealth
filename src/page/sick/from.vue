@@ -7,7 +7,7 @@
   </div>
 </template>
 <script>
-import manageForm from '@/components/common/manageForm.vue'
+import manageForm from '@/components/sick/manageForm.vue'
 
 export default {
     components : {

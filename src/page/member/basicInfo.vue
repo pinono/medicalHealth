@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-  import memFrom from '../../components/common/memberFrom.vue'
+  import memFrom from '../../components/member/memberFrom.vue'
 export default {
   components : {
     memFrom
