@@ -1,5 +1,6 @@
 <template>
   <div class="forgetPassword">
+    <header-top :title="title"></header-top>
     <section>
       <ul>
         <li>
@@ -29,10 +30,14 @@
   </div>
 </template>
 <script>
+  import HeaderTop from '@/components/common/header.vue'
 export default {
+  components : {
+    HeaderTop
+  },
     data () {
         return {
-
+          title: '忘记密码'
         }
     }
 }
@@ -42,6 +47,7 @@ export default {
     width: 100%;
     height: 1334px;
     background: #fff;
+    padding-top: 80px;
     section{
       ul{
         padding: 0px 75px;
@@ -86,9 +92,10 @@ export default {
         color: #fff;
         background: #2B8CFF;
         margin-bottom: 20px;
+        border: 2px solid #2B8CFF;
       }
       .noBtn{
-        border: 1px solid #999;
+        border: 2px solid #999;
         border-radius: 4px;
       }
     }
