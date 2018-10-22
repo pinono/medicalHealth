@@ -37,7 +37,7 @@
 <script>
 import dateLine from '@/components/Home/swiper.vue'
 import HeaderTop from '@/components/common/header.vue'
-
+import { getDataTrain,getDataHome } from '@/api/data/index.js'
 export default {
     components : {
         dateLine,HeaderTop
@@ -47,28 +47,14 @@ export default {
             bgColor : '',
             title: '训练',
             curDate : 'day',
-            
+            memberData: '',
         }
     },
     mounted () {
-        this.bgColor = this.$route.query.type;
-        switch ( this.bgColor ) {
-            case 'train' :
-                this.title = '训练';
-                break;
-            case 'brain' :
-                this.title = '脑氧';
-                break;
-            case 'blood' :
-                this.title = '血压';
-                break;
-            case 'heart' :
-                this.title = '心率';
-                break;
-            case 'oxygen' :
-                this.title = '指氧';
-                break;
-        }
+        this.switchData();
+        getDataTrain().then( res => {
+            console.log('train',res)
+        })
     },
     methods : {
         /**
@@ -76,7 +62,36 @@ export default {
          * */ 
         tabCut (data) {
             this.curDate = data;
+        },
+        switchData () {
+            this.bgColor = this.$route.query.type;
+            // 用户ID 和 登录时间 (传参)
+            var obj = {
+                date : '2018-8-12'
+            }
+            
+            switch ( this.bgColor ) {
+                case 'train' :
+                    this.title = '训练';
+                    getDataHome(obj).then( res => {
+                        console.log(res)
+                    })
+                    break;
+                case 'brain' :
+                    this.title = '脑氧';
+                    break;
+                case 'blood' :
+                    this.title = '血压';
+                    break;
+                case 'heart' :
+                    this.title = '心率';
+                    break;
+                case 'oxygen' :
+                    this.title = '指氧';
+                    break;
+            }
         }
+        
     }
 }
 </script>
