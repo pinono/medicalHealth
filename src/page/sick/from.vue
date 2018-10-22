@@ -9,7 +9,7 @@
 </template>
 <script>
   import HeaderTop from '@/components/common/header.vue'
-  import manageForm from '@/components/sick/manageForm.vue'
+  import manageForm from '@/components/sick/autoManageForm.vue'
 
 export default {
     components : {
