@@ -45,7 +45,15 @@
           <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
         </li>
         <!--下拉选项-->
-
+        <li @click="">
+          <span>下拉选项</span>
+          <select>
+            <option value="1">abc</option>
+            <option value="2">bac</option>
+            <option value="3">cab</option>
+          </select>
+          <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
+        </li>
         <!--静态标签-->
         <li>
           <span>静态标签</span>
@@ -117,6 +125,7 @@
         minute-format="{value}分"
         @confirm="handleConfirmLength">
       </mt-datetime-picker>
+
   </div>
 </template>
 <script>
@@ -229,7 +238,11 @@ export default {
           }
 
         ];
-      }
+      },
+      //下拉选项
+      dropDownFn(){
+
+      },
 
 
 
@@ -277,11 +290,18 @@ export default {
                 text-align: center;
                 margin-right: 30px;
               }
-              input{
+              input,select{
                 flex: 1;
                 font-size: 34px;
                 color: #888888;
                 text-align: right;
+                border: none;
+              }
+              select {
+                direction: rtl;
+              }
+              select option {
+                direction: ltr;
               }
               p{
                 flex: 1;
