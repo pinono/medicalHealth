@@ -97,6 +97,7 @@
     </div>
 </template>
 <script>
+import {getDataHome} from '@/api/data/index.js'
 import Footer from '@/components/common/footer.vue'
 
 export default {
@@ -107,6 +108,11 @@ export default {
         return {
             nowStatus : 'home',
         }
+    },
+    mounted () {
+        getDataHome().then( res=>{
+            console.log(res)
+        })
     },
     methods : {
         goTrain (purpose) {
