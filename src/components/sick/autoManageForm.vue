@@ -39,7 +39,7 @@
           <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
         </li>
         <!--单选-->
-        <li @click="showOrClosePop(2)">
+        <li @click="">
           <span>单选按钮</span>
           <p>{{checkListStr}}</p>
           <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
@@ -98,6 +98,18 @@
           v-model="checkListVal"
           :options="options">
         </mt-checklist>
+        <div class="popOmen_btn pop_btn">
+          <span @click="showOrClosePop(0)">取消</span>
+          <span @click="supplementFn">确定</span>
+        </div>
+      </div>
+      <!--单选框-弹窗-->
+      <div class="pop_omen" v-if="popStatus==12">
+        <mt-radio
+          title="单选框列表"
+          v-model="value"
+          :options="['选项A', '选项B', '选项C']">
+        </mt-radio>
         <div class="popOmen_btn pop_btn">
           <span @click="showOrClosePop(0)">取消</span>
           <span @click="supplementFn">确定</span>
