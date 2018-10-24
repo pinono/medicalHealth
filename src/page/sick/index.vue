@@ -19,6 +19,7 @@
 <script>
 import Footer from '@/components/common/footer.vue'
 import manageList from '@/components/common/manageIndexList.vue'
+import {getDataSick} from '@/api/data/index.js'
 
 export default {
     components : {
@@ -31,7 +32,9 @@ export default {
       nowStatus : 'sickIndex',//底部组件跳转地址
     }
   },
-  mounted(){},
+  mounted(){
+    this.getDateList();
+  },
   methods:{
     //tap切换
     navTapCut(tapFlag){
@@ -41,7 +44,15 @@ export default {
     addManItemFn(){
       this.$router.push({path: 'sickFrom'})
     },
-  },
+    //请求数据
+    getDateList(){
+      getDataSick().then( res => {
+        console.log('Sick',res)
+      })
+    },
+
+
+  }
 
 }
 </script>

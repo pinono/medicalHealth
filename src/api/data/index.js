@@ -10,9 +10,20 @@ const getDataHome = params  => {
 const getDataTrain = params  => {
     return axios.get(HOST + '/api/v1/tran/8?date=2018-08-17',{params:params});
 }
+
+
+
+/*慢病管理*/
+//慢病病例-数据列表
+const getDataSick = params => {
+  return axios.get(HOST + 'api/v1/paper-list/1',{params:params})
+}
+
+
 export{
     getDataHome,
-    getDataTrain
+    getDataTrain,
+    getDataSick
 }
 
 
