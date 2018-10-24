@@ -9,7 +9,13 @@
           <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
         </li>
         <!--多行文本-->
-        <li @click="showOrClosePop(3)">
+        <li @click="showOrClosePop(3,'index1')">
+          <span>多行文本</span>
+          <p>{{supplementText}}</p>
+          <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
+        </li>
+        <!--多行文本-->
+        <li @click="showOrClosePop(3,'index2')">
           <span>多行文本</span>
           <p>{{supplementText}}</p>
           <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
@@ -33,15 +39,15 @@
           <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
         </li>
         <!--多选-->
-        <li @click="showOrClosePop(2)">
+        <li @click="showOrClosePop(2,'itemFlag')">
           <span>多选按钮</span>
-          <p>{{checkListStr}}</p>
+          <p>{{checkBoxStr}}</p>
           <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
         </li>
         <!--单选-->
-        <li @click="">
+        <li @click="showOrClosePop(1,'itemFlag')">
           <span>单选按钮</span>
-          <p>{{checkListStr}}</p>
+          <p>{{radioVal}}</p>
           <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
         </li>
         <!--下拉选项-->
@@ -60,27 +66,7 @@
           <input type="text" value="1231321" name="" readonly="readonly"/>
           <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
         </li>
-
-
-
-
-
       </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       <div class="pop_background" @click="showOrClosePop(0)" v-if="popStatus==1||popStatus==2||popStatus==3"></div>
       <!--多行文本-弹窗-->
@@ -93,9 +79,9 @@
         </div>
       </div>
       <!--多选框-弹窗-->
-      <div class="pop_omen" v-if="popStatus==2">
+      <div class="pop_checkBox" v-if="popStatus==2">
         <mt-checklist
-          v-model="checkListVal"
+          v-model="checkBoxVal"
           :options="options">
         </mt-checklist>
         <div class="popOmen_btn pop_btn">
@@ -104,10 +90,9 @@
         </div>
       </div>
       <!--单选框-弹窗-->
-      <div class="pop_omen" v-if="popStatus==12">
+      <div class="pop_checkBox pop_radio" v-if="popStatus==1">
         <mt-radio
-          title="单选框列表"
-          v-model="value"
+          v-model="radioVal"
           :options="['选项A', '选项B', '选项C']">
         </mt-radio>
         <div class="popOmen_btn pop_btn">
@@ -117,7 +102,7 @@
       </div>
       <!--datetime日期组件-->
       <mt-datetime-picker
-        ref="picker"
+        ref="dateTimeType"
         type="datetime"
         v-model="dateTime"
         year-format="{value} 年"
@@ -130,7 +115,7 @@
       </mt-datetime-picker>
       <!--time时间组件-->
       <mt-datetime-picker
-        ref="picker1"
+        ref="timeType"
         type="time"
         v-model="timeLength"
         hour-format="{value}时"
@@ -147,14 +132,16 @@ export default {
         return {
           supplementText : '',//补充说明表单内容
           supplementPopText : '',//补充说明弹窗内容
-          popStatus : 0,//弹窗显示与隐藏(0是隐藏,1是时间,2是先兆,3说明)
+          popStatus : 0,//弹窗显示与隐藏(0是隐藏弹窗,1单选按钮,2复选框,3多行文本)
           dateTime: '', //发作的时间值
           startDate: new Date('1807'),//设置开始时间根据自己的需要
           //endDate: new Date('2018'),//设置结束时间
           options:[],//复选框的选项
-          checkListVal:[],//复选框选中的值
-          checkListStr: '',//发作先兆的值
+          checkBoxVal:[],//复选框选中的值
+          checkBoxStr: '',//发作先兆的值
+          radioVal:'',//单选按钮选中的值
           timeLength: '',//发作时长值
+          itemIndex : 0,//弹窗表示
         }
     },
     mounted(){
@@ -162,35 +149,39 @@ export default {
     },
     methods : {
       //显示隐藏弹窗
-      showOrClosePop(popFlag){
-        if(popFlag == 3){
-          this.supplementPopText=this.supplementText;
+      showOrClosePop(popFlag,index){
+
+        if(index==1){
+            this.itemIndex=index;
         }
+        /*if(popFlag == 3){
+          this.supplementPopText=this.supplementText;
+        }*/
         this.popStatus=popFlag;
         console.log(this.popStatus)
       },
-      //说明弹窗的内容赋值给表单
+      //pop的确定按钮
       supplementFn(){
+
+        this.popStatus=0;//确定后隐藏弹框
         this.supplementText=this.supplementPopText;
-        this.popStatus=0;
-        this.checkListStr =this.checkListVal.join(",");
+
+        this.checkBoxStr = this.checkBoxVal.join(",");
       },
-      //打开发作时间组件
+      //datetime日期组件
       openPicker () {
-        this.$refs.picker.open()
+        this.$refs.dateTimeType.open()
         this.dateTime=new Date()
       },
-      //发作时间组件确定回调
-      handleConfirm (data) {
+      handleConfirm (data) {//成功回调
         let date = moment(data).format("YYYY-MM-DD HH:mm")
         this.dateTime = date
       },
       //time时间组件
       openPickerLength(){
-        this.$refs.picker1.open()
+        this.$refs.timeType.open()
       },
-
-      handleConfirmLength(data){
+      handleConfirmLength(data){//成功回调
         this.timeLength = data
       },
       //复选框组件
@@ -211,10 +202,6 @@ export default {
           {
             label: '选项B',
             value: '值B'
-          },
-          {
-            label: '选中禁用',
-            value: '选中禁用的值',
           },
           {
             label: '选项A',
@@ -374,7 +361,7 @@ export default {
             color: #333333;
           }
       }
-      .pop_omen{
+      .pop_checkBox{
         position: fixed;
         left: 0px;
         right: 0px;
@@ -386,6 +373,36 @@ export default {
         background: #FFF;
         border-radius: 10px;
         padding-top: 54px;
+        .mint-radiolist{
+          width: 100%;
+          height: 806px;
+          overflow-y: auto;
+          .mint-cell{
+            width: 100%;
+            padding: 0px 75px 48px 75px;
+            .mint-radio-core{
+              width: 40px;
+              height: 40px;
+              background: #EEE;
+              border: none;
+              vertical-align: sub;
+            }
+            .mint-radio-core::after {
+              width: 16px;
+              height: 16px;
+              left: 12px;
+              top:12px;
+            }
+            .mint-radio-input:checked + .mint-radio-core {
+              background-color: #26a2ff;
+              border-color: #26a2ff;
+            }
+            label{
+              font-size: 34px;
+              color: #333333;
+            }
+          }
+        }
         .mint-checklist{
             width: 100%;
             height: 806px;
