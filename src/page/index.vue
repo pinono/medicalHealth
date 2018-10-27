@@ -4,13 +4,13 @@
             <div class="banner">
                 <div class="top">
                     <span class="date">
-                        2018-09-12 14:00
+                        {{homeData.tran.tranTime}}
                     </span>
-                    <span class="right mode">模式：<b>中级</b></span>
+                    <span class="right mode">模式：<b>{{homeData.tran.tranType}}</b></span>
                 </div>
                 <div class="zan">
                     <p>
-                        <span class="zanNo2"></span>
+                        <span :class="'zanNo' + homeData.tran.effect"></span>
                         训练效果非常棒！
                     </p>
                 </div>
@@ -23,23 +23,23 @@
                         <p>
                             <span class="icon move"></span>
                             <span class="name">训练</span><span class="minName">(完整度)</span>
-                            <span class="datanum">90</span>
-                            <span class="zanNum right"></span>
+                            <span class="datanum">{{homeData.tran.tranComplete}}</span>
+                            <span :class="'right zanNum' +  homeData.tran.effect"></span>
                         </p>
                         <p>
-                            <span class="data">时长：00时25分</span>
+                            <span class="data">时长：{{homeData.tran.tranDuration}}</span>
                             <span class="arrow right"></span>
                         </p>
                 </li>
                 <li @click="goTrain('brain')">
                         <p>
                             <span class="icon brain"></span>
-                            <span class="name">脑氧</span><span class="minName">(完整度)</span>
-                            <span class="datanum">90</span>
-                            <span class="zanNum right"></span>
+                            <span class="name">脑氧</span><span class="minName">(%)</span>
+                            <span class="datanum">{{homeData.rsco2.rsco2Value1}}</span>
+                            <span :class="'right zanNum' +  homeData.rsco2.effect"></span>
                         </p>
                         <p>
-                            <span class="data">时长：00时25分</span>
+                            <span class="data">{{homeData.rsco2.access}}</span>
                             <span class="arrow right"></span>
                         </p>
 
@@ -47,36 +47,36 @@
                 <li @click="goTrain('blood')">
                         <p>
                             <span class="icon blood"></span>
-                            <span class="name">血压</span><span class="minName">(完整度)</span>
-                            <span class="datanum">90</span>
-                            <span class="zanNum right"></span>
+                            <span class="name">血压</span><span class="minName">(mmHg)</span>
+                            <span class="datanum">{{homeData.bp.bpHigh}}/{{homeData.bp.bpLow}}</span>
+                            <span :class="'right zanNum' +  homeData.bp.effect"></span>
                         </p>
                         <p>
-                            <span class="data">时长：00时25分</span>
+                            <span class="data">{{homeData.bp.access}}</span>
                             <span class="arrow right"></span>
                         </p>
                 </li>
                 <li @click="goTrain('heart')">
                         <p>
                             <span class="icon heart"></span>
-                            <span class="name">心率</span><span class="minName">(完整度)</span>
-                            <span class="datanum">90</span>
-                            <span class="zanNum right"></span>
+                            <span class="name">心率</span><span class="minName">(次/分)</span>
+                            <span class="datanum">{{homeData.hr.hrValue1}}</span>
+                            <span :class="'right zanNum' +  homeData.hr.effect"></span>
                         </p>
                         <p>
-                            <span class="data">时长：00时25分</span>
+                            <span class="data">时长：{{homeData.hr.access}}</span>
                             <span class="arrow right"></span>
                         </p>
                 </li>
                 <li @click="goTrain('oxygen')">
                     <p>
                         <span class="icon yang"></span>
-                        <span class="name">指氧</span><span class="minName">(完整度)</span>
-                        <span class="datanum">90</span>
-                        <span class="zanNum right"></span>
+                        <span class="name">指氧</span><span class="minName">(%)</span>
+                        <span class="datanum">{{homeData.spo2.spo2Value1}}</span>
+                        <span :class="'right zanNum' +  homeData.spo2.effect"></span>
                     </p>
                     <p>
-                        <span class="data">时长：00时25分</span>
+                        <span class="data">时长：{{homeData.spo2.access}}</span>
                         <span class="arrow right"></span>
                     </p>
                 </li>
@@ -107,11 +107,13 @@ export default {
     data () {
         return {
             nowStatus : 'home',
+            homeData : null,
         }
     },
     mounted () {
         getDataHome().then( res=>{
-            console.log(res)
+            this.homeData = res.data.result;
+            console.log(this.homeData)
         })
     },
     methods : {
@@ -259,15 +261,43 @@ export default {
                 }
                 .datanum{
                     position: absolute;
-                    font-size:44px;
+                    font-size:36px;
                     left:380px;
                     top:30px;
                     color:#777;
                 }
-                .zanNum{
+                .zanNum1{
                     display: inline-block;
                     width:40px;height:40px;
                     background:url('../assets/images/home/zan.png') no-repeat;
+                    background-size:100%;
+                    margin-top:7px;
+                }
+                .zanNum2{
+                    display: inline-block;
+                    width:80px;height:40px;
+                    background:url('../assets/images/home/zan2.png') no-repeat;
+                    background-size:100%;
+                    margin-top:7px;
+                }
+                .zanNum3{
+                    display: inline-block;
+                    width:120px;height:40px;
+                    background:url('../assets/images/home/zan3.png') no-repeat;
+                    background-size:100%;
+                    margin-top:7px;
+                }
+                .zanNum4{
+                    display: inline-block;
+                    width:160px;height:40px;
+                    background:url('../assets/images/home/zan4.png') no-repeat;
+                    background-size:100%;
+                    margin-top:7px;
+                }
+                .zanNum5{
+                    display: inline-block;
+                    width:200px;height:40px;
+                    background:url('../assets/images/home/zan5.png') no-repeat;
                     background-size:100%;
                     margin-top:7px;
                 }
