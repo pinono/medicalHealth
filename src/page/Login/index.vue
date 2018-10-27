@@ -45,7 +45,7 @@
 </template>
 <script>
 import HeaderTop from '@/components/common/header.vue'
-
+import { GoMemLoin } from '@/api/data/index.js'
 export default {
     components : {
        HeaderTop
@@ -63,6 +63,13 @@ export default {
         }
     },
     mounted () {
+        var obj = {
+            "phone" : '13678965467',
+            "tuserPwd" : '123456'
+        }
+        GoMemLoin(obj).then( res => {
+            console.log('1111')
+        })
         this.status == 'register' ? this.title = '注册' : this.title = '登录';
     },
     methods : {
