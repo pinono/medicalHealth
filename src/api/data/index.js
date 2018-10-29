@@ -2,6 +2,8 @@ window.SETDOMAIN = 'cn';
 window.HOST = 'http://60.205.180.79:8002'
 import axios from 'axios'
 
+axios.defaults.withCredentials = true;
+
 // 首页整体信息
 const getDataHome = params  => {
     return axios.get(HOST + '/api/v1/data',params);

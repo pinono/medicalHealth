@@ -68,7 +68,11 @@ export default {
             "tuserPwd" : '123456'
         }
         GoMemLoin(obj).then( res => {
-            console.log('1111')
+            console.log(res.data.result)
+            var result = res.data.result;
+            this.setCookie('baseTuserId',result.baseTuserId);
+            this.setCookie('deviceId',result.deviceId)
+            this.setCookie('tuserId',result.tuserId)
         })
         this.status == 'register' ? this.title = '注册' : this.title = '登录';
     },
@@ -82,12 +86,17 @@ export default {
         },
         goLogin () {
             this.$router.push({path: '/home'})
-
         },
         //忘记密码
         forgetPassword(){
           this.$router.push({path: 'forgetPassword'})
+        },
+        setCookie (name,value) {
+            // var exdate=new Date();
+            // exdate.setDate(exdate.getDate()+expiredays);
+            document.cookie=name+ "=" +escape(value)
         }
+
 
 
     },
