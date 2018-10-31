@@ -18,10 +18,43 @@ const getDataTrain = params  => {
 }
 
 /*慢病管理*/
-//慢病病例-数据列表
+//慢病数据列表页
 const getDataSick = params => {
-  return axios.get(HOST + 'api/v1/paper-list/1',{params:params})
+  return axios.get(HOST + '/api/v1/paperListOfType/'+params)
 }
+//
+const getPaperModel = params => {
+  return axios.get(HOST + '/api/v1/paperModelList/'+params)
+}
+//慢病问卷数据结构
+const getPaperStruct = params => {
+  return axios.get(HOST + '/api/v1/paperStruct/'+params)
+}
+//慢病问卷具体详细记录
+const getPaperList = params => {
+  return axios.get(HOST + '/api/v1/paperList',{params:params})
+}
+//慢病保存问卷
+const addDataPaper = params => {
+  return axios.post(HOST + '/api/v1/InsertPaper/:paperId',{params:params})
+}
+//慢病修改编剧问卷
+const updateDataPaper = params => {
+  return axios.post(HOST + 'api/v1/updatePaper/:paperId/:recordId',{params:params})
+}
+
+/*
+* 个人中心
+* */
+//获取亲属列表
+const getRelativeList = params => {
+  return axios.get(HOST + '/api/v1/relativeList',{params:params})
+}
+//设备信息
+const getDeviceInfo = params => {
+  return axios.get(HOST + '/api/v1/deviceInfo',{params:params})
+}
+
 
 // 医患分享列表
 const getShareList = params  => {
@@ -38,6 +71,13 @@ export{
     getShareDetail,
     GoMemLoin,
     getDataSick,
+    getPaperModel,
+    getPaperStruct,
+    getPaperList,
+    addDataPaper,
+    updateDataPaper,
+    getRelativeList,
+    getDeviceInfo,
 }
 
 

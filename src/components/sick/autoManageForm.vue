@@ -2,70 +2,68 @@
   <div class="myManForm">
       <!--表单列表-->
       <ul class="formList">
-        <!--单行文本-->
-        <li>
-          <span>单行文本</span>
-          <input type="text" value="" name=""/>
-          <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
-        </li>
-        <!--多行文本-->
-        <li @click="showOrClosePop(3,'index1')">
-          <span>多行文本</span>
-          <p>{{supplementText}}</p>
-          <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
-        </li>
-        <!--多行文本-->
-        <li @click="showOrClosePop(3,'index2')">
-          <span>多行文本</span>
-          <p>{{supplementText}}</p>
-          <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
-        </li>
-        <!--数字类型-->
-        <li>
-          <span>数字类型</span>
-          <input type="number" />
-          <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
-        </li>
-        <!--日期类型-->
-        <li @click="openPicker">
-          <span>日期类型</span>
-          <p>{{dateTime}}</p>
-          <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
-        </li>
-        <!--时间类型-->
-        <li @click="openPickerLength">
-          <span>时间类型</span>
-          <p>{{timeLength}}</p>
-          <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
-        </li>
-        <!--多选-->
-        <li @click="showOrClosePop(2,'itemFlag')">
-          <span>多选按钮</span>
-          <p>{{checkBoxStr}}</p>
-          <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
-        </li>
-        <!--单选-->
-        <li @click="showOrClosePop(1,'itemFlag')">
-          <span>单选按钮</span>
-          <p>{{radioVal}}</p>
-          <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
-        </li>
-        <!--下拉选项-->
-        <li @click="">
-          <span>下拉选项</span>
-          <select>
-            <option value="1">abc</option>
-            <option value="2">bac</option>
-            <option value="3">cab</option>
-          </select>
-          <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
-        </li>
-        <!--静态标签-->
-        <li>
-          <span>静态标签</span>
-          <input type="text" value="1231321" name="" readonly="readonly"/>
-          <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
-        </li>
+        <template v-for="item in fieldList">
+          <input type="hidden" :name="item.fieldCode" value=""/>
+          <!--静态标签-->
+          <li v-if="item.fieldType.typeId==0">
+            <span>静态标签</span>
+            <input type="text" value="1231321" name="" readonly="readonly"/>
+            <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
+          </li>
+          <!--数字类型-->
+          <li v-if="item.fieldType.typeId==1">
+            <span>数字类型</span>
+            <input type="number" />
+            <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
+          </li>
+          <!--单行文本-->
+          <li v-if="item.fieldType.typeId==2">
+            <span>单行文本</span>
+            <input type="text" value="" name=""/>
+            <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
+          </li>
+          <!--多行文本-->
+          <li @click="showOrClosePop(3,'index1')" v-if="item.fieldType.typeId==3">
+            <span>多行文本</span>
+            <p>{{supplementText}}</p>
+            <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
+          </li>
+          <!--日期类型-->
+          <li @click="openPicker" v-if="item.fieldType.typeId==4">
+            <span>日期类型</span>
+            <p>{{dateTime}}</p>
+            <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
+          </li>
+          <!--时间类型-->
+          <li @click="openPickerLength" v-if="item.fieldType.typeId==5">
+            <span>时间类型</span>
+            <p>{{timeLength}}</p>
+            <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
+          </li>
+          <!--单选-->
+          <li @click="showOrClosePop(1,'itemFlag')" v-if="item.fieldType.typeId==6">
+            <span>单选按钮</span>
+            <p>{{radioVal}}</p>
+            <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
+          </li>
+          <!--下拉选项-->
+          <li @click="" v-if="item.fieldType.typeId==7">
+            <span>下拉选项</span>
+            <select>
+              <option value="1">abc</option>
+              <option value="2">bac</option>
+              <option value="3">cab</option>
+            </select>
+            <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
+          </li>
+          <!--多选-->
+          <li @click="showOrClosePop(2,'itemFlag')" v-if="item.fieldType.typeId==8">
+            <span>多选按钮</span>
+            <p>{{checkBoxStr}}</p>
+            <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
+          </li>
+
+        </template>
       </ul>
 
       <div class="pop_background" @click="showOrClosePop(0)" v-if="popStatus==1||popStatus==2||popStatus==3"></div>
@@ -127,9 +125,12 @@
 </template>
 <script>
   import moment from 'moment'// 格式化时间
+  import {getPaperStruct,getPaperList} from '@/api/data/index.js' //接口
 export default {
     data () {
         return {
+          paperId : '',
+          fieldList : [],     //表单结构
           supplementText : '',//补充说明表单内容
           supplementPopText : '',//补充说明弹窗内容
           popStatus : 0,//弹窗显示与隐藏(0是隐藏弹窗,1单选按钮,2复选框,3多行文本)
@@ -142,12 +143,35 @@ export default {
           radioVal:'',//单选按钮选中的值
           timeLength: '',//发作时长值
           itemIndex : 0,//弹窗表示
+
         }
     },
     mounted(){
         this.checkList();
+        this.getFormInfo();
     },
     methods : {
+      //获取表单信息
+      getFormInfo(){
+        this.paperId=this.$route.query.paperId;
+        //得到表单结构
+        getPaperStruct(this.paperId).then( res => {
+          console.log('结构=',res)
+          this.fieldList=res.data.result.fieldList;
+        });
+        //得到表单数据回显
+        if(this.$route.query.recordId != undefined){
+          let obj ={
+            paperId : this.paperId,
+            recordId : 1
+          }
+          getPaperList(obj).then( res => {
+            console.log('数据回显=',res)
+          });
+        }
+      },
+
+
       //显示隐藏弹窗
       showOrClosePop(popFlag,index){
 
@@ -271,6 +295,8 @@ export default {
   .myManForm{
     width: 100%;
     background: #fff;
+    height: 1100px;
+    overflow-y: auto;
     padding-top: 80px;
       .formList{
         li{
