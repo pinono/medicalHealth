@@ -13,10 +13,12 @@ const GoMemLoin = params  => {
     return axios.post(HOST + '/api/v1/login',params);
 }
 // 训练信息
+// const getDataTrain = params  => {
+//     return axios.get(HOST + '/api/v1/tran/?date=2018-08-17',{params:params});
+// }
 const getDataTrain = params  => {
-    return axios.get(HOST + '/api/v1/tran/8?date=2018-08-17',{params:params});
+    return axios.get(HOST + '/api/v1/trans',{params:params});
 }
-
 /*慢病管理*/
 //慢病病例-数据列表
 const getDataSick = params => {
