@@ -2,7 +2,7 @@
   <div class="addFamilyPage">
     <header-top :title="title"></header-top>
     <div class="topNav">
-      <img src="" alt="">
+      <img class="navImg" src="../../assets/images/center/familyBanner.png" alt="">
       <p>与家人试试分享病情</p>
     </div>
     <div class="familyList">
@@ -16,29 +16,10 @@
               <p>{{item.name}}</p>
               <p>{{item.phone}}</p>
             </div>
-            <img class="listIcon" src="../../assets/images/center/familyData.png" alt="">
+            <img v-if="item.isShare==0" class="listIcon" src="../../assets/images/center/shareIconFalse.png" alt="">
+            <img v-if="item.isShare==1" class="listIcon" src="../../assets/images/center/shareIconTrue.png" alt="">
           </li>
         </template>
-        <li>
-          <div class="listImg">
-            <img  src="" alt="">
-          </div>
-          <div class="listInfo">
-            <p>某某某</p>
-            <p>13718345029</p>
-          </div>
-          <img class="listIcon" src="../../assets/images/center/familyData.png" alt="">
-        </li>
-        <li>
-          <div class="listImg">
-            <img  src="" alt="">
-          </div>
-          <div class="listInfo">
-            <p>某某某</p>
-            <p>13718345029</p>
-          </div>
-          <img class="listIcon" src="../../assets/images/center/familyData.png" alt="">
-        </li>
 
       </ul>
     </div>
@@ -95,9 +76,9 @@ export default {
       height: 400px;
       background: #F2F4F5;
       position: fixed;
-      img{
-        width: 100%;
-        height: 100%;
+      .navImg{
+        width: 750px;
+        margin-top: 40px;
       }
       p{
         width: 100%;

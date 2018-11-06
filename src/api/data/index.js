@@ -52,6 +52,14 @@ const updateDataPaper = params => {
 const getRelativeList = params => {
   return axios.get(HOST + '/api/v1/relativeList',{params:params})
 }
+//新增亲属
+const addRelative = params => {
+  return axios.post(HOST + '/api/v1/insertRelative',{params:params})
+}
+//编辑亲属
+const updateRelative = params => {
+  return axios.post(HOST + '/api/v1/updateRelatives',{params:params})
+}
 //设备信息
 const getDeviceInfo = params => {
   return axios.get(HOST + '/api/v1/deviceInfo',{params:params})
@@ -79,6 +87,8 @@ export{
     addDataPaper,
     updateDataPaper,
     getRelativeList,
+    addRelative,
+    updateRelative,
     getDeviceInfo,
     getDataBps,
 }

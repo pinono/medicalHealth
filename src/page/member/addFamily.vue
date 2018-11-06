@@ -7,11 +7,11 @@
       </div>
       <div class="inputbox">
         <span>家属昵称</span>
-        <input type="text" name="" placeholder="请输入家属昵称">
+        <input type="text" name="" v-model="name" placeholder="请输入家属昵称">
       </div>
       <div class="inputbox">
         <span>家属手机</span>
-        <input type="number" name="" placeholder="请输入家属手机号">
+        <input type="number" name="" v-model="phone" placeholder="请输入家属手机号">
       </div>
       <div class="shareBox">
         <p class="shareTitle">数据分享</p>
@@ -25,13 +25,37 @@
 
     </div>
     <div class="footer">
-      <span class="addBtn">确定添加</span>
+      <span class="addBtn" @click="insertRelative">确定添加</span>
+    </div>
+    <!--切换角色头像-->
+    <div class="popBg">
+      <ul class="popList">
+        <li>
+          <img src="../../assets/images/center/man.png" alt="">
+          <p>默认一</p>
+        </li>
+        <li>
+          <img src="../../assets/images/center/woman.png" alt="">
+          <p>默认二</p>
+        </li>
+        <li>
+          <img src="../../assets/images/center/oldMan.png" alt="">
+          <p>默认三</p>
+        </li>
+        <li>
+          <img src="../../assets/images/center/oldWoman.png" alt="">
+          <p>默认四</p>
+        </li>
+      </ul>
+      <div class="closePop">关闭</div>
     </div>
   </div>
 </template>
 
 <script>
   import HeaderTop from '@/components/common/header.vue'
+  import {addRelative} from '@/api/data/index.js'
+  import { Toast } from 'mint-ui';
 export default {
   components : {
     HeaderTop
@@ -39,14 +63,33 @@ export default {
    data(){
        return{
          switchVal : true,
-         title: '新增家属'
+         title: '新增家属',
+         iconTypeId:0,//头像代号0,1,2,3
+         name:'',//昵称
+         phone:'',//手机号
+         isShare:1,//0不分享,1分享
        }
    },
   mounted(){
 
   },
   methods:{
+    insertRelative(){
 
+      let obj ={
+        iconTypeId:this.iconTypeId,
+        isShare:this.isShare,
+        name:this.name,
+        phone:this.phone
+      }
+      Toast({
+        message: '提示',
+        duration: 5000
+      });
+      /*addRelative(obj).then( res => {
+          console.log("........"+res)
+      })*/
+    },
   }
 }
 </script>
@@ -82,7 +125,7 @@ export default {
   }
   .addNewFamilyPage{
     width: 100%;
-    height:100%;
+    height:1334px;
     position: relative;
     padding-top: 80px;
     .topNav{
@@ -165,6 +208,35 @@ export default {
         text-align: center;
         font-size: 34px;
         color: #FFFFFF;
+      }
+    }
+    .popBg{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      background: rgba(0,0,0,0.2);
+      .popList{
+        height: 300px;
+        width: 750px;
+        overflow-x: auto;
+        display: flex;
+        position: absolute;
+        bottom: 0px;
+        flex-wrap: nowrap;
+        background: #fff;
+        li{
+          margin: 30px;
+          text-align: center;
+          img{
+            width: 200px;
+          }
+        }
+      }
+      .closePop{
+        height: 80px;
+
       }
     }
   }
