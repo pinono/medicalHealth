@@ -16,7 +16,9 @@ const GoMemLoin = params  => {
 const getDataTrain = params  => {
     return axios.get(HOST + '/api/v1/tran/8?date=2018-08-17',{params:params});
 }
-
+const getDataBps = params  => {
+    return axios.get(HOST + '/api/v1/bps',{params:params});
+}
 /*慢病管理*/
 //慢病数据列表页
 const getDataSick = params => {
@@ -78,7 +80,7 @@ export{
     updateDataPaper,
     getRelativeList,
     getDeviceInfo,
-
+    getDataBps,
 }
 
 

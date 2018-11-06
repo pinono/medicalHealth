@@ -8,13 +8,13 @@
                 <li @click="tabCut('week')" :class="curDate == 'week' ? 'act': ''">周</li>
                 <li @click="tabCut('month')" :class="curDate == 'month' ? 'act': ''">月</li>
             </ul>
-            <ul class="trainData" v-if="resultData.param">
+            <ul class="trainData" v-if="resultData.param && resultData.trans">
                 <li>
-                   <p class="times">{{resultData.param.tranEffect}}</p>
+                   <p class="times">{{resultData.param.tranTotal}}</p> 
                    <p class="name">训练次数</p>
                 </li>
                 <li>
-                   <p class="times">{{resultData.param.tranTotal}}</p>
+                   <p class="times">{{resultData.param.tranEffect}}</p> 
                    <p class="name">有效次数</p>
                 </li>
                 <li>
@@ -23,6 +23,23 @@
                        <span class="num">+{{resultData.param.effect}}</span>
                     </p>
                    <p class="name">训练效果</p>
+                </li>
+            </ul>
+            <ul class="trainData" v-if="resultData.param">
+                <li>
+                   <p class="times">{{resultData.param.bpTotal}}</p> 
+                   <p class="name">测量次数</p>
+                </li>
+                <li>
+                   <p class="times">{{resultData.param.bpNormal}}</p> 
+                   <p class="name">正常次数</p>
+                </li>
+                <li>
+                   <p class="result">
+                       <!-- <span class="zan"></span> -->
+                       <span class="num">+{{resultData.param.bpNoNormal}}</span>
+                    </p> 
+                   <p class="name">不正常次数</p>
                 </li>
             </ul>
             <div class="tip-wrap" v-if="resultData.param">
@@ -37,7 +54,7 @@
 <script>
 import dateLine from '@/components/Home/swiper.vue'
 import HeaderTop from '@/components/common/header.vue'
-import { getDataTrain,getDataHome } from '@/api/data/index.js'
+import { getDataTrain,getDataHome,getDataBps } from '@/api/data/index.js'
 export default {
     components : {
         dateLine,HeaderTop
@@ -88,9 +105,20 @@ export default {
                     break;
                 case 'brain' :
                     this.title = '脑氧';
+                    
                     break;
                 case 'blood' :
                     this.title = '血压';
+                    var obj = {
+                        dayBegin :'2018-08-01',
+                        dayEnd : '2018-08-31'
+                    }
+                    getDataBps(obj).then( res => {
+                        this.resultData = res.data.result;
+                        this.newDate = res.data.result.bpss.date;
+                        this.getNewDate();
+                        console.log('bps',this.resultData)
+                    })
                     break;
                 case 'heart' :
                     this.title = '心率';
