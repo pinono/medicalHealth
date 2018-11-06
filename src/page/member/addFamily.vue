@@ -42,6 +42,12 @@ export default {
          title: '新增家属'
        }
    },
+  mounted(){
+
+  },
+  methods:{
+
+  }
 }
 </script>
 <style lang="scss">
