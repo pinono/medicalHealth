@@ -2,8 +2,8 @@
   <div class="addNewFamilyPage">
     <header-top :title="title"></header-top>
     <div class="topNav">
-      <div class="navImg">
-        <img src="" alt="">
+      <div class="navImg" @click="openImgPop">
+        <img :src='navImgSrc' alt="">
       </div>
       <div class="inputbox">
         <span>家属昵称</span>
@@ -28,27 +28,26 @@
       <span class="addBtn" @click="insertRelative">确定添加</span>
     </div>
     <!--切换角色头像-->
-    <div class="popBg">
-      <ul class="popList">
-        <li>
-          <img src="../../assets/images/center/man.png" alt="">
-          <p>默认一</p>
-        </li>
-        <li>
-          <img src="../../assets/images/center/woman.png" alt="">
-          <p>默认二</p>
-        </li>
-        <li>
-          <img src="../../assets/images/center/oldMan.png" alt="">
-          <p>默认三</p>
-        </li>
-        <li>
-          <img src="../../assets/images/center/oldWoman.png" alt="">
-          <p>默认四</p>
-        </li>
-      </ul>
-      <div class="closePop">关闭</div>
+    <div class="popBg" v-show="isPopBg"  @click="ChoosePicture()">
     </div>
+    <ul class="popList" :style="{bottom:popBottom+'px'}">
+      <li @click="ChoosePicture(0)">
+        <img src="../../assets/images/center/man.png" alt="">
+        <p>默认一</p>
+      </li>
+      <li @click="ChoosePicture(1)">
+        <img src="../../assets/images/center/woman.png" alt="">
+        <p>默认二</p>
+      </li>
+      <li @click="ChoosePicture(2)">
+        <img src="../../assets/images/center/oldMan.png" alt="">
+        <p>默认三</p>
+      </li>
+      <li @click="ChoosePicture(3)">
+        <img src="../../assets/images/center/oldWoman.png" alt="">
+        <p>默认四</p>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -64,16 +63,44 @@ export default {
        return{
          switchVal : true,
          title: '新增家属',
-         iconTypeId:0,//头像代号0,1,2,3
+         iconTypeId:0,//头像代号0男人,1女人,2爷爷,3奶奶
          name:'',//昵称
          phone:'',//手机号
          isShare:1,//0不分享,1分享
+         popBottom : -150,
+         isPopBg : false,
+         navImgSrc : '',
        }
    },
   mounted(){
 
   },
   methods:{
+      //选择头像
+    openImgPop(){
+      this.isPopBg=true;
+      this.popBottom=0;
+    },
+    ChoosePicture(imgFlag){
+      if(imgFlag!=undefined){
+        this.iconTypeId=imgFlag;
+      }
+      this.isPopBg=false;
+      this.popBottom=-150;
+      switch (imgFlag){
+        case 0 : this.navImgSrc = '../../assets/images/center/man.png';
+          break;
+        case 1 : this.navImgSrc = '../../assets/images/center/woman.png';
+          break;
+        case 2 : this.navImgSrc = '../../assets/images/center/oldMan.png';
+          break;
+        case 3 : this.navImgSrc = '../../assets/images/center/oldWoman.png';
+          break;
+        default: this.iconTypeId;
+          break;
+      }
+    },
+      //新增亲属
     insertRelative(){
 
       let obj ={
@@ -217,26 +244,25 @@ export default {
       top: 0px;
       left: 0px;
       background: rgba(0,0,0,0.2);
-      .popList{
-        height: 300px;
-        width: 750px;
-        overflow-x: auto;
-        display: flex;
-        position: absolute;
-        bottom: 0px;
-        flex-wrap: nowrap;
-        background: #fff;
-        li{
-          margin: 30px;
-          text-align: center;
-          img{
-            width: 200px;
-          }
+    }
+    .popList{
+      height: 300px;
+      width: 750px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      display: flex;
+      position: absolute;
+      flex-wrap: nowrap;
+      background: #fff;
+      bottom: 0px;
+      transition: all 2s;
+      -webkit-transition: all 500ms; /*兼容webkit内核*/
+      li{
+        margin: 30px;
+        text-align: center;
+        img{
+          width: 200px;
         }
-      }
-      .closePop{
-        height: 80px;
-
       }
     }
   }
