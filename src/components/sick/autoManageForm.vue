@@ -143,7 +143,6 @@ export default {
           radioVal:'',//单选按钮选中的值
           timeLength: '',//发作时长值
           itemIndex : 0,//弹窗表示
-
         }
     },
     mounted(){
@@ -170,7 +169,6 @@ export default {
           });
         }
       },
-
 
       //显示隐藏弹窗
       showOrClosePop(popFlag,index){

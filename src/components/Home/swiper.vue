@@ -4,51 +4,20 @@
             <section class="date-wrap">
                 <swiper :options="swiperOption" ref="mySwiperA">
                     <!-- slides -->
-                    <swiper-slide>8.1</swiper-slide>
-                    <swiper-slide>8.2</swiper-slide>
-                    <swiper-slide>8.3</swiper-slide>
-                    <swiper-slide>8.4</swiper-slide>
-                    <swiper-slide>8.5</swiper-slide>
-                    <swiper-slide>8.6</swiper-slide>
-                    <swiper-slide>8.7</swiper-slide>
-                    <swiper-slide>8.8</swiper-slide>
+                    <swiper-slide v-for="(item,i) in newDate" :key="i">{{item}}</swiper-slide>
                 </swiper>
             </section>
 
             <section class="detail-wrap" v-show="dateType == 'day'">
                 <swiper :options="swiperOption2" ref="mySwiperB">
                     <!-- slides -->
-                    <swiper-slide>
-                        <span class="zan1"></span>
-                        <p class="tip">训练效果非常棒！1111</p>
-                    </swiper-slide>
-                    <swiper-slide>
-                        <span class="zan1"></span>
-                        <p class="tip">训练效果非常棒！2222</p>
-                    </swiper-slide>
-                    <swiper-slide>
-                        <span class="zan1"></span>
-                        <p class="tip">训练效果非常棒！3333</p>
-                    </swiper-slide>
-                    <swiper-slide>
-                        <span class="zan1"></span>
-                        <p class="tip">训练效果非常棒！4444</p>
-                    </swiper-slide>
-                    <swiper-slide>
-                        <span class="zan1"></span>
-                        <p class="tip">训练效果非常棒！5555</p>
-                    </swiper-slide>
-                    <swiper-slide>
-                        <span class="zan1"></span>
-                        <p class="tip">训练效果非常棒！6666</p>
-                    </swiper-slide>
-                    <swiper-slide>
-                        <span class="zan1"></span>
-                        <p class="tip">训练效果非常棒！77777</p>
-                    </swiper-slide>
-                    <swiper-slide>
-                        <span class="zan1"></span>
-                        <p class="tip">训练效果非常棒！88888</p>
+                    <swiper-slide v-if="zanNum" v-for="(item,i) in zanNum" :key="i">
+                        <span :class="'zanNo zanNo' + item"></span>
+                        <p class="tip" v-if="item == null">没有训练哦!</p>
+                        <p class="tip" v-if="item == 0">训练效果零级棒!</p>
+                        <p class="tip" v-if="item == 1">训练效果一级棒!</p>
+                        <p class="tip" v-if="item == 2">训练效果二级棒!</p>
+                        <p class="tip" v-if="item == 3">训练效果三级棒!</p>
                     </swiper-slide>
                     <!-- Optional controls -->
                     <div class="swiper-button-prev" slot="button-prev"></div>
@@ -131,7 +100,7 @@ export default {
         swiper,
         swiperSlide,
     },
-    props :['dateType'],
+    props :['dateType','newDate','zanNum'],
     data() {
         return {
             mySwiperA : '',
@@ -293,14 +262,42 @@ export default {
             color:#fff;
             font-size:30px;
         }
-        .zan1{
+        .zanNo{
             display: inline-block;
             width:90px;height:88px;
             margin-top:105px;
             margin-bottom:25px;
-            background:url('../../assets/images/home/zan-white.png') no-repeat;
-            background-size: 100%;
         }
+        .zanNo1{
+                width:90px;
+                height:90px;
+                background:url('../../assets/images/home/zan-white.png') no-repeat;
+                background-size:100%;
+            }
+            .zanNo2{
+                width:180px;
+                height:90px;
+                background:url('../../assets/images/home/zan-white2.png') no-repeat;
+                background-size:100%;
+            }
+            .zanNo3{
+                width:270px;
+                height:90px;
+                background:url('../../assets/images/home/zan-white3.png') no-repeat;
+                background-size:100%;
+            }
+            .zanNo4{
+                width:90px;
+                height:90px;
+                background:url('../../assets/images/home/zan-white4.png') no-repeat;
+                background-size:100%;
+            }
+            .zanNo5{
+                width:90px;
+                height:90px;
+                background:url('../../assets/images/home/zan-white5.png') no-repeat;
+                background-size:100%;
+            }
         .tip{
             font-size:30px;
         }

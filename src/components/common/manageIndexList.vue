@@ -111,7 +111,9 @@ export default {
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-line-clamp: 2;
+      /*! autoprefixer: off */
       -webkit-box-orient: vertical;
+      /* autoprefixer: on */
       color: #000;
       font-size: 34px;
     }

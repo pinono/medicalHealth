@@ -1,15 +1,15 @@
 <template>
     <div class="Train">
         <div class="banner-wrap">
-            <div class="banner">
+            <div class="banner" v-if="homeData">
                 <div class="top">
-                    <span class="date">
+                    <span class="date" v-if="homeData.tran">
                         {{homeData.tran.tranTime}}
                     </span>
-                    <span class="right mode">模式：<b>{{homeData.tran.tranType}}</b></span>
+                    <span class="right mode">模式：<b v-if="homeData.tran">{{homeData.tran.tranType}}</b></span>
                 </div>
                 <div class="zan">
-                    <p>
+                    <p v-if="homeData.tran">
                         <span :class="'zanNo' + homeData.tran.effect"></span>
                         训练效果非常棒！
                     </p>
@@ -18,9 +18,9 @@
         </div>
 
         <section>
-            <ul>
-                <li @click="goTrain('train')">
-                        <p>
+            <ul v-if="homeData">
+                <li @click="goTrain('train')" >
+                        <p v-if="homeData.tran">
                             <span class="icon move"></span>
                             <span class="name">训练</span><span class="minName">(完整度)</span>
                             <span class="datanum">{{homeData.tran.tranComplete}}</span>
@@ -113,7 +113,6 @@ export default {
     mounted () {
         getDataHome().then( res=>{
             this.homeData = res.data.result;
-            console.log(this.homeData)
         })
     },
     methods : {
