@@ -25,25 +25,25 @@
 
     </div>
     <div class="footer">
-      <span class="addBtn" @click="insertRelative">确定添加</span>
+      <span class="addBtn" @click="insertRelative">确定{{saveBtnText}}</span>
     </div>
     <!--切换角色头像-->
     <div class="popBg" v-show="isPopBg"  @click="ChoosePicture()">
     </div>
     <ul class="popList" :style="{bottom:popBottom+'px'}">
-      <li @click="ChoosePicture(0)">
+      <li @click="ChoosePicture('0')">
         <img src="../../assets/images/center/man.png" alt="">
         <p>默认一</p>
       </li>
-      <li @click="ChoosePicture(1)">
+      <li @click="ChoosePicture('1')">
         <img src="../../assets/images/center/woman.png" alt="">
         <p>默认二</p>
       </li>
-      <li @click="ChoosePicture(2)">
+      <li @click="ChoosePicture('2')">
         <img src="../../assets/images/center/oldMan.png" alt="">
         <p>默认三</p>
       </li>
-      <li @click="ChoosePicture(3)">
+      <li @click="ChoosePicture('3')">
         <img src="../../assets/images/center/oldWoman.png" alt="">
         <p>默认四</p>
       </li>
@@ -53,7 +53,7 @@
 
 <script>
   import HeaderTop from '@/components/common/header.vue'
-  import {addRelative} from '@/api/data/index.js'
+  import {addRelative,updateRelative} from '@/api/data/index.js'
   import { Toast } from 'mint-ui';
 export default {
   components : {
@@ -61,18 +61,26 @@ export default {
   },
    data(){
        return{
-         switchVal : true,
          title: '新增家属',
+         switchVal : true,
          iconTypeId:0,//头像代号0男人,1女人,2爷爷,3奶奶
          name:'',//昵称
          phone:'',//手机号
          popBottom : -150,
          isPopBg : false,
          navImgSrc : require('../../assets/images/center/man.png'),
+         saveBtnText:'添加',
        }
    },
   mounted(){
-
+    if(this.$route.query.relativeId != undefined){//编辑
+      this.switchVal = this.$route.query.isShare==1? true:false;
+      this.name = this.$route.query.name;
+      this.phone = this.$route.query.phone;
+      this.ChoosePicture(this.$route.query.iconTypeId);
+      this.saveBtnText='编辑';
+      this.title='编辑家属'
+    }
   },
   methods:{
       //选择头像
@@ -87,15 +95,13 @@ export default {
       this.isPopBg=false;
       this.popBottom=-150;
       switch (imgFlag){
-        case 0 : this.navImgSrc = require('../../assets/images/center/man.png');
+        case '0' : this.navImgSrc = require('../../assets/images/center/man.png');
           break;
-        case 1 : this.navImgSrc = require('../../assets/images/center/woman.png');
+        case '1' : this.navImgSrc = require('../../assets/images/center/woman.png');
           break;
-        case 2 : this.navImgSrc = require('../../assets/images/center/oldMan.png');
+        case '2' : this.navImgSrc = require('../../assets/images/center/oldMan.png');
           break;
-        case 3 : this.navImgSrc = require('../../assets/images/center/oldWoman.png');
-          break;
-        default: this.iconTypeId;
+        case '3' : this.navImgSrc = require('../../assets/images/center/oldWoman.png');
           break;
       }
     },
@@ -118,20 +124,26 @@ export default {
       }else {
           console.log(this.switchVal)
         let obj ={
-          iconTypeId:this.iconTypeId,
+          iconTypeId:parseInt(this.iconTypeId),
           isShare:this.switchVal ? 1:0,
           name:this.name,
           phone:this.phone
         }
         console.log(obj)
-        /*addRelative(obj).then( res => {
-         console.log("........"+res)
-         })*/
+        if(this.$route.query.relativeId != undefined){
+          obj.relativeId=parseInt(this.$route.query.relativeId);
+          updateRelative(obj).then( res => {//新增亲属
+            console.log("添加亲属："+res)
+          })
+        }else{
+          addRelative(obj).then( res => {//新增亲属
+            console.log("添加亲属："+res)
+          })
+        }
+
+
+
       }
-
-
-
-
     },
   }
 }

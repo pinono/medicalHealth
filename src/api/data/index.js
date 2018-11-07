@@ -54,17 +54,20 @@ const getRelativeList = params => {
 }
 //新增亲属
 const addRelative = params => {
-  return axios.post(HOST + '/api/v1/insertRelative',{params:params})
+  return axios.post(HOST + '/api/v1/insertRelative',params)
 }
 //编辑亲属
 const updateRelative = params => {
-  return axios.post(HOST + '/api/v1/updateRelatives',{params:params})
+  return axios.post(HOST + '/api/v1/updateRelatives',params)
 }
 //设备信息
 const getDeviceInfo = params => {
   return axios.get(HOST + '/api/v1/deviceInfo',{params:params})
 }
-
+//常见问题
+const getCommonProblem = params => {
+  return axios.get(HOST + '/api/v1/commonProblem')
+}
 
 // 医患分享列表
 const getShareList = params  => {
@@ -91,6 +94,7 @@ export{
     updateRelative,
     getDeviceInfo,
     getDataBps,
+    getCommonProblem,
 }
 
 

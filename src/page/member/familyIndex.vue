@@ -58,8 +58,8 @@ export default {
       this.$router.push({path: 'addFamily'})
     },
     //修改亲属信息
-    updateRelativeFn(){
-      this.$router.push({path: 'addFamily'})
+    updateRelativeFn(relativeItem){
+      this.$router.push({path: 'addFamily',query:relativeItem})
     },
   }
 }

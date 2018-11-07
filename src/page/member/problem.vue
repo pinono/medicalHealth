@@ -33,6 +33,7 @@
 </template>
 <script>
   import HeaderTop from '@/components/common/header.vue'
+  import {getCommonProblem} from '@/api/data/index.js'
 export default {
   components : {
     HeaderTop
@@ -44,11 +45,17 @@ export default {
     }
   },
   mounted(){
-
+    this.getCommonProblemFn();
   },
   methods:{
     titleChecked(flag){
       this.arrowsIcon=flag;
+    },
+    //获取页面数据
+    getCommonProblemFn(){
+      getCommonProblem().then( res => {
+        console.log('常见问题',res)
+      })
     }
   },
 
