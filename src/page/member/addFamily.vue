@@ -66,10 +66,9 @@ export default {
          iconTypeId:0,//头像代号0男人,1女人,2爷爷,3奶奶
          name:'',//昵称
          phone:'',//手机号
-         isShare:1,//0不分享,1分享
          popBottom : -150,
          isPopBg : false,
-         navImgSrc : '',
+         navImgSrc : require('../../assets/images/center/man.png'),
        }
    },
   mounted(){
@@ -88,13 +87,13 @@ export default {
       this.isPopBg=false;
       this.popBottom=-150;
       switch (imgFlag){
-        case 0 : this.navImgSrc = '../../assets/images/center/man.png';
+        case 0 : this.navImgSrc = require('../../assets/images/center/man.png');
           break;
-        case 1 : this.navImgSrc = '../../assets/images/center/woman.png';
+        case 1 : this.navImgSrc = require('../../assets/images/center/woman.png');
           break;
-        case 2 : this.navImgSrc = '../../assets/images/center/oldMan.png';
+        case 2 : this.navImgSrc = require('../../assets/images/center/oldMan.png');
           break;
-        case 3 : this.navImgSrc = '../../assets/images/center/oldWoman.png';
+        case 3 : this.navImgSrc = require('../../assets/images/center/oldWoman.png');
           break;
         default: this.iconTypeId;
           break;
@@ -102,20 +101,37 @@ export default {
     },
       //新增亲属
     insertRelative(){
-
-      let obj ={
-        iconTypeId:this.iconTypeId,
-        isShare:this.isShare,
-        name:this.name,
-        phone:this.phone
+      //固话
+      var isPhone = /^([0-9]{3,4}-)?[0-9]{7,8}$/;
+      //手机
+      var isMob = /^((\+?86)|(\(\+86\)))?(13[012356789][0-9]{8}|15[012356789][0-9]{8}|18[02356789][0-9]{8}|147[0-9]{8}|1349[0-9]{7})$/;
+      if(this.name==''){
+        Toast({
+          message: '请输入家属昵称',
+          duration: 2000
+        });
+      }else if(!isMob.test(this.phone)){
+        Toast({
+          message: '手机号格式不正确',
+          duration: 2000
+        });
+      }else {
+          console.log(this.switchVal)
+        let obj ={
+          iconTypeId:this.iconTypeId,
+          isShare:this.switchVal ? 1:0,
+          name:this.name,
+          phone:this.phone
+        }
+        console.log(obj)
+        /*addRelative(obj).then( res => {
+         console.log("........"+res)
+         })*/
       }
-      Toast({
-        message: '提示',
-        duration: 5000
-      });
-      /*addRelative(obj).then( res => {
-          console.log("........"+res)
-      })*/
+
+
+
+
     },
   }
 }
@@ -251,7 +267,7 @@ export default {
       overflow-x: auto;
       overflow-y: hidden;
       display: flex;
-      position: absolute;
+      position: fixed;
       flex-wrap: nowrap;
       background: #fff;
       bottom: 0px;
