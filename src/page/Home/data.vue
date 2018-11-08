@@ -1,34 +1,51 @@
 <template>
     <div>
         <header-top :title="title"></header-top>
-        <date-line :dateType='curDate'></date-line>
+        <date-line :dateType='curDate' :newDate="newDate" :zanNum="zanNum"></date-line>
         <div class="cycle-data" :class="bgColor">
             <ul class="dateBar">
                 <li @click="tabCut('day')" :class="curDate == 'day' ? 'act': ''">日</li>
                 <li @click="tabCut('week')" :class="curDate == 'week' ? 'act': ''">周</li>
                 <li @click="tabCut('month')" :class="curDate == 'month' ? 'act': ''">月</li>
             </ul>
-            <ul class="trainData">
+            <ul class="trainData" v-if="resultData.param && resultData.trans">
                 <li>
-                   <p class="times">1332</p> 
+                   <p class="times">{{resultData.param.tranTotal}}</p> 
                    <p class="name">训练次数</p>
                 </li>
                 <li>
-                   <p class="times">232</p> 
+                   <p class="times">{{resultData.param.tranEffect}}</p> 
                    <p class="name">有效次数</p>
                 </li>
                 <li>
                    <p class="result">
                        <span class="zan"></span>
-                       <span class="num">+3</span>
-                    </p> 
+                       <span class="num">+{{resultData.param.effect}}</span>
+                    </p>
                    <p class="name">训练效果</p>
                 </li>
             </ul>
-            <div class="tip-wrap">
+            <ul class="trainData" v-if="resultData.param">
+                <li>
+                   <p class="times">{{resultData.param.bpTotal}}</p> 
+                   <p class="name">测量次数</p>
+                </li>
+                <li>
+                   <p class="times">{{resultData.param.bpNormal}}</p> 
+                   <p class="name">正常次数</p>
+                </li>
+                <li>
+                   <p class="result">
+                       <!-- <span class="zan"></span> -->
+                       <span class="num">+{{resultData.param.bpNoNormal}}</span>
+                    </p> 
+                   <p class="name">不正常次数</p>
+                </li>
+            </ul>
+            <div class="tip-wrap" v-if="resultData.param">
                 <h5>训练小贴士</h5>
                 <p>
-                    怎么测试呢？在平台上根据网页，看别人产品的销量，基本上翻到四页的样子就可以了。然后统计别人的销量，如果产品能有三到五家的商家卖出了巨量。
+                    {{resultData.param.tip}}
                 </p>
             </div>
         </div>
@@ -37,7 +54,7 @@
 <script>
 import dateLine from '@/components/Home/swiper.vue'
 import HeaderTop from '@/components/common/header.vue'
-
+import { getDataTrain,getDataHome,getDataBps } from '@/api/data/index.js'
 export default {
     components : {
         dateLine,HeaderTop
@@ -47,36 +64,93 @@ export default {
             bgColor : '',
             title: '训练',
             curDate : 'day',
-            
+            memberData: '',
+            resultData : '',
+            newDate : [],
+            zanNum : [],
         }
     },
     mounted () {
-        this.bgColor = this.$route.query.type;
-        switch ( this.bgColor ) {
-            case 'train' :
-                this.title = '训练';
-                break;
-            case 'brain' :
-                this.title = '脑氧';
-                break;
-            case 'blood' :
-                this.title = '血压';
-                break;
-            case 'heart' :
-                this.title = '心率';
-                break;
-            case 'oxygen' :
-                this.title = '指氧';
-                break;
-        }
+        this.switchData();
+        this.getData();
     },
     methods : {
         /**
          * *  Tab切换
-         * */ 
+         * */
         tabCut (data) {
             this.curDate = data;
+        },
+        switchData () {
+            this.bgColor = this.$route.query.type;
+            // 用户ID 和 登录时间 (传参)
+            var obj = {
+                date : '2018-8-12'
+            }
+
+            switch ( this.bgColor ) {
+                case 'train' :
+                    this.title = '训练';
+                    var obj = {
+                        dayBegin :'2018-08-01',
+                        dayEnd : '2018-08-31'
+                    }
+                    getDataTrain(obj).then( res => {
+                        this.resultData = res.data.result;
+                        this.newDate = res.data.result.trans.date;
+                        this.zanNum = res.data.result.trans.effect;
+                        this.getNewDate();
+                        console.log('train',this.resultData)
+                    })
+                    break;
+                case 'brain' :
+                    this.title = '脑氧';
+                    
+                    break;
+                case 'blood' :
+                    this.title = '血压';
+                    var obj = {
+                        dayBegin :'2018-08-01',
+                        dayEnd : '2018-08-31'
+                    }
+                    getDataBps(obj).then( res => {
+                        this.resultData = res.data.result;
+                        this.newDate = res.data.result.bpss.date;
+                        this.getNewDate();
+                        console.log('bps',this.resultData)
+                    })
+                    break;
+                case 'heart' :
+                    this.title = '心率';
+                    break;
+                case 'oxygen' :
+                    this.title = '指氧';
+                    break;
+            }
+
+        },
+        /**
+         * 获取数据
+         * */
+        getData () {
+
+
+        },
+        /***
+         * 日期截取字符串
+         * */
+        getNewDate () {
+            var aa = [],bb =[];
+            this.newDate.forEach( (val,i) => {
+                aa.push(val.substring(6,10))
+            })
+            aa.forEach( val => {
+                bb.push(val.replace(/-/,'.'));
+            })
+            this.newDate = bb;
+
         }
+
     }
 }
 </script>
@@ -116,7 +190,7 @@ export default {
             margin-bottom:10px;
             li{
                 font-size:34px;
-                height:88px;  
+                height:88px;
                 line-height: 88px;
                 text-align: center;
                 flex-grow: 1;
@@ -137,7 +211,7 @@ export default {
             li{
                height: 85px;
                text-align: center;
-               flex-grow: 1; 
+               flex-grow: 1;
                border-right:1px solid #EEE;
                :last-of-type{
                    border-right:none;

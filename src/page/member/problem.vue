@@ -3,36 +3,23 @@
     <header-top :title="title"></header-top>
     <!--表单组件-->
     <div class="proList">
-      <div class="listTitle" @click="titleChecked(1)">
-        <span>1.中国脑卒中发病情况和治疗现状？</span>
-        <img v-if="arrowsIcon != 1" src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
-        <img v-if="arrowsIcon==1" :class="arrowsIcon==1?'bottomImg':''" src="../../assets/images/center/arrowsBottom.png" alt="">
-      </div>
-      <div class="listContent" v-if="arrowsIcon==1">
-        国脑卒中具有高发病率、高致残率、高死亡率和高复发率的特点。在我国，卒中正以每年8.7%的速度快速增长，每年新增卒中患者280万，总数超过750万人。
-      </div>
-      <div class="listTitle" @click="titleChecked(2)">
-        <span>2.设备时间显示不对？</span>
-        <img v-if="arrowsIcon != 2" src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
-        <img v-if="arrowsIcon==2" :class="arrowsIcon==2?'bottomImg':''" src="../../assets/images/center/arrowsBottom.png" alt="">
-      </div>
-      <div class="listContent" v-if="arrowsIcon==2">
-        国脑卒中具有高发病率、高致残率、高死亡率和高复发率的特点。在我国，卒中正以每年8.7%的速度快速增长，每年
-      </div>
-      <div class="listTitle" @click="titleChecked(3)">
-        <span>3.连接不上设备怎么办？</span>
-        <img v-if="arrowsIcon != 3" src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
-        <img v-if="arrowsIcon==3" :class="arrowsIcon==3?'bottomImg':''" src="../../assets/images/center/arrowsBottom.png" alt="">
-      </div>
-      <div class="listContent" v-if="arrowsIcon==3">
-        国脑卒中具有高发病率、高致残率、高死亡率和高复发率的特点。在我国，卒中正以每年8.7%的速度快速增长，每年
-      </div>
+      <template v-for="(item,index) in dataList">
+        <div class="listTitle" @click="titleChecked(index)">
+          <span>{{item.question}}</span>
+          <img v-if="arrowsIcon != index" src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
+          <img v-if="arrowsIcon==index" :class="arrowsIcon==index?'bottomImg':''" src="../../assets/images/center/arrowsBottom.png" alt="">
+        </div>
+        <div class="listContent" v-if="arrowsIcon==index">
+          {{item.answer}}
+        </div>
+      </template>
     </div>
 
   </div>
 </template>
 <script>
   import HeaderTop from '@/components/common/header.vue'
+  import {getCommonProblem} from '@/api/data/index.js'
 export default {
   components : {
     HeaderTop
@@ -40,15 +27,23 @@ export default {
   data(){
     return {
       arrowsIcon : 0,
-      title: '常见问题'
+      title: '常见问题',
+      dataList : [],
     }
   },
   mounted(){
-
+    this.getCommonProblemFn();
   },
   methods:{
     titleChecked(flag){
       this.arrowsIcon=flag;
+    },
+    //获取页面数据
+    getCommonProblemFn(){
+      getCommonProblem().then( res => {
+        console.log('常见问题',res)
+        this.dataList = res.data.result.commonProblems;
+      })
     }
   },
 

@@ -8,19 +8,19 @@
       <ul>
         <li class="deviceItem">
           <span>设备型号</span>
-          <span>IPC-906</span>
+          <span>{{device.deviceType}}</span>
         </li>
         <li class="deviceItem">
           <span>设备SN号</span>
-          <span>123456789</span>
+          <span>{{device.deviceSN}}</span>
         </li>
         <li class="deviceItem">
           <span>固件版本</span>
-          <span>11.0</span>
+          <span>{{device.softwareVersion}}</span>
         </li>
         <li class="deviceItem">
           <span>IMEI</span>
-          <span>1234567890</span>
+          <span>{{device.deviceIMEI}}</span>
         </li>
       </ul>
     </div>
@@ -29,15 +29,29 @@
 
 <script>
   import HeaderTop from '@/components/common/header.vue'
+  import {getDeviceInfo} from '@/api/data/index.js' //接口
 export default {
   components : {
     HeaderTop
   },
   data(){
     return {
-      title: '设备信息'
+      title: '设备信息',
+      device:{},
     }
   },
+  mounted(){
+      this.getDeviceInfoFn();
+  },
+  methods:{
+    getDeviceInfoFn(){
+      getDeviceInfo().then( res => {
+        console.log('设备信息=',res)
+        this.device=res.data.result.device;
+      })
+    },
+  }
+
 }
 </script>
 

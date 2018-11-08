@@ -18,6 +18,7 @@
 <script>
 import Footer from '@/components/common/footer.vue'
 import manageList from '@/components/common/manageIndexList.vue'
+import {getShareList,getShareDetail} from '@/api/data/index.js'
 
 export default {
     components : {
@@ -30,11 +31,20 @@ export default {
             curIndex : 1,
         }
     },
+    mounted () {
+      getShareList().then( res => {
+        console.log(res)
+      })
+      getShareDetail().then( res => {
+        console.log(res)
+      })
+    },
     methods : {
         tabCut (index) {
             // this.curIndex = index
             this.$set(this,'curIndex',index)
         },
+        
     }
 }
 </script>

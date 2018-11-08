@@ -45,7 +45,7 @@
 </template>
 <script>
 import HeaderTop from '@/components/common/header.vue'
-
+import { GoMemLoin } from '@/api/data/index.js'
 export default {
     components : {
        HeaderTop
@@ -63,6 +63,17 @@ export default {
         }
     },
     mounted () {
+        var obj = {
+            "phone" : '13678965467',
+            "tuserPwd" : '123456'
+        }
+        GoMemLoin(obj).then( res => {
+            console.log(res.data.result)
+            var result = res.data.result;
+            this.setCookie('baseTuserId',result.baseTuserId);
+            this.setCookie('deviceId',result.deviceId)
+            this.setCookie('tuserId',result.tuserId)
+        })
         this.status == 'register' ? this.title = '注册' : this.title = '登录';
     },
     methods : {
@@ -75,12 +86,17 @@ export default {
         },
         goLogin () {
             this.$router.push({path: '/home'})
-
         },
         //忘记密码
         forgetPassword(){
           this.$router.push({path: 'forgetPassword'})
+        },
+        setCookie (name,value) {
+            // var exdate=new Date();
+            // exdate.setDate(exdate.getDate()+expiredays);
+            document.cookie=name+ "=" +escape(value)
         }
+
 
 
     },

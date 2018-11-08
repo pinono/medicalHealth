@@ -2,8 +2,8 @@
   <div class="manxingbing_page">
     <!--tap切换-->
     <div class="mxb_headeNav">
-      <div class="mxb_navItem" :class="[navTapStatu==1 ? 'navChecke' : '']" @click="navTapCut(1)">异常事件</div>
-      <div class="mxb_navItem" :class="[navTapStatu==2 ? 'navChecke' : '']" @click="navTapCut(2)">误报事件</div>
+      <div class="mxb_navItem" :class="[navTapStatu==1 ? 'navChecke' : '']" @click="navTapCut(1)">慢病管理</div>
+      <div class="mxb_navItem" :class="[navTapStatu==2 ? 'navChecke' : '']" @click="navTapCut(2)">随访管理</div>
     </div>
     <!--添加事件-->
     <div class="addItemBtn" @click="addManItemFn">
@@ -19,6 +19,7 @@
 <script>
 import Footer from '@/components/common/footer.vue'
 import manageList from '@/components/common/manageIndexList.vue'
+import {getDataSick,getPaperModel} from '@/api/data/index.js'
 
 export default {
     components : {
@@ -29,19 +30,40 @@ export default {
     return {
       navTapStatu : 1,//导航的切换状态
       nowStatus : 'sickIndex',//底部组件跳转地址
+      paperId : '',
     }
   },
-  mounted(){},
+  mounted(){
+    this.getDateList();
+  },
   methods:{
     //tap切换
     navTapCut(tapFlag){
-    this.navTapStatu=tapFlag;
+      this.navTapStatu=tapFlag;
+      this.getDateList();
     },
     //添加管理事件
     addManItemFn(){
-      this.$router.push({path: 'sickFrom'})
+        let obj ={
+          paperId : this.paperId
+        }
+      this.$router.push({path: 'sickFrom',query:obj})
     },
-  },
+    //请求数据
+    getDateList(){
+      let obj =this.navTapStatu
+      getDataSick(obj).then( res => {
+        console.log('Sick',res)
+      })
+      getPaperModel(obj).then( res => {
+        /*console.log('表单结构=',res)*/
+        this.paperId = res.data.result.papers[0].paperId;
+
+      })
+    },
+
+
+  }
 
 }
 </script>

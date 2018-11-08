@@ -2,41 +2,24 @@
   <div class="addFamilyPage">
     <header-top :title="title"></header-top>
     <div class="topNav">
-      <img src="" alt="">
+      <img class="navImg" src="../../assets/images/center/familyBanner.png" alt="">
       <p>与家人试试分享病情</p>
     </div>
     <div class="familyList">
       <ul>
-        <li>
-          <div class="listImg">
-            <img  src="" alt="">
-          </div>
-          <div class="listInfo">
-            <p>某某某</p>
-            <p>13718345029</p>
-          </div>
-          <img class="listIcon" src="../../assets/images/center/familyData.png" alt="">
-        </li>
-        <li>
-          <div class="listImg">
-            <img  src="" alt="">
-          </div>
-          <div class="listInfo">
-            <p>某某某</p>
-            <p>13718345029</p>
-          </div>
-          <img class="listIcon" src="../../assets/images/center/familyData.png" alt="">
-        </li>
-        <li>
-          <div class="listImg">
-            <img  src="" alt="">
-          </div>
-          <div class="listInfo">
-            <p>某某某</p>
-            <p>13718345029</p>
-          </div>
-          <img class="listIcon" src="../../assets/images/center/familyData.png" alt="">
-        </li>
+        <template v-for="item in relativeList">
+          <li @click="updateRelativeFn(item)">
+            <div class="listImg">
+              <img  src="" alt="">
+            </div>
+            <div class="listInfo">
+              <p>{{item.name}}</p>
+              <p>{{item.phone}}</p>
+            </div>
+            <img v-if="item.isShare==0" class="listIcon" src="../../assets/images/center/shareIconFalse.png" alt="">
+            <img v-if="item.isShare==1" class="listIcon" src="../../assets/images/center/shareIconTrue.png" alt="">
+          </li>
+        </template>
 
       </ul>
     </div>
@@ -48,20 +31,35 @@
 
 <script>
   import HeaderTop from '@/components/common/header.vue'
+  import {getRelativeList} from '@/api/data/index.js'
 export default {
   components : {
     HeaderTop
   },
    data(){
        return{
-         title: '我的家属'
+         title: '我的家属',
+         relativeList:[],     //亲属数据
        }
    },
-  mounted(){},
+  mounted(){
+       this.getRelativeList();
+  },
   methods:{
+    //得到亲属信息数据
+    getRelativeList(){
+      getRelativeList().then( res => {
+        console.log('亲属列表=',res)
+        this.relativeList=res.data.result.relatives;
+      })
+    },
     //添加新家属
     toAddFamily(){
       this.$router.push({path: 'addFamily'})
+    },
+    //修改亲属信息
+    updateRelativeFn(relativeItem){
+      this.$router.push({path: 'addFamily',query:relativeItem})
     },
   }
 }
@@ -78,9 +76,9 @@ export default {
       height: 400px;
       background: #F2F4F5;
       position: fixed;
-      img{
-        width: 100%;
-        height: 100%;
+      .navImg{
+        width: 750px;
+        margin-top: 40px;
       }
       p{
         width: 100%;
