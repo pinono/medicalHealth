@@ -4,7 +4,7 @@
             <section class="date-wrap">
                 <swiper :options="swiperOption" ref="mySwiperA">
                     <!-- slides -->
-                    <swiper-slide v-for="(item,i) in newDate" :key="i">{{item}}</swiper-slide>
+                    <swiper-slide v-for="(item,i) in dateDayBuf" :key="i">{{item}}</swiper-slide>
                 </swiper>
             </section>
             <section class="detail-wrap" v-show="dateType == 'day'">
@@ -107,7 +107,8 @@ export default {
             mySwiperC : '',
             bgColor :'',
             timeType : this.dateType,
-            chooseDate : this.sltDate,
+            homeDate : this.sltDate,
+            dateDayBuf : [],   //日期模板
             swiperOption: {
                 notNextTick: true,  
                 slidesPerView : 7,
@@ -151,7 +152,8 @@ export default {
         }
     },
     mounted() {
-        this.turnDate(this.chooseDate)
+        this.turnDate(this.homeDate);
+        this.arrTurnDate(this.homeDate,this.homeDate);
         this.bgColor = this.$route.query.type;   //背景颜色
         // this.BindSwiper(); //绑定swiper
     },
@@ -206,7 +208,42 @@ export default {
         turnDate (str) {
             var date = new Date(str)
             console.log(date)
-        }
+        },
+        //数组日期 转化
+        arrTurnDate (homeDate,chooseDate) {
+            const nDay = 3;
+            var getHomeDay = new Date(homeDate);
+            var dateDayBuf = new Array(nDay);
+            //初始化数组
+            function initDateDay(date){
+                var dateDemo = new Date(date);
+                dateDayBuf[nDay-1] = dateDemo.Format("MM.dd");
+                for(var i=nDay-2;i>=0; i--){
+                    dateDemo.setDate(dateDemo.getDate()-1);
+                    dateDayBuf[i] = dateDemo.Format("MM.dd");
+                }
+
+                for(var i=0; i<nDay; i++){
+                    console.log(dateDayBuf[i]);
+                }
+            }
+
+            //刷新数组
+            (function refreshDate(date){
+                var dateDemo = new Date(date);
+                console.log(dateDemo)
+                if(dateDemo >= getHomeDay){
+                    dateDemo = getHomeDay;
+                }
+                dateDemo.setDate(dateDemo.getDate() + nDay/2);
+                initDateDay(dateDemo.Format("yyyy-MM-dd"));
+                
+            })(chooseDate)
+            this.dateDayBuf = dateDayBuf;
+            console.log(dateDayBuf)
+	        // refreshDate('2018-09-07');
+
+        } 
     },
     /**
      * * tab切换时监听日期 : day week month  
