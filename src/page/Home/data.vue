@@ -1,14 +1,15 @@
 <template>
     <div>
         <header-top :title="title"></header-top>
-        <date-line :dateType='curDate' :newDate="newDate" :zanNum="zanNum"></date-line>
+        <date-line :dateType='curDate' :newDate="newDate" :zanNum="zanNum" :sltDate="selectDate"></date-line>
         <div class="cycle-data" :class="bgColor">
             <ul class="dateBar">
                 <li @click="tabCut('day')" :class="curDate == 'day' ? 'act': ''">日</li>
                 <li @click="tabCut('week')" :class="curDate == 'week' ? 'act': ''">周</li>
                 <li @click="tabCut('month')" :class="curDate == 'month' ? 'act': ''">月</li>
             </ul>
-            <ul class="trainData" v-if="resultData.param && resultData.trans">
+            <!-- 训练 -->
+            <ul class="trainData" v-if="resultData.tran">
                 <li>
                    <p class="times">{{resultData.param.tranTotal}}</p> 
                    <p class="name">训练次数</p>
@@ -25,7 +26,26 @@
                    <p class="name">训练效果</p>
                 </li>
             </ul>
-            <ul class="trainData" v-if="resultData.param">
+            <!-- 脑氧 -->
+            <ul class="trainData" v-if="resultData.rsco2">
+                <li>
+                   <p class="times">{{resultData.param.rsco2Total}}</p> 
+                   <p class="name">测量次数</p>
+                </li>
+                <li>
+                   <p class="times">{{resultData.param.rsco2Normal}}</p> 
+                   <p class="name">正常次数</p>
+                </li>
+                <li>
+                   <p class="result">
+                       <!-- <span class="zan"></span> -->
+                       <span class="num">+{{resultData.param.rsco2NoNormal}}</span>
+                    </p> 
+                   <p class="name">不正常次数</p>
+                </li>
+            </ul>
+            <!-- 血压 -->
+            <ul class="trainData" v-if="resultData.bp">
                 <li>
                    <p class="times">{{resultData.param.bpTotal}}</p> 
                    <p class="name">测量次数</p>
@@ -42,6 +62,42 @@
                    <p class="name">不正常次数</p>
                 </li>
             </ul>
+            <!-- 心率 -->
+            <ul class="trainData" v-if="resultData.hr">
+                <li>
+                   <p class="times">{{resultData.param.hrTotal}}</p> 
+                   <p class="name">测量次数</p>
+                </li>
+                <li>
+                   <p class="times">{{resultData.param.hrNormal}}</p> 
+                   <p class="name">正常次数</p>
+                </li>
+                <li>
+                   <p class="result">
+                       <!-- <span class="zan"></span> -->
+                       <span class="num">+{{resultData.param.hrNoNormal}}</span>
+                    </p> 
+                   <p class="name">不正常次数</p>
+                </li>
+            </ul>
+            <!-- 指氧 -->
+            <ul class="trainData" v-if="resultData.spo2">
+                <li>
+                   <p class="times">{{resultData.param.spo2Total}}</p> 
+                   <p class="name">测量次数</p>
+                </li>
+                <li>
+                   <p class="times">{{resultData.param.spo2Normal}}</p> 
+                   <p class="name">正常次数</p>
+                </li>
+                <li>
+                   <p class="result">
+                       <!-- <span class="zan"></span> -->
+                       <span class="num">+{{resultData.param.spo2NoNormal}}</span>
+                    </p> 
+                   <p class="name">不正常次数</p>
+                </li>
+            </ul>
             <div class="tip-wrap" v-if="resultData.param">
                 <h5>训练小贴士</h5>
                 <p>
@@ -54,7 +110,7 @@
 <script>
 import dateLine from '@/components/Home/swiper.vue'
 import HeaderTop from '@/components/common/header.vue'
-import { getDataTrain,getDataHome,getDataBps } from '@/api/data/index.js'
+import { getDataTrain,getDataHome,getDataBp,getDataRsco2,getDataHr,getDataSpo2 } from '@/api/data/index.js'
 export default {
     components : {
         dateLine,HeaderTop
@@ -68,6 +124,7 @@ export default {
             resultData : '',
             newDate : [],
             zanNum : [],
+            selectDate : this.$route.query.selectDate,
         }
     },
     mounted () {
@@ -83,48 +140,43 @@ export default {
         },
         switchData () {
             this.bgColor = this.$route.query.type;
-            // 用户ID 和 登录时间 (传参)
             var obj = {
-                date : '2018-8-12'
+                date : this.selectDate
             }
-
             switch ( this.bgColor ) {
                 case 'train' :
                     this.title = '训练';
-                    var obj = {
-                        dayBegin :'2018-08-01',
-                        dayEnd : '2018-08-31'
-                    }
                     getDataTrain(obj).then( res => {
                         this.resultData = res.data.result;
-                        this.newDate = res.data.result.trans.date;
-                        this.zanNum = res.data.result.trans.effect;
-                        this.getNewDate();
-                        console.log('train',this.resultData)
                     })
                     break;
                 case 'brain' :
                     this.title = '脑氧';
-                    
+                    getDataRsco2(obj).then( res => {
+                        this.resultData = res.data.result;
+                        console.log('rsco2',this.resultData)
+                    })
                     break;
                 case 'blood' :
                     this.title = '血压';
-                    var obj = {
-                        dayBegin :'2018-08-01',
-                        dayEnd : '2018-08-31'
-                    }
-                    getDataBps(obj).then( res => {
+                    getDataBp(obj).then( res => {
                         this.resultData = res.data.result;
-                        this.newDate = res.data.result.bpss.date;
-                        this.getNewDate();
                         console.log('bps',this.resultData)
                     })
                     break;
                 case 'heart' :
                     this.title = '心率';
+                    getDataHr(obj).then( res => {
+                        this.resultData = res.data.result;
+                        console.log('hr',this.resultData)
+                    })
                     break;
                 case 'oxygen' :
                     this.title = '指氧';
+                    getDataSpo2(obj).then( res => {
+                        this.resultData = res.data.result;
+                        console.log('spo2',this.resultData)
+                    })
                     break;
             }
 

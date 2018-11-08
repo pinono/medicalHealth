@@ -108,30 +108,33 @@ export default {
         return {
             nowStatus : 'home',
             homeData : null,
+            selectDate : '',
         }
     },
     mounted () {
         getDataHome().then( res=>{
             this.homeData = res.data.result;
+            this.selectDate = res.data.result.date;
+
         })
     },
     methods : {
         goTrain (purpose) {
             switch (purpose) {
                 case 'train' :
-                    this.$router.push({path: '/train?type=train'})
+                    this.$router.push({path: '/train?type=train&selectDate='+ this.selectDate})
                     break;
                 case 'brain' :
-                    this.$router.push({path: '/train?type=brain'})
+                    this.$router.push({path: '/train?type=brain&selectDate='+ this.selectDate})
                     break;
                 case 'blood' :
-                    this.$router.push({path: '/train?type=blood'})
+                    this.$router.push({path: '/train?type=blood&selectDate='+ this.selectDate})
                     break;
                 case 'heart' :
-                    this.$router.push({path: '/train?type=heart'})
+                    this.$router.push({path: '/train?type=heart&selectDate='+ this.selectDate})
                     break;
                 case 'oxygen' :
-                    this.$router.push({path: '/train?type=oxygen'})
+                    this.$router.push({path: '/train?type=oxygen&selectDate='+ this.selectDate})
                     break;
                 case 'stroke' :
                     this.$router.push({path: '/stroke'})

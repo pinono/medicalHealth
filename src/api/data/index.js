@@ -14,10 +14,23 @@ const GoMemLoin = params  => {
 }
 // 训练信息
 const getDataTrain = params  => {
-    return axios.get(HOST + '/api/v1/tran/8?date=2018-08-17',{params:params});
+    return axios.get(HOST + '/api/v1/tran',{params:params});
 }
-const getDataBps = params  => {
-    return axios.get(HOST + '/api/v1/bps',{params:params});
+// 血压信息
+const getDataBp = params  => {
+    return axios.get(HOST + '/api/v1/bp',{params:params});
+}
+// 脑氧信息
+const getDataRsco2 = params  => {
+  return axios.get(HOST + '/api/v1/rsco2',{params:params});
+}
+// 心率信息
+const getDataHr = params  => {
+  return axios.get(HOST + '/api/v1/hr',{params:params});
+}
+// 指氧信息
+const getDataSpo2 = params  => {
+  return axios.get(HOST + '/api/v1/spo2',{params:params});
 }
 /*
 *慢病管理
@@ -134,7 +147,7 @@ export{
     addRelative,
     updateRelative,
     getDeviceInfo,
-    getDataBps,
+    getDataBp,
     getCommonProblem,
     getBasicStruct,
     getBasicData,
@@ -145,6 +158,9 @@ export{
     getStrokeStruct,
     getStrokeData,
     updateStroke,
+    getDataRsco2,
+    getDataHr,
+    getDataSpo2,
 }
 
 

@@ -7,10 +7,10 @@
                     <swiper-slide v-for="(item,i) in newDate" :key="i">{{item}}</swiper-slide>
                 </swiper>
             </section>
-
             <section class="detail-wrap" v-show="dateType == 'day'">
+            </section>
+            <!-- <section class="detail-wrap" v-show="dateType == 'day'">
                 <swiper :options="swiperOption2" ref="mySwiperB">
-                    <!-- slides -->
                     <swiper-slide v-if="zanNum" v-for="(item,i) in zanNum" :key="i">
                         <span :class="'zanNo zanNo' + item"></span>
                         <p class="tip" v-if="item == null">没有训练哦!</p>
@@ -19,11 +19,10 @@
                         <p class="tip" v-if="item == 2">训练效果二级棒!</p>
                         <p class="tip" v-if="item == 3">训练效果三级棒!</p>
                     </swiper-slide>
-                    <!-- Optional controls -->
                     <div class="swiper-button-prev" slot="button-prev"></div>
                     <div class="swiper-button-next" slot="button-next"></div>
                 </swiper>
-            </section>
+            </section> -->
             <section class="detail-wrap" v-show="dateType == 'week'">
                 <swiper :options="swiperOption3" ref="mySwiperC">
                     <!-- slides -->
@@ -100,7 +99,7 @@ export default {
         swiper,
         swiperSlide,
     },
-    props :['dateType','newDate','zanNum'],
+    props :['dateType','newDate','zanNum','sltDate'],
     data() {
         return {
             mySwiperA : '',
@@ -108,6 +107,7 @@ export default {
             mySwiperC : '',
             bgColor :'',
             timeType : this.dateType,
+            chooseDate : this.sltDate,
             swiperOption: {
                 notNextTick: true,  
                 slidesPerView : 7,
@@ -116,15 +116,15 @@ export default {
                 slidesOffsetAfter : 0,
                 
             },
-            swiperOption2: {
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-                controller: {
-                    control: this.mySwiperA, //控制Swiper1
-                },
-            },
+            // swiperOption2: {
+            //     navigation: {
+            //         nextEl: '.swiper-button-next',
+            //         prevEl: '.swiper-button-prev',
+            //     },
+            //     controller: {
+            //         control: this.mySwiperA, //控制Swiper1
+            //     },
+            // },
             swiperOption3: {
                 navigation: {
                     nextEl: '.swiper-button-next',
@@ -151,9 +151,9 @@ export default {
         }
     },
     mounted() {
-        console.log(this.dateType)
+        this.turnDate(this.chooseDate)
         this.bgColor = this.$route.query.type;   //背景颜色
-        this.BindSwiper(); //绑定swiper
+        // this.BindSwiper(); //绑定swiper
     },
     methods : {
         /**
@@ -202,6 +202,11 @@ export default {
             this.mySwiperC.controller.control = this.mySwiperA;//Swiper2控制Swiper1，需要在Swiper1初始化后
             this.mySwiperD.controller.control = this.mySwiperA;//Swiper2控制Swiper1，需要在Swiper1初始化后
         },
+        // 传来的时期 转化为日期
+        turnDate (str) {
+            var date = new Date(str)
+            console.log(date)
+        }
     },
     /**
      * * tab切换时监听日期 : day week month  
@@ -256,6 +261,7 @@ export default {
         }
     }
     .detail-wrap{
+        height: 418px;
         .swiper-slide{
             text-align: center;
             height: 418px;
