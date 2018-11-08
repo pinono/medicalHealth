@@ -59,6 +59,7 @@
 
 <script>
   import HeaderTop from '@/components/common/header.vue'
+  import {getBasicData,getHistoricalData,getStrokeData} from '@/api/data/index.js'
 export default {
   components : {
     HeaderTop
@@ -68,6 +69,22 @@ export default {
       title: '病历报告'
     }
   },
+  mounted(){
+    this.getDateList();
+  },
+  methods:{
+    getDateList(){
+      getBasicData().then( res => {
+        console.log('基本信息='+res)
+      });
+      getHistoricalData().then( res => {
+        console.log('患病历史='+res)
+      });
+      getStrokeData().then( res => {
+        console.log('脑卒中筛查='+res)
+      });
+    }
+  }
 }
 </script>
 

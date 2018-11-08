@@ -49,6 +49,8 @@
 
 <script>
   import HeaderTop from '@/components/common/header.vue'
+  import {getTranReport,getBpReport,getRsco2Report,getHrReport,getspo2Report,} from '@/api/data/index.js'
+
   export default {
     components : {
       HeaderTop
@@ -63,6 +65,7 @@
     },
     mounted(){
       this.detailsDataChartFn();
+      this.getReportData();
     },
     methods:{
       //导航切换
@@ -182,6 +185,37 @@
         })
 
       },
+      //总训练
+      getReportData(){
+        let obj ={
+          dayBegin:'2018_09-09',
+          dayEnd:'2018_09-10'
+        }
+        console.log(obj)
+        getTranReport(obj).then(res=>{
+          console.log('训练',res)
+        })
+        getBpReport(obj).then( res => {
+          console.log("血压："+res)
+        })
+        getRsco2Report(obj).then( res => {
+          console.log("脑氧："+res)
+        })
+        getHrReport(obj).then( res => {
+          console.log("心率："+res)
+        })
+        getspo2Report(obj).then( res => {
+          console.log("指氧："+res)
+        })
+      }
+
+      //血压
+
+      //脑氧
+
+      //心率
+
+      //指氧
 
     }
 

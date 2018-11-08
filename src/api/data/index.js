@@ -89,7 +89,7 @@ const getBasicStruct = params => {
 }
 //获得基本信息-数据
 const getBasicData = params => {
-  return axios.get(HOST + '/api/v1/papers/1/0')
+  return axios.get(HOST + '/api/v1/papers/0')
 }
 //编辑基本信息
 const updateBasicInfo = params => {
@@ -101,7 +101,7 @@ const getHistoricalStruct = params => {
 }
 //历史病例-数据
 const getHistoricalData = params => {
-  return axios.get(HOST + '/api/v1/paper-struct/2/0')
+  return axios.get(HOST + '/api/v1/paper-struct/2')
 }
 //编辑历史病例
 const updateHistorical = params => {
@@ -109,16 +109,37 @@ const updateHistorical = params => {
 }
 //脑卒中筛查-表结构
 const getStrokeStruct = params => {
-  return axios.get(HOST + '/ api/v1/paperStruct/3')
+  return axios.get(HOST + '/api/v1/paperStruct/3')
 }
 //脑卒中筛查-数据
 const getStrokeData = params => {
-  return axios.get(HOST + '/api/v1/papers/3/0')
+  return axios.get(HOST + '/api/v1/papers/3')
 }
 //编辑脑卒中筛查
 const updateStroke = params => {
   return axios.post(HOST + '/api/v1/updatePaper/3/0',params)
 }
+//训练报告-训练
+const getTranReport = params => {
+  return axios.get(HOST + '/api/v1/tranReport',{params:params})
+}
+//训练报告-血压
+const getBpReport = params => {
+  return axios.get(HOST + '/api/v1/bpReport',{params:params})
+}
+//训练报告-脑氧
+const getRsco2Report = params => {
+  return axios.get(HOST + '/api/v1/rsco2Report',{params:params})
+}
+//训练报告-心率
+const getHrReport = params => {
+  return axios.get(HOST + '/api/v1/hrReport',{params:params})
+}
+//训练报告-指氧
+const getspo2Report = params => {
+  return axios.get(HOST + '/api/v1/spo2Report',{params:params})
+}
+
 
 /*
  * 医患分享
@@ -161,6 +182,11 @@ export{
     getDataRsco2,
     getDataHr,
     getDataSpo2,
+    getTranReport,
+    getBpReport,
+    getRsco2Report,
+    getHrReport,
+    getspo2Report,
 }
 
 
