@@ -140,7 +140,6 @@ const getspo2Report = params => {
   return axios.get(HOST + '/api/v1/spo2Report',{params:params})
 }
 
-
 /*
  * 医患分享
  * */
