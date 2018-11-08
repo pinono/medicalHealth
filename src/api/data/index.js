@@ -19,7 +19,9 @@ const getDataTrain = params  => {
 const getDataBps = params  => {
     return axios.get(HOST + '/api/v1/bps',{params:params});
 }
-/*慢病管理*/
+/*
+*慢病管理
+*/
 //慢病数据列表页
 const getDataSick = params => {
   return axios.get(HOST + '/api/v1/paperListOfType/'+params)
@@ -58,7 +60,7 @@ const addRelative = params => {
 }
 //编辑亲属
 const updateRelative = params => {
-  return axios.post(HOST + '/api/v1/updateRelatives',params)
+  return axios.post(HOST + '/api/v1/updateRelative',params)
 }
 //设备信息
 const getDeviceInfo = params => {
@@ -68,7 +70,46 @@ const getDeviceInfo = params => {
 const getCommonProblem = params => {
   return axios.get(HOST + '/api/v1/commonProblem')
 }
+//获得基本信息-表结构
+const getBasicStruct = params => {
+  return axios.get(HOST + '/api/v1/paperStruct/1')
+}
+//获得基本信息-数据
+const getBasicData = params => {
+  return axios.get(HOST + '/api/v1/papers/1/0')
+}
+//编辑基本信息
+const updateBasicInfo = params => {
+  return axios.post(HOST + '/api/v1/updatePaper/1/0',params)
+}
+//历史病例-表结构
+const getHistoricalStruct = params => {
+  return axios.get(HOST + '/api/v1/paperStruct/2')
+}
+//历史病例-数据
+const getHistoricalData = params => {
+  return axios.get(HOST + '/api/v1/paper-struct/2/0')
+}
+//编辑历史病例
+const updateHistorical = params => {
+  return axios.post(HOST + '/api/v1/updatePaper/2/0',params)
+}
+//脑卒中筛查-表结构
+const getStrokeStruct = params => {
+  return axios.get(HOST + '/ api/v1/paperStruct/3')
+}
+//脑卒中筛查-数据
+const getStrokeData = params => {
+  return axios.get(HOST + '/api/v1/papers/3/0')
+}
+//编辑脑卒中筛查
+const updateStroke = params => {
+  return axios.post(HOST + '/api/v1/updatePaper/3/0',params)
+}
 
+/*
+ * 医患分享
+ * */
 // 医患分享列表
 const getShareList = params  => {
     return axios.get(HOST + '/api/v1/articals?currentPage=1&pageSize=2',{params:params});
@@ -95,6 +136,15 @@ export{
     getDeviceInfo,
     getDataBps,
     getCommonProblem,
+    getBasicStruct,
+    getBasicData,
+    updateBasicInfo,
+    getHistoricalStruct,
+    getHistoricalData,
+    updateHistorical,
+    getStrokeStruct,
+    getStrokeData,
+    updateStroke,
 }
 
 
