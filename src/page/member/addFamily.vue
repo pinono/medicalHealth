@@ -140,9 +140,7 @@ export default {
             console.log("添加亲属："+res)
           })
         }
-
-
-
+        
       }
     },
   }

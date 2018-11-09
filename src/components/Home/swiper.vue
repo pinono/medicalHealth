@@ -208,7 +208,7 @@ export default {
         turnDate (str) {
             var date = new Date(str)
             console.log(date)
-        },
+        }, 
         //数组日期 转化
         arrTurnDate (homeDate,chooseDate) {
             const nDay = 3;
