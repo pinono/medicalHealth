@@ -2,9 +2,9 @@
     <div class="wrap">
         <div class="swiper" :class="bgColor">
             <section class="date-wrap">
-                <swiper :options="swiperOption" ref="mySwiperA">
+                <swiper :options="lineSwiperOpt()" ref="mySwiperA">
                     <!-- slides -->
-                    <swiper-slide v-for="(item,i) in dateDayBuf" :key="i">{{item}}</swiper-slide>
+                    <swiper-slide v-for="(item,i) in dateDayBuf1" :key="i">{{item}}</swiper-slide>
                 </swiper>
             </section>
             <section class="detail-wrap" v-show="dateType == 'day'">
@@ -105,18 +105,26 @@ export default {
             mySwiperA : '',
             mySwiperB : '',
             mySwiperC : '',
-            bgColor :'',
+            bgColor :'',  //tra
             timeType : this.dateType,
             homeDate : this.sltDate,
-            dateDayBuf : [],   //日期模板
-            swiperOption: {
-                notNextTick: true,  
-                slidesPerView : 7,
-                centeredSlides : true,
-                slidesOffsetBefore : 0,
-                slidesOffsetAfter : 0,
-                
-            },
+            dateDayBuf1 : [],   //日期模板 08.1
+            dateDayBuf2 : [],   //日期模板 2018-08-01 
+            // swiperOption: {
+            //     notNextTick: true,  
+            //     slidesPerView : 7,
+            //     centeredSlides : true,
+            //     slidesOffsetBefore : 0,
+            //     slidesOffsetAfter : 0,
+            //     on: {
+            //         slideChangeTransitionEnd: function(){
+            //             if( this.activeIndex == 0 ) {
+            //                 console.log(this)
+            //             }
+
+            //         },
+            //     },
+            // },
             // swiperOption2: {
             //     navigation: {
             //         nextEl: '.swiper-button-next',
@@ -152,8 +160,11 @@ export default {
         }
     },
     mounted() {
+        var myDate = new Date()
+        console.log(myDate.Format('yyyy-MM-dd'))
         this.turnDate(this.homeDate);
         this.arrTurnDate(this.homeDate,this.homeDate);
+        console.log(this.homeDate)
         this.bgColor = this.$route.query.type;   //背景颜色
         // this.BindSwiper(); //绑定swiper
     },
@@ -213,19 +224,34 @@ export default {
         arrTurnDate (homeDate,chooseDate) {
             const nDay = 3;
             var getHomeDay = new Date(homeDate);
-            var dateDayBuf = new Array(nDay);
+            var dateDayBuf1 = new Array(nDay);
+            var dateDayBuf2 = new Array(nDay);
+
             //初始化数组
             function initDateDay(date){
                 var dateDemo = new Date(date);
-                dateDayBuf[nDay-1] = dateDemo.Format("MM.dd");
-                for(var i=nDay-2;i>=0; i--){
-                    dateDemo.setDate(dateDemo.getDate()-1);
-                    dateDayBuf[i] = dateDemo.Format("MM.dd");
-                }
+               
+                    dateDayBuf1[nDay-1] = dateDemo.Format("MM.dd");
+                    for(var i=nDay-2;i>=0; i--){
+                        dateDemo.setDate(dateDemo.getDate()-1);
+                        dateDayBuf1[i] = dateDemo.Format("MM.dd");
+                    }
 
-                for(var i=0; i<nDay; i++){
-                    console.log(dateDayBuf[i]);
-                }
+                    for(var i=0; i<nDay; i++){
+                        console.log(dateDayBuf1[i]);
+                    }
+                
+                    dateDayBuf2[nDay-1] = dateDemo.Format("yyyy-MM-dd");
+                    for(var i=nDay-2;i>=0; i--){
+                        dateDemo.setDate(dateDemo.getDate()-1);
+                        dateDayBuf2[i] = dateDemo.Format("yyyy-MM-dd");
+                    }
+
+                    for(var i=0; i<nDay; i++){
+                        console.log(dateDayBuf2[i]);
+                    }
+                
+                
             }
 
             //刷新数组
@@ -239,11 +265,42 @@ export default {
                 initDateDay(dateDemo.Format("yyyy-MM-dd"));
                 
             })(chooseDate)
-            this.dateDayBuf = dateDayBuf;
-            console.log(dateDayBuf)
-	        // refreshDate('2018-09-07');
+            this.dateDayBuf1 = dateDayBuf1;
+            this.dateDayBuf2 = dateDayBuf2;
 
-        } 
+            console.log(dateDayBuf1)
+
+        },
+        // 时间轴配置
+        lineSwiperOpt () {
+            var that = this;
+            var swiperOption = {
+                    notNextTick: true,  
+                    slidesPerView : 7,
+                    centeredSlides : true,
+                    slidesOffsetBefore : 0,
+                    slidesOffsetAfter : 0,
+                    on: {
+                        slideChangeTransitionEnd: function(){
+                            if( this.activeIndex == 0 ) {
+                                console.log(this.activeIndex);
+                                that.switchGetData()
+                                that.arrTurnDate(that.homeDate,that.dateDayBuf2[2])
+                                this.slideTo(1, 10, false);
+                            }
+
+                        },
+                    },
+            }
+            return swiperOption;
+        },
+        switchGetData ( ) {
+            switch (this.bgColor) {
+                case 'train' : 
+                
+            }
+        }
+
     },
     /**
      * * tab切换时监听日期 : day week month  
@@ -255,7 +312,7 @@ export default {
                 this.drawLine();   
             }
         }
-    }
+    },
  
 }
 </script>

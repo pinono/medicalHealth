@@ -18,7 +18,7 @@
 <script>
 import Footer from '@/components/common/footer.vue'
 import manageList from '@/components/common/manageIndexList.vue'
-import {getShareList,getShareDetail} from '@/api/data/index.js'
+import {getShareList,getShareDetail} from '@/api/data/share.js'
 
 export default {
     components : {
@@ -35,9 +35,9 @@ export default {
       getShareList().then( res => {
         console.log(res)
       })
-      getShareDetail().then( res => {
-        console.log(res)
-      })
+      // getShareDetail().then( res => {
+      //   console.log(res)
+      // })
     },
     methods : {
         tabCut (index) {

@@ -1,7 +1,32 @@
 <template>
     <div>
         <header-top :title="title"></header-top>
-        <date-line :dateType='curDate' :newDate="newDate" :zanNum="zanNum" :sltDate="selectDate"></date-line>
+        <div class="swiper" :class="bgColor">
+            <section class="date-wrap">
+                <swiper :options="lineSwiperOpt()" ref="mySwiperA">
+                    <!-- slides -->
+                    <swiper-slide v-for="(item,i) in dateDayBuf1" :key="i">{{item}}</swiper-slide>
+                </swiper>
+            </section>
+            <section class="detail-wrap" v-show="curDate == 'day'" >
+                <div v-if="resultData">   
+                    <div v-if="resultData.param" class="zanwrap">
+                        <span :class="'zanNo zanNo' + resultData.param.effect"></span>
+                        <p class="tip" v-if="resultData.param.effect == null">没有训练哦!</p>
+                        <p class="tip" v-if="resultData.param.effect == 0">没有训练哦~</p>
+                        <p class="tip" v-if="resultData.param.effect == 1">训练效果很棒!</p>
+                        <p class="tip" v-if="resultData.param.effect == 2">训练效果非常棒!</p>
+                        <p class="tip" v-if="resultData.param.effect == 3">训练效果特别棒!</p>
+                    </div>
+                </div>
+                
+                <div v-if="!resultData" class="zanwrap">
+                    <span :class="'zanNo zanNoCry'"></span>
+                    <p class="tip" >没有训练哦!</p>
+                </div>
+            </section>
+        </div>
+        <!-- <date-line :dateType='curDate' :newDate="newDate" :zanNum="zanNum" :sltDate="selectDate"></date-line> -->
         <div class="cycle-data" :class="bgColor">
             <ul class="dateBar">
                 <li @click="tabCut('day')" :class="curDate == 'day' ? 'act': ''">日</li>
@@ -108,16 +133,19 @@
     </div>
 </template>
 <script>
-import dateLine from '@/components/Home/swiper.vue'
+// import dateLine from '@/components/Home/swiper.vue'
 import HeaderTop from '@/components/common/header.vue'
+import 'swiper/dist/css/swiper.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import { getDataTrain,getDataHome,getDataBp,getDataRsco2,getDataHr,getDataSpo2 } from '@/api/data/index.js'
 export default {
     components : {
-        dateLine,HeaderTop
+        HeaderTop,swiper,swiperSlide,
     },
     data () {
         return {
             bgColor : '',
+            mySwiperA : '',
             title: '训练',
             curDate : 'day',
             memberData: '',
@@ -125,11 +153,15 @@ export default {
             newDate : [],
             zanNum : [],
             selectDate : this.$route.query.selectDate,
+            homeDate : this.$route.query.selectDate,
+            dateDayBuf1 : [],   //日期模板 08.1
+            dateDayBuf2 : [],   //日期模板 2018-08-01 
         }
     },
     mounted () {
         this.switchData();
-        this.getData();
+        this.arrTurnDate(this.homeDate,this.homeDate);
+
     },
     methods : {
         /**
@@ -138,10 +170,40 @@ export default {
         tabCut (data) {
             this.curDate = data;
         },
-        switchData () {
+        // 时间轴配置
+        lineSwiperOpt () {
+            var that = this;
+            var swiperOption = {
+                    notNextTick: true,  
+                    slidesPerView : 7,
+                    centeredSlides : true,
+                    slidesOffsetBefore : 0,
+                    slidesOffsetAfter : 0,
+                    on: {
+                        slideChangeTransitionEnd: function(){
+                            if( this.activeIndex == 0 ) {
+                                console.log(this.activeIndex);
+                                that.switchData(that.dateDayBuf2[0])
+                                that.arrTurnDate(that.homeDate,that.dateDayBuf2[0])
+                                this.slideTo(1, 10, false);
+                            }else if ( this.activeIndex == 2 ){
+                                console.log(this.activeIndex);
+                                that.switchData(that.dateDayBuf2[2])
+                                that.arrTurnDate(that.homeDate,that.dateDayBuf2[2])
+                                this.slideTo(1, 10, false);
+                            }else if ( this.activeIndex == 1 ) {
+                                that.switchData(that.dateDayBuf2[1])
+                            } 
+
+                        },
+                    },
+            }
+            return swiperOption;
+        },
+        switchData (chooseDate) {
             this.bgColor = this.$route.query.type;
             var obj = {
-                date : this.selectDate
+                date : chooseDate ? chooseDate :this.selectDate
             }
             switch ( this.bgColor ) {
                 case 'train' :
@@ -181,6 +243,54 @@ export default {
             }
 
         },
+        //数组日期 转化
+        arrTurnDate (homeDate,chooseDate) {
+            const nDay = 3;
+            var getHomeDay = new Date(homeDate);
+            var dateDayBuf1 = new Array(nDay);
+            var dateDayBuf2 = new Array(nDay);
+
+            //初始化数组
+            function initDateDay(date){
+                var dateDemo = new Date(date);
+                    dateDayBuf1[nDay-1] = dateDemo.Format("MM.dd");
+                    for(var i=nDay-2;i>=0; i--){
+                        dateDemo.setDate(dateDemo.getDate()-1);
+                        dateDayBuf1[i] = dateDemo.Format("MM.dd");
+                    }
+
+                    for(var i=0; i<nDay; i++){
+                        console.log(dateDayBuf1[i]);
+                    }
+                
+                    dateDayBuf2[nDay-1] = dateDemo.Format("yyyy-MM-dd");
+                    for(var i=nDay-2;i>=0; i--){
+                        dateDemo.setDate(dateDemo.getDate()+1);
+                        dateDayBuf2[i] = dateDemo.Format("yyyy-MM-dd");
+                    }
+
+                    for(var i=0; i<nDay; i++){
+                        console.log(dateDayBuf2[i]);
+                    }
+            }
+
+            //刷新数组
+            (function refreshDate(date){
+                var dateDemo = new Date(date);
+                console.log(dateDemo)
+                if(dateDemo >= getHomeDay){
+                    dateDemo = getHomeDay;
+                }
+                dateDemo.setDate(dateDemo.getDate() + nDay/2);
+                initDateDay(dateDemo.Format("yyyy-MM-dd"));
+                
+            })(chooseDate)
+            this.dateDayBuf1 = dateDayBuf1;
+            this.dateDayBuf2 = dateDayBuf2.reverse();
+            console.log(dateDayBuf2)
+
+        },
+        
         /**
          * 获取数据
          * */
@@ -188,6 +298,7 @@ export default {
 
 
         },
+
         /***
          * 日期截取字符串
          * */
@@ -207,6 +318,79 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+    .swiper.train{
+        background: #2B8CFF;
+    }
+    .swiper.brain{
+        background: #3AD7E8;
+    }
+    .swiper.blood{
+        background: #77CB53;
+    }
+    .swiper.heart{
+        background: #FA816B;
+    }
+    .swiper.oxygen{
+        background: #E6B917;
+    }
+    .wrap{
+        margin-top:80px;
+    }
+    .swiper { margin-top:80px;}
+    .detail-wrap{
+        height: 418px;
+        .zanwrap{
+            text-align: center;
+        }
+        .zanNo{
+            display: inline-block;
+            width:90px;height:88px;
+            margin-top:105px;
+            margin-bottom:25px;
+
+        }
+        .zanNo0 {
+            height: 90px;
+            background:url('../../assets/images/home/cryface.png') no-repeat;
+            background-size:100%;
+        }
+        .zanNo1{
+            width:90px;
+            height:90px;
+            background:url('../../assets/images/home/zan-white.png') no-repeat;
+            background-size:100%;
+        }
+        .zanNo2{
+            width:180px;
+            height:90px;
+            background:url('../../assets/images/home/zan-white2.png') no-repeat;
+            background-size:100%;
+        }
+        .zanNo3{
+            width:270px;
+            height:90px;
+            background:url('../../assets/images/home/zan-white3.png') no-repeat;
+            background-size:100%;
+        }
+        .zanNo4{
+            width:90px;
+            height:90px;
+            background:url('../../assets/images/home/zan-white4.png') no-repeat;
+            background-size:100%;
+        }
+        .zanNo5{
+            width:90px;
+            height:90px;
+            background:url('../../assets/images/home/zan-white5.png') no-repeat;
+            background-size:100%;
+        }
+        .tip{
+            font-size:30px;
+            color:#fff;
+            text-align: center;
+        }
+
+    }
         .cycle-data.train {
             .dateBar li.act,.trainData li .times{
                 color:#2B8CFF;
@@ -310,6 +494,29 @@ export default {
                 color: #333333;
                 letter-spacing: 0;
                 line-height: 56px;
+            }
+        }
+    }
+    .date-wrap{
+        height: 100px;
+        .swiper-wrapper{
+            height:82px;
+            line-height: 82px;
+            margin-left:80px;
+            .swiper-slide{
+                text-align: center;
+                width: 100px !important;
+                color:#fff;
+                font-size:30px;
+            line-height: 82px;
+                
+                opacity: .7;
+            }
+            .swiper-slide-active{
+                font-size:40px;
+                opacity: 1;
+            line-height: 82px;
+
             }
         }
     }

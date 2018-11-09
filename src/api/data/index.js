@@ -1,5 +1,4 @@
-window.SETDOMAIN = 'cn';
-window.HOST = 'http://60.205.180.79:8002'
+
 import axios from 'axios'
 
 axios.defaults.withCredentials = true;
@@ -140,17 +139,7 @@ const getspo2Report = params => {
   return axios.get(HOST + '/api/v1/spo2Report',{params:params})
 }
 
-/*
- * 医患分享
- * */
-// 医患分享列表
-const getShareList = params  => {
-    return axios.get(HOST + '/api/v1/articals?currentPage=1&pageSize=2',{params:params});
-}
-// 医患分享详情
-const getShareDetail = params  => {
-    return axios.get(HOST + '/api/v1/articals/1',{params:params});
-}
+
 export{
     getDataHome,
     getDataTrain,
