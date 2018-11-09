@@ -1,49 +1,78 @@
 <template>
   <div class="trainReport">
     <header-top :title="title"></header-top>
-    <section class="item">
+      <section class="item">
         <div class="title">
           <p>总体训练报告</p>
           <p>上一次训练时间：2018.08.04 11:11:11</p>
         </div>
         <ul class="navCut">
-          <li @click="checkNavFn(1)" :class="[ checkNav==1 ? 'checkLi':'']">近1个月</li>
-          <li @click="checkNavFn(3)" :class="[ checkNav==3 ? 'checkLi':'']">近3个月</li>
-          <li @click="checkNavFn(6)" :class="[ checkNav==6 ? 'checkLi':'']">近6个月</li>
-          <li @click="checkNavFn(12)" :class="[ checkNav==12 ? 'checkLi':'']">近1年</li>
+          <li @click="checkNavFn(1,1)" :class="[ checkNav01==1 ? 'checkLi':'']">近1个月</li>
+          <li @click="checkNavFn(3,1)" :class="[ checkNav01==3 ? 'checkLi':'']">近3个月</li>
+          <li @click="checkNavFn(6,1)" :class="[ checkNav01==6 ? 'checkLi':'']">近6个月</li>
+          <li @click="checkNavFn(12,1)" :class="[ checkNav01==12 ? 'checkLi':'']">近1年</li>
         </ul>
-        <div class="myChart" id="myChart">
+        <div class="myChart" id="myChart1">
 
         </div>
       </section>
-    <section class="item">
+      <section class="item" v-for="">
+        <div class="title">
+          <p>血压报告</p>
+        </div>
+        <ul class="navCut">
+          <li @click="checkNavFn(1,2)" :class="[ checkNav02==1 ? 'checkLi':'']">近1个月</li>
+          <li @click="checkNavFn(3,2)" :class="[ checkNav02==3 ? 'checkLi':'']">近3个月</li>
+          <li @click="checkNavFn(6,2)" :class="[ checkNav02==6 ? 'checkLi':'']">近6个月</li>
+          <li @click="checkNavFn(12,2)" :class="[ checkNav02==12 ? 'checkLi':'']">近1年</li>
+        </ul>
+        <div class="myChart" id="myChart2">
+
+        </div>
+      </section>
+    <section class="item" v-for="">
       <div class="title">
         <p>脑氧报告</p>
       </div>
       <ul class="navCut">
-        <li class="checkLi">近1个月</li>
-        <li>近3个月</li>
-        <li>近6个月</li>
-        <li>近1年</li>
+        <li @click="checkNavFn(1,3)" :class="[ checkNav03==1 ? 'checkLi':'']">近1个月</li>
+        <li @click="checkNavFn(3,3)" :class="[ checkNav03==3 ? 'checkLi':'']">近3个月</li>
+        <li @click="checkNavFn(6,3)" :class="[ checkNav03==6 ? 'checkLi':'']">近6个月</li>
+        <li @click="checkNavFn(12,3)" :class="[ checkNav03==12 ? 'checkLi':'']">近1年</li>
       </ul>
-      <div class="myChart" id="myChart1">
+      <div class="myChart" id="myChart3">
 
       </div>
     </section>
-    <section class="item">
+    <section class="item" v-for="">
       <div class="title">
-        <p>总体训练报告</p>
+        <p>心率报告</p>
       </div>
       <ul class="navCut">
-        <li class="checkLi">近1个月</li>
-        <li>近3个月</li>
-        <li>近6个月</li>
-        <li>近1年</li>
+        <li @click="checkNavFn(1,4)" :class="[ checkNav04==1 ? 'checkLi':'']">近1个月</li>
+        <li @click="checkNavFn(3,4)" :class="[ checkNav04==3 ? 'checkLi':'']">近3个月</li>
+        <li @click="checkNavFn(6,4)" :class="[ checkNav04==6 ? 'checkLi':'']">近6个月</li>
+        <li @click="checkNavFn(12,4)" :class="[ checkNav04==12 ? 'checkLi':'']">近1年</li>
       </ul>
-      <div class="myChart" id="myChart2">
+      <div class="myChart" id="myChart4">
 
       </div>
     </section>
+    <section class="item" v-for="">
+      <div class="title">
+        <p>指氧报告</p>
+      </div>
+      <ul class="navCut">
+        <li @click="checkNavFn(1,5)" :class="[ checkNav05==1 ? 'checkLi':'']">近1个月</li>
+        <li @click="checkNavFn(3,5)" :class="[ checkNav05==3 ? 'checkLi':'']">近3个月</li>
+        <li @click="checkNavFn(6,5)" :class="[ checkNav05==6 ? 'checkLi':'']">近6个月</li>
+        <li @click="checkNavFn(12,5)" :class="[ checkNav05==12 ? 'checkLi':'']">近1年</li>
+      </ul>
+      <div class="myChart" id="myChart5">
+
+      </div>
+    </section>
+
   </div>
 </template>
 
@@ -59,25 +88,102 @@
       return {
         xAxisData : [], //图表时间轴
         seriesData : [],//图表数据
-        checkNav : 1,//导航切换为1,3,6,12个月
+        checkNav01 : 1,//导航切换为1,3,6,12个月
+        checkNav02 : 1,//导航切换为1,3,6,12个月
+        checkNav03 : 1,//导航切换为1,3,6,12个月
+        checkNav04 : 1,//导航切换为1,3,6,12个月
+        checkNav05 : 1,//导航切换为1,3,6,12个月
         title: '训练报告',
+        tranReportObj : {},//训练
+        bpReportObj:{},//血压
+        rsco2ReportObj:{},//脑氧
+        HrReportObj:{},//心率
+        spo2ReportObj:{},//指氧
+        reportDataArry : [],
       }
     },
     mounted(){
-      this.detailsDataChartFn();
       this.getReportData();
+
+
     },
     methods:{
       //导航切换
-      checkNavFn(month){
+      checkNavFn(month,reportType){
+          var obj = {};
+          if(month==1){
+            obj.dayBegin='2018-08-01';
+            obj.dayEnd='2018-08-30';
+          }else if(month==3){
+            obj.dayBegin='2018-05-01';
+            obj.dayEnd='2018-08-30';
+          }else if(month==6){
+            obj.dayBegin='2018-02-01';
+            obj.dayEnd='2018-08-30';
+          }else if(month==12){
+            obj.dayBegin='2017-08-01';
+            obj.dayEnd='2018-08-30';
+          }
+          switch (reportType){
+            case 1:
+                this.checkNav01=month;
+                getTranReport(obj).then(res=>{
+                  //console.log('训练',res)
+                  this.tranReportObj=res.data.result;
+
+                  console.log('训练',this.tranReportObj)
+                })
+              break;
+            case 2:
+                this.checkNav02=month;
+                getBpReport(obj).then( res => {
+                  //console.log("血压：",res)
+                  this.bpReportObj=res.data.result;
+
+                  console.log('血压',this.bpReportObj)
+                })
+              break;
+            case 3:
+                this.checkNav03=month;
+                getRsco2Report(obj).then( res => {
+                  //console.log("脑氧：",res)
+                  this.rsco2ReportObj=res.data.result;
+
+                  console.log('脑氧',this.rsco2ReportObj)
+                })
+              break;
+            case 4:
+                this.checkNav04=month;
+                getHrReport(obj).then( res => {
+                  //console.log("心率：",res)
+                  this.HrReportObj=res.data.result;
+
+                  console.log('心率',this.HrReportObj)
+                })
+              break;
+            case 5:
+                this.checkNav05=month;
+                getspo2Report(obj).then( res => {
+                  //console.log("指氧：",res)
+                  this.spo2ReportObj=res.data.result;
+
+                  console.log('指氧',this.spo2ReportObj)
+                })
+              break;
+          }
         this.checkNav=month;
+        this.detailsDataChartFn()
       },
       //详情条形图
       detailsDataChartFn(){
         // 基于准备好的dom，初始化echarts实例
-        let myChart1 = this.$echarts.init(document.getElementById('myChart'));
-        let myChart2 = this.$echarts.init(document.getElementById('myChart1'));
-        let myChart3 = this.$echarts.init(document.getElementById('myChart2'));
+        let myChart1 = this.$echarts.init(document.getElementById('myChart1'));
+        let myChart2 = this.$echarts.init(document.getElementById('myChart2'));
+        let myChart3 = this.$echarts.init(document.getElementById('myChart3'));
+        let myChart4 = this.$echarts.init(document.getElementById('myChart4'));
+        let myChart5 = this.$echarts.init(document.getElementById('myChart5'));
+        var that = this;
+        console.log(that.tranReportObj)
         myChart1.setOption({
           tooltip : {
             trigger: 'axis'
@@ -96,7 +202,7 @@
             {
               type : 'category',
               boundaryGap : false,
-              data : ["2018-09-06", "2018-09-07", "2018-09-08", "2018-09-09", "2018-09-10", "2018-09-11", "2018-09-12","2018-09-06", "2018-09-07", "2018-09-08", "2018-09-09", "2018-09-10", "2018-09-11", "2018-09-12"]
+              data : that.tranReportObj.tranDate
             }
           ],
           yAxis : [
@@ -109,7 +215,7 @@
               name:'训练报告',
               type:'line',
               itemStyle : {color:'#6b4ccf'},
-              data: [2, 3, 441, 33, 43, 44, 0,422, 3, 441, 33, 43, 44, 0]
+              data: that.tranReportObj.tranValue
             }
           ]
         })
@@ -183,31 +289,117 @@
             }
           ]
         })
+        myChart4.setOption({
+          tooltip : {
+            trigger: 'axis'
+          },
+          legend: {
+            data:['训练报告'],
+          },
+          calculable : true,
+          dataZoom : {
+            show : true,
+            realtime : true,
+            start : 0,
+            end : 100
+          },
+          xAxis : [
+            {
+              type : 'category',
+              boundaryGap : false,
+              data : ["2018-09-06", "2018-09-07", "2018-09-08", "2018-09-09", "2018-09-10", "2018-09-11", "2018-09-12","2018-09-06", "2018-09-07", "2018-09-08", "2018-09-09", "2018-09-10", "2018-09-11", "2018-09-12"]
+            }
+          ],
+          yAxis : [
+            {
+              type : 'value'
+            }
+          ],
+          series : [
+            {
+              name:'训练报告',
+              type:'line',
+              itemStyle : {color:'#6b4ccf'},
+              data: [2, 3, 441, 33, 43, 44, 0,422, 3, 441, 33, 43, 44, 0]
+            }
+          ]
+        })
+        myChart5.setOption({
+          tooltip : {
+            trigger: 'axis'
+          },
+          legend: {
+            data:['训练报告'],
+          },
+          calculable : true,
+          dataZoom : {
+            show : true,
+            realtime : true,
+            start : 0,
+            end : 100
+          },
+          xAxis : [
+            {
+              type : 'category',
+              boundaryGap : false,
+              data : ["2018-09-06", "2018-09-07", "2018-09-08", "2018-09-09", "2018-09-10", "2018-09-11", "2018-09-12","2018-09-06", "2018-09-07", "2018-09-08", "2018-09-09", "2018-09-10", "2018-09-11", "2018-09-12"]
+            }
+          ],
+          yAxis : [
+            {
+              type : 'value'
+            }
+          ],
+          series : [
+            {
+              name:'训练报告',
+              type:'line',
+              itemStyle : {color:'#6b4ccf'},
+              data: [2, 3, 441, 33, 43, 44, 0,422, 3, 441, 33, 43, 44, 0]
+            }
+          ]
+        })
 
       },
       //总训练
       getReportData(){
         let obj ={
-          dayBegin:'2018_09-09',
-          dayEnd:'2018_09-10'
+          dayBegin:'2018-08-01',
+          dayEnd:'2018-08-30'
         }
         console.log(obj)
         getTranReport(obj).then(res=>{
-          console.log('训练',res)
+          //console.log('训练',res)
+          this.tranReportObj=res.data.result;
+          this.reportDataArry.push(res.data.result);
+          console.log('训练',this.tranReportObj)
         })
         getBpReport(obj).then( res => {
-          console.log("血压："+res)
+          //console.log("血压：",res)
+          this.bpReportObj=res.data.result;
+          this.reportDataArry.push(res.data.result);
+          console.log('血压',this.bpReportObj)
         })
         getRsco2Report(obj).then( res => {
-          console.log("脑氧："+res)
+          //console.log("脑氧：",res)
+          this.rsco2ReportObj=res.data.result;
+          this.reportDataArry.push(res.data.result);
+          console.log('脑氧',this.rsco2ReportObj)
         })
         getHrReport(obj).then( res => {
-          console.log("心率："+res)
+          //console.log("心率：",res)
+          this.HrReportObj=res.data.result;
+          this.reportDataArry.push(res.data.result);
+          console.log('心率',this.HrReportObj)
         })
         getspo2Report(obj).then( res => {
-          console.log("指氧："+res)
+          //console.log("指氧：",res)
+          this.spo2ReportObj=res.data.result;
+          this.reportDataArry.push(res.data.result);
+          console.log('指氧',this.spo2ReportObj)
         })
-      }
+        this.detailsDataChartFn();
+      },
 
       //血压
 

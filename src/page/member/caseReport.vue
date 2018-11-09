@@ -66,7 +66,7 @@ export default {
   },
   data(){
     return {
-      title: '病历报告'
+      title: '病历报告',
     }
   },
   mounted(){
@@ -77,10 +77,18 @@ export default {
       getBasicData().then( res => {
         console.log('基本信息='+res)
       });
-      getHistoricalData().then( res => {
+      let obj1={
+        paperId:2,
+        recordId:0
+      }
+      getHistoricalData(obj1).then( res => {
         console.log('患病历史='+res)
       });
-      getStrokeData().then( res => {
+      let obj2={
+        paperId:3,
+        recordId:0
+      }
+      getStrokeData(obj2).then( res => {
         console.log('脑卒中筛查='+res)
       });
     }

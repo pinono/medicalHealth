@@ -88,7 +88,7 @@ const getBasicStruct = params => {
 }
 //获得基本信息-数据
 const getBasicData = params => {
-  return axios.get(HOST + '/api/v1/papers/0')
+  return axios.get(HOST + '/api/v1/paperList/1')
 }
 //编辑基本信息
 const updateBasicInfo = params => {
@@ -100,7 +100,7 @@ const getHistoricalStruct = params => {
 }
 //历史病例-数据
 const getHistoricalData = params => {
-  return axios.get(HOST + '/api/v1/paper-struct/2')
+  return axios.get(HOST + '/api/v1/paperList',{params:params})
 }
 //编辑历史病例
 const updateHistorical = params => {
@@ -112,7 +112,7 @@ const getStrokeStruct = params => {
 }
 //脑卒中筛查-数据
 const getStrokeData = params => {
-  return axios.get(HOST + '/api/v1/papers/3')
+  return axios.get(HOST + '/api/v1/paperList',{params:params})
 }
 //编辑脑卒中筛查
 const updateStroke = params => {
