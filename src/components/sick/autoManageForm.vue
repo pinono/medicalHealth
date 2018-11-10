@@ -7,11 +7,11 @@
           <!--静态标签-->
           <li v-if="item.fieldType.typeId==0" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
             <span>静态标签</span>
-            <input type="text" v-model="StaticInp" readonly="readonly"/>
+            <input type="text" v-model="staticInp" readonly="readonly"/>
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
           </li>
           <!--数字类型-->
-          <li v-if="item.fieldType.typeId==1" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
+          <li v-if="item.fieldType.typeId==2" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
             <span>数字类型</span>
             <input type="number" />
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
@@ -57,7 +57,7 @@
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
           </li>
           <!--多选-->
-          <li @click="showOrClosePop(2,'itemFlag')" v-if="item.fieldType.typeId==2">
+          <li @click="showOrClosePop(2,'itemFlag')" v-if="item.fieldType.typeId==8">
             <span>多选按钮</span>
             <p>{{checkBoxStr}}</p>
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
@@ -151,7 +151,7 @@ export default {
           itemIndex : 0,//弹窗表示
 
 
-          StaticInp:'111',//0.静态标签
+          staticInp:'111',//0.静态标签
         }
     },
     mounted(){
@@ -160,21 +160,19 @@ export default {
     methods : {
       //得到结构
       getItemInfo(index,fieldCode,typeId,content){//参数按顺序是:1.循环索引,2.参数key,3.结构类型,4.结构内容
-        var subObj = {
-        };
-        console.log(fieldCode)
+        var subObj = {};
         switch (typeId){
             //静态标签
           case 0:
-            subObj[]
-            subObj.fieldCode=this.StaticInp;
+            subObj[fieldCode]=this.staticInp;
 
             break;
           //数字类型
           case 1:
               break;
-          //静态标签
+          //单行文本
           case 2:
+            subObj[fieldCode]=this.staticInp;
             break;
           //多行文本
           case 3:
@@ -196,6 +194,7 @@ export default {
             break;
 
         }
+        console.log(subObj)
       },
       //提交表单
       submitForm(){
