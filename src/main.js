@@ -18,7 +18,8 @@ Vue.use(router)
 Vue.use(VueAwesomeSwiper)
 Vue.use(moment)
 Vue.prototype.$echarts = echarts
-
+window.SETDOMAIN = 'cn';
+window.HOST = 'http://60.205.180.79:8002';
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -27,8 +28,7 @@ new Vue({
   template: '<App/>'
 })
 
-window.SETDOMAIN = 'cn';
-window.HOST = 'http://60.205.180.79:8002';
+
 //格式化
 Date.prototype.Format = function (fmt) { 
   var o = {
