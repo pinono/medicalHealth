@@ -18,7 +18,7 @@
 <script>
 import Footer from '@/components/common/footer.vue'
 import manageList from '@/components/common/manageIndexList.vue'
-import {getShareList,getShareDetail} from '@/api/data/share.js'
+import {getShareList,getShareDetail,getVideoList} from '@/api/data/share.js'
 
 export default {
     components : {
@@ -37,6 +37,9 @@ export default {
         this.articals = res.data.result.articals;
         console.log(this.acticals)
 
+      })
+      getVideoList().then ( res => {
+        console.log(res)
       })
       // getShareDetail().then( res => {
       //   console.log(res)

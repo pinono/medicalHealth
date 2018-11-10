@@ -21,12 +21,6 @@ Vue.prototype.$echarts = echarts
 window.SETDOMAIN = 'cn';
 window.HOST = 'http://60.205.180.79:8002';
 /* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
-})
 
 
 //格式化
@@ -49,3 +43,13 @@ Date.prototype.Format = function (fmt) {
 }
   return fmt;
 }
+
+
+new Vue({
+  el: '#app',
+  router,
+  components: { App },
+  template: '<App/>'
+})
+
+

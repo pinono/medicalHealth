@@ -11,7 +11,7 @@
                 </swiper>
             </section>
             <section v-show="curDate == 'week'">
-                <div id="myChart" :style="{width: '300px', height: '208px',margin:'0 auto'}"></div>
+                <div id="myChart" :style="{width: '300px', height: '220px',margin:'0 auto'}"></div>
             </section>
             <section class="detail-wrap" v-show="curDate == 'day'" >
                 <div v-if="resultData">   
@@ -49,7 +49,7 @@
                 <li @click="tabCut('month')" :class="curDate == 'month' ? 'act': ''">月</li>
             </ul>
             <!-- 训练 -->
-            <ul class="trainData" v-if="resultData.tran">
+            <ul class="trainData" v-if="resultData.tran || resultData.trans" >
                 <li>
                    <p class="times">{{resultData.param.tranTotal}}</p> 
                    <p class="name">训练次数</p>
@@ -59,7 +59,7 @@
                    <p class="name">有效次数</p>
                 </li>
                 <li>
-                   <p class="result">
+                   <p class="result train">
                        <span class="zan"></span>
                        <span class="num">+{{resultData.param.effect}}</span>
                     </p>
@@ -67,7 +67,7 @@
                 </li>
             </ul>
             <!-- 脑氧 -->
-            <ul class="trainData" v-if="resultData.rsco2">
+            <ul class="trainData" v-if="resultData.rsco2 || resultData.rsco2s">
                 <li>
                    <p class="times">{{resultData.param.rsco2Total}}</p> 
                    <p class="name">测量次数</p>
@@ -85,7 +85,7 @@
                 </li>
             </ul>
             <!-- 血压 -->
-            <ul class="trainData" v-if="resultData.bp">
+            <ul class="trainData" v-if="resultData.bp || resultData.bps">
                 <li>
                    <p class="times">{{resultData.param.bpTotal}}</p> 
                    <p class="name">测量次数</p>
@@ -103,7 +103,7 @@
                 </li>
             </ul>
             <!-- 心率 -->
-            <ul class="trainData" v-if="resultData.hr">
+            <ul class="trainData" v-if="resultData.hr || resultData.hrs">
                 <li>
                    <p class="times">{{resultData.param.hrTotal}}</p> 
                    <p class="name">测量次数</p>
@@ -193,10 +193,12 @@ export default {
             switch ( data ) {
                 case 'day' :
                     this.arrTurnDate(this.homeDate,this.homeDate);  //day 
+                    this.switchData(this.homeDate)
 
                 break;
                 case 'week' :
                     this.arrTurnWeek(this.homeDate,this.homeDate);
+                    this.switchArrData(this.dateWeekBuf2[1])
                 break
             }
         },
@@ -209,6 +211,7 @@ export default {
                     centeredSlides : true,
                     slidesOffsetBefore : 0,
                     slidesOffsetAfter : 0,
+                    initialSlide :1,//默认第二个
                     on: {
                         slideChangeTransitionEnd: function(){
                             if ( that.curDate == 'day') {
@@ -338,6 +341,7 @@ export default {
                 case 'train' :
                     this.title = '训练';
                     getDataTrains(chooseDate).then  ( res => {
+                        this.resultData = res.data.result;
                         var data = res.data.result.trans.effect;
                         that.drawLine(data);
                         
@@ -346,6 +350,7 @@ export default {
                 case 'brain' :
                     this.title = '脑氧';
                     getDataRsco2s(chooseDate).then( res => {
+                        this.resultData = res.data.result;
                         var data = res.data.result.rsco2s.rsco2Value1;
                         that.drawLine(data);
                         
@@ -354,6 +359,7 @@ export default {
                 case 'blood' :
                     this.title = '血压';
                     getDataBps(chooseDate).then( res => {
+                        this.resultData = res.data.result;
                         var hightData = res.data.result.bps.bpHighLeftFirst;
                         var lowData = res.data.result.bps.bpLowLeftFirst;
                         that.drawLine2(hightData,lowData);
@@ -362,6 +368,7 @@ export default {
                 case 'heart' :
                     this.title = '心率';
                     getDataHrs(chooseDate).then( res => {
+                        this.resultData = res.data.result;
                         var data = res.data.result.hrs.hrValue1;
                         that.drawLine(data);
 
@@ -370,6 +377,7 @@ export default {
                 case 'oxygen' :
                     this.title = '指氧';
                     getDataSpo2s(chooseDate).then( res => {
+                        this.resultData = res.data.result;
                         var data = res.data.result.spo2s.spo2Value1;
                         that.drawLine(data);
                     })
@@ -387,15 +395,31 @@ export default {
             var option = {
                 xAxis: {
                     type: 'category',
-                    data: ['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ]
+                    data: ['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ],
+                    axisLine:{
+                        lineStyle:{
+                            color:'#fff',
+                            opacity:'.1',
+
+                        }
+                    },
                 },
                 yAxis: {
-                    type: 'value'
+                    type: 'value',
+                    axisLine:{
+                        lineStyle:{
+                            color:'#fff',
+                            opacity:'.1',
+                        }
+                    },
                 },
-                series: [{
-                    data: data,
-                    type: 'line'
-                }]
+                series: [
+                    {
+                        data: data,
+                        type: 'line',
+                        itemStyle : {color:'#fff'},
+                    }
+                ]
             };
             myChartArr.setOption(option);
         },
@@ -725,8 +749,11 @@ export default {
                    font-size:28px;
                    color:#888;
                }
-               .result{
+               .result.train{
                    line-height: 10px;
+               }
+               .result{
+                   line-height: 34px;
                    .zan{
                        display: inline-block;
                         width:35px;height:35px;
