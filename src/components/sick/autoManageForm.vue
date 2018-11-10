@@ -11,19 +11,19 @@
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
           </li>
           <!--数字类型-->
-          <li v-if="item.fieldType.typeId==2" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
+          <li v-if="item.fieldType.typeId==1" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
             <span>数字类型</span>
-            <input type="number" />
+            <input type="number" v-model="numInp" />
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
           </li>
           <!--单行文本-->
           <li v-if="item.fieldType.typeId==2" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
             <span>单行文本</span>
-            <input type="text" value="" name=""/>
+            <input type="text" v-model="aSingleInp" />
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
           </li>
           <!--多行文本-->
-          <li @click="showOrClosePop(3,'index1')" v-if="item.fieldType.typeId==3">
+          <li v-if="item.fieldType.typeId==3" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
             <span>多行文本</span>
             <p>{{supplementText}}</p>
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
@@ -31,17 +31,17 @@
           <!--日期类型-->
           <li @click="openPicker" v-if="item.fieldType.typeId==4">
             <span>日期类型</span>
-            <p>{{dateTime}}</p>
+            <p>{{dateVal}}</p>
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
           </li>
           <!--时间类型-->
           <li @click="openPickerLength" v-if="item.fieldType.typeId==5">
             <span>时间类型</span>
-            <p>{{timeLength}}</p>
+            <p>{{timeVal}}</p>
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
           </li>
           <!--单选-->
-          <li @click="showOrClosePop(1,'itemFlag')" v-if="item.fieldType.typeId==6">
+          <li @click="showOrClosePop(6,'itemFlag')" v-if="item.fieldType.typeId==6">
             <span>单选按钮</span>
             <p>{{radioVal}}</p>
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
@@ -57,7 +57,7 @@
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
           </li>
           <!--多选-->
-          <li @click="showOrClosePop(2,'itemFlag')" v-if="item.fieldType.typeId==8">
+          <li @click="showOrClosePop(8,'itemFlag')" v-if="item.fieldType.typeId==8">
             <span>多选按钮</span>
             <p>{{checkBoxStr}}</p>
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
@@ -70,7 +70,7 @@
 <!--
 弹窗部分
 -->
-      <div class="pop_background" @click="showOrClosePop(0)" v-if="popStatus==1||popStatus==2||popStatus==3"></div>
+      <div class="pop_background" @click="showOrClosePop(0)" v-if="popStatus==3||popStatus==6||popStatus==8"></div>
       <!--多行文本-弹窗-->
       <div class="pop_supplement" v-if="popStatus==3">
         <p class="popsup_title">补充说明</p>
@@ -81,7 +81,7 @@
         </div>
       </div>
       <!--多选框-弹窗-->
-      <div class="pop_checkBox" v-if="popStatus==2">
+      <div class="pop_checkBox" v-if="popStatus==8">
         <mt-checklist
           v-model="checkBoxVal"
           :options="checkBoxPop">
@@ -92,7 +92,7 @@
         </div>
       </div>
       <!--单选框-弹窗-->
-      <div class="pop_checkBox pop_radio" v-if="popStatus==1">
+      <div class="pop_checkBox pop_radio" v-if="popStatus==6">
         <mt-radio
           v-model="radioVal"
           :options="radioPop">
@@ -106,7 +106,7 @@
       <mt-datetime-picker
         ref="dateTimeType"
         type="datetime"
-        v-model="dateTime"
+        v-model="dateVal"
         year-format="{value} 年"
         month-format="{value} 月"
         date-format="{value} 日"
@@ -119,7 +119,7 @@
       <mt-datetime-picker
         ref="timeType"
         type="time"
-        v-model="timeLength"
+        v-model="timeVal"
         hour-format="{value}时"
         minute-format="{value}分"
         @confirm="handleConfirmLength">
@@ -138,44 +138,76 @@ export default {
           fieldList : [],     //表单结构
           supplementText : '',//补充说明表单内容
           supplementPopText : '',//补充说明弹窗内容
-          popStatus : 0,//弹窗显示与隐藏(0是隐藏弹窗,1单选按钮,2复选框,3多行文本)
-          dateTime: '', //发作的时间值
           startDate: new Date('1807'),//设置开始时间根据自己的需要
           //endDate: new Date('2018'),//设置结束时间
+          radioPop:[],//单选按钮的选项
           checkBoxPop:[],//复选框的选项
           checkBoxVal:[],//复选框选中的值
-          checkBoxStr: '',//发作先兆的值
-          radioVal:'',//单选按钮选中的值
-          radioPop:[],
-          timeLength: '',//发作时长值
-          itemIndex : 0,//弹窗表示
+
+          itemIndex : 0,//弹窗表示===========
+
+          popStatus : 0,//弹窗显示与隐藏(0是隐藏弹窗,6单选按钮,8复选框,3多行文本)
+          subObj:{},//提交表单的参数
+          staticInp:'',//0.静态标签
+          numInp:null,//1.数字类型
+          aSingleInp:'',//2.单行文本
+          textareaVal:'',//3.多行文本
+          dateVal: '', //4.日期类型
+          timeVal: '',//5.时间类型
+          radioVal:'',//6.单选按钮选中的值
+          checkBoxStr: '',//8.发作先兆的值
 
 
-          staticInp:'111',//0.静态标签
+
+
+          /*赋值时的条件*/
+          itemIndex:null,
+          itemFieldCode:'',
+          itemTypeId:null,
+          itemContent:'',
+
+
+
+
+
+
         }
     },
     mounted(){
         this.checkList();
     },
     methods : {
-      //得到结构
+      //赋值
       getItemInfo(index,fieldCode,typeId,content){//参数按顺序是:1.循环索引,2.参数key,3.结构类型,4.结构内容
-        var subObj = {};
+        this.itemIndex=index;
+        this.itemFieldCode=fieldCode;
+        this.itemTypeId=typeId;
+        this.itemContent=content;
+        console.log('赋值时的条件',this.itemIndex+'/'+this.itemFieldCode+'/'+this.itemTypeId+'/'+this.itemContent)
+
         switch (typeId){
             //静态标签
           case 0:
-            subObj[fieldCode]=this.staticInp;
-
+            this.subObj[fieldCode]=this.staticInp;
             break;
           //数字类型
           case 1:
+            this.subObj[fieldCode]=this.numInp;
               break;
           //单行文本
           case 2:
-            subObj[fieldCode]=this.staticInp;
+            this.subObj[fieldCode]=this.aSingleInp;
+
+
+
+
+            this.popStatus=3;
+
+
             break;
           //多行文本
           case 3:
+
             break;
           //日期类型
           case 4:
@@ -194,7 +226,7 @@ export default {
             break;
 
         }
-        console.log(subObj)
+        console.log(this.subObj)
       },
       //提交表单
       submitForm(){
@@ -207,35 +239,42 @@ export default {
         if(index==1){
             this.itemIndex=index;
         }
-        /*if(popFlag == 3){
-          this.supplementPopText=this.supplementText;
-        }*/
         this.popStatus=popFlag;
-        console.log(this.popStatus)
+
       },
       //pop的确定按钮
       supplementFn(){
-
         this.popStatus=0;//确定后隐藏弹框
-        this.supplementText=this.supplementPopText;
 
+        this.supplementText=this.supplementPopText;
         this.checkBoxStr = this.checkBoxVal.join(",");
+        //alert(this.itemTypeId+","+this.itemFieldCode+","+this.supplementText)
+
+        if(this.itemTypeId==3){
+          this.subObj[this.itemFieldCode]=this.supplementText;
+        }else if(this.itemTypeId==6){
+          this.subObj[this.itemFieldCode]=this.radioVal;
+        }else if(this.itemTypeId==8){
+          this.subObj[this.itemFieldCode]=this.checkBoxStr;
+        }
+
+        console.log(this.subObj)
       },
       //datetime日期组件
       openPicker () {
         this.$refs.dateTimeType.open()
-        this.dateTime=new Date()
+        this.dateVal=new Date()
       },
       handleConfirm (data) {//成功回调
         let date = moment(data).format("YYYY-MM-DD HH:mm")
-        this.dateTime = date
+        this.dateVal = date
       },
       //time时间组件
       openPickerLength(){
         this.$refs.timeType.open()
       },
       handleConfirmLength(data){//成功回调
-        this.timeLength = data
+        this.timeVal = data
       },
       //复选框组件
       checkList(){
