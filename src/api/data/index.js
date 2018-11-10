@@ -38,7 +38,7 @@ const getDataSpo2 = params  => {
 const getDataSick = params => {
   return axios.get(HOST + '/api/v1/paperListOfType/'+params)
 }
-//
+//得到paperId
 const getPaperModel = params => {
   return axios.get(HOST + '/api/v1/paperModelList/'+params)
 }
@@ -118,6 +118,11 @@ const getStrokeData = params => {
 const updateStroke = params => {
   return axios.post(HOST + '/api/v1/updatePaper/3/0',params)
 }
+//病理报告
+const getCaseReport = params => {
+  return axios.get(HOST + '/api/v1/blReport',{params:params})
+}
+
 //训练报告-训练
 const getTranReport = params => {
   return axios.get(HOST + '/api/v1/tranReport',{params:params})
@@ -143,8 +148,6 @@ const getspo2Report = params => {
 export{
     getDataHome,
     getDataTrain,
-    getShareList,
-    getShareDetail,
     GoMemLoin,
     getDataSick,
     getPaperModel,
@@ -175,6 +178,7 @@ export{
     getRsco2Report,
     getHrReport,
     getspo2Report,
+    getCaseReport,
 }
 
 

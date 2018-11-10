@@ -2,27 +2,42 @@
     <div>
         <header-top :title="title"></header-top>
         <div class="swiper" :class="bgColor">
-            <section class="date-wrap">
+            <section :class="'date-wrap ' + curDate ">
                 <swiper :options="lineSwiperOpt()" ref="mySwiperA">
                     <!-- slides -->
-                    <swiper-slide v-for="(item,i) in dateDayBuf1" :key="i">{{item}}</swiper-slide>
+                    <swiper-slide v-if="curDate == 'day'" v-for="(item,i) in dateDayBuf1" :key="i">{{item}}</swiper-slide>
+
+                    <swiper-slide v-if="curDate == 'week'" v-for="(item,i) in dateWeekBuf1" :key="i+'week'">{{item}}</swiper-slide>
                 </swiper>
+            </section>
+            <section v-show="curDate == 'week'">
+                <div id="myChart" :style="{width: '300px', height: '208px',margin:'0 auto'}"></div>
             </section>
             <section class="detail-wrap" v-show="curDate == 'day'" >
                 <div v-if="resultData">   
-                    <div v-if="resultData.param" class="zanwrap">
+                    <div v-if="resultData.param && !resultData.bp" class="zanwrap">
                         <span :class="'zanNo zanNo' + resultData.param.effect"></span>
-                        <p class="tip" v-if="resultData.param.effect == null">没有训练哦!</p>
                         <p class="tip" v-if="resultData.param.effect == 0">没有训练哦~</p>
                         <p class="tip" v-if="resultData.param.effect == 1">训练效果很棒!</p>
                         <p class="tip" v-if="resultData.param.effect == 2">训练效果非常棒!</p>
                         <p class="tip" v-if="resultData.param.effect == 3">训练效果特别棒!</p>
                     </div>
                 </div>
-                
-                <div v-if="!resultData" class="zanwrap">
-                    <span :class="'zanNo zanNoCry'"></span>
-                    <p class="tip" >没有训练哦!</p>
+                <div v-if="resultData.bp" class="zanwrap">
+                    <table class="table">
+                        <tr>
+                            <td>左臂</td>
+                            <td>右臂</td>
+                        </tr>
+                        <tr>
+                            <td>{{resultData.bp.bpHighLeftFirst}}</td>
+                            <td>{{resultData.bp.bpHighRightFirst}}</td>
+                        </tr>
+                        <tr>        
+                            <td>{{resultData.bp.bpLowLeftFirst}}</td>
+                            <td>{{resultData.bp.bpLowRightFirst}}</td>
+                        </tr>
+                    </table>
                 </div>
             </section>
         </div>
@@ -138,6 +153,8 @@ import HeaderTop from '@/components/common/header.vue'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import { getDataTrain,getDataHome,getDataBp,getDataRsco2,getDataHr,getDataSpo2 } from '@/api/data/index.js'
+import { getDataTrains,getDataBps,getDataRsco2s,getDataHrs,getDataSpo2s } from '@/api/data/home.js'
+
 export default {
     components : {
         HeaderTop,swiper,swiperSlide,
@@ -154,15 +171,18 @@ export default {
             zanNum : [],
             selectDate : this.$route.query.selectDate,
             homeDate : this.$route.query.selectDate,
-            dateDayBuf1 : [],   //日期模板 08.1
+            homeWeek : '',
+            dateDayBuf1 : [],   //日期 day 模板 08.1
             dateDayBuf2 : [],   //日期模板 2018-08-01 
+            dateWeekBuf1 : [] ,  //日期  week 模板  08.05-08.11
+            dateWeekBuf2 : [] ,  //日期  week 模板  08.05-08.11
+
         }
     },
     mounted () {
         this.switchData();
         this.arrTurnDate(this.homeDate,this.homeDate);  //day 
-        this.arrTurnWeek();
-
+        this.arrTurnWeek(this.homeDate,this.homeDate); //week
     },
     methods : {
         /**
@@ -170,6 +190,15 @@ export default {
          * */
         tabCut (data) {
             this.curDate = data;
+            switch ( data ) {
+                case 'day' :
+                    this.arrTurnDate(this.homeDate,this.homeDate);  //day 
+
+                break;
+                case 'week' :
+                    this.arrTurnWeek(this.homeDate,this.homeDate);
+                break
+            }
         },
         // 时间轴配置
         lineSwiperOpt () {
@@ -182,69 +211,221 @@ export default {
                     slidesOffsetAfter : 0,
                     on: {
                         slideChangeTransitionEnd: function(){
-                            if( this.activeIndex == 0 ) {
-                                console.log(this.activeIndex);
-                                that.switchData(that.dateDayBuf2[0])
-                                that.arrTurnDate(that.homeDate,that.dateDayBuf2[0])
-                                this.slideTo(1, 10, false);
-                            }else if ( this.activeIndex == 2 ){
-                                console.log(this.activeIndex);
-                                that.switchData(that.dateDayBuf2[2])
-                                that.arrTurnDate(that.homeDate,that.dateDayBuf2[2])
-                                this.slideTo(1, 10, false);
-                            }else if ( this.activeIndex == 1 ) {
-                                that.switchData(that.dateDayBuf2[1])
-                            } 
+                            if ( that.curDate == 'day') {
+                                switch ( this.activeIndex ) {
+                                    case 0 :
+                                        that.switchData(that.dateDayBuf2[0])
+                                        that.arrTurnDate(that.homeDate,that.dateDayBuf2[0])
+                                        this.slideTo(1, 10, false);
+                                    break;
+                                    case 1 :
+                                        that.switchData(that.dateDayBuf2[1])
+                                        that.arrTurnDate(that.homeDate,that.dateDayBuf2[1])
+                                        this.slideTo(1, 10, false);
+                                    break;
+                                    case 2 :
+                                        that.switchData(that.dateDayBuf2[2])
+                                        that.arrTurnDate(that.homeDate,that.dateDayBuf2[2])
+                                        this.slideTo(1, 10, false);
+                                    break;
+                                }
+                            } else if ( that.curDate == 'week' ) {
+                                switch ( this.activeIndex ) {
+                                    case 0 :
+                                        that.switchArrData(that.dateWeekBuf2[0])
+                                        that.arrTurnWeek(that.homeDate,that.dateWeekBuf2[0].dayBegin);
+                                        this.slideTo(1, 10, false);
+                                    break;
+                                    case 1 :
+                                        that.switchArrData(that.dateWeekBuf2[1])
+                                        that.arrTurnWeek(that.homeDate,that.dateWeekBuf2[1].dayBegin);
+
+                                        this.slideTo(1, 10, false);
+
+                                    break
+                                    case 2 :
+                                        that.switchArrData(that.dateWeekBuf2[2])
+                                        that.arrTurnWeek(that.homeDate,that.dateWeekBuf2[2].dayBegin);
+                                        this.slideTo(1, 10, false);
+
+                                    break
+                                }
+                            }
+                            
 
                         },
                     },
             }
             return swiperOption;
         },
+        // 请求单日接口
         switchData (chooseDate) {
             this.bgColor = this.$route.query.type;
             var obj = {
                 date : chooseDate ? chooseDate :this.selectDate
             }
+            
             switch ( this.bgColor ) {
                 case 'train' :
                     this.title = '训练';
-                    getDataTrain(obj).then( res => {
-                        this.resultData = res.data.result;
+                    if ( this.curDate == 'day') {
+                            getDataTrain(obj).then( res => {
+                            this.resultData = res.data.result;
+                        })
+                    }else {
+                        getDataTrains(obj).then  ( res => {
+                            
+                        })
+                    }
+                    
+                    break;
+                case 'brain' :
+                    this.title = '脑氧';
+                    if ( this.curDate == 'day' ) {
+                        getDataRsco2(obj).then( res => {
+                            this.resultData = res.data.result;
+                            console.log('rsco2',this.resultData)
+                        })
+                    } else {
+
+                    }
+                    
+                    break;
+                case 'blood' :
+                    this.title = '血压';
+                    if ( this.curDate == 'day' ) {
+                        getDataBp(obj).then( res => {
+                            this.resultData = res.data.result;
+                            console.log('bps',this.resultData)
+                        })
+                    } else {
+
+                    }
+                    break;
+                case 'heart' :
+                    this.title = '心率';
+                    if ( this.curDate == 'day' ) {
+                        getDataHr(obj).then( res => {
+                            this.resultData = res.data.result;
+                            console.log('hr',this.resultData)
+                        })
+                    }else {
+
+                    }
+                    
+                    break;
+                case 'oxygen' :
+                    this.title = '指氧';
+                    if ( this.curDate == 'day' ) {
+                        getDataSpo2(obj).then( res => {
+                            this.resultData = res.data.result;
+                            console.log('spo2',this.resultData)
+                        })
+                    } else {
+                        
+                    }
+                    
+                    break;
+            }
+
+        },
+        // 请求时间段 接口
+        switchArrData (chooseDate) {
+            var that = this;
+            this.bgColor = this.$route.query.type;
+            
+            switch ( this.bgColor ) {
+                case 'train' :
+                    this.title = '训练';
+                    getDataTrains(chooseDate).then  ( res => {
+                        var data = res.data.result.trans.effect;
+                        that.drawLine(data);
+                        
                     })
                     break;
                 case 'brain' :
                     this.title = '脑氧';
-                    getDataRsco2(obj).then( res => {
-                        this.resultData = res.data.result;
-                        console.log('rsco2',this.resultData)
+                    getDataRsco2s(chooseDate).then( res => {
+                        var data = res.data.result.rsco2s.rsco2Value1;
+                        that.drawLine(data);
+                        
                     })
                     break;
                 case 'blood' :
                     this.title = '血压';
-                    getDataBp(obj).then( res => {
-                        this.resultData = res.data.result;
-                        console.log('bps',this.resultData)
+                    getDataBps(chooseDate).then( res => {
+                        var hightData = res.data.result.bps.bpHighLeftFirst;
+                        var lowData = res.data.result.bps.bpLowLeftFirst;
+                        that.drawLine2(hightData,lowData);
                     })
                     break;
                 case 'heart' :
                     this.title = '心率';
-                    getDataHr(obj).then( res => {
-                        this.resultData = res.data.result;
-                        console.log('hr',this.resultData)
+                    getDataHrs(chooseDate).then( res => {
+                        var data = res.data.result.hrs.hrValue1;
+                        that.drawLine(data);
+
                     })
                     break;
                 case 'oxygen' :
                     this.title = '指氧';
-                    getDataSpo2(obj).then( res => {
-                        this.resultData = res.data.result;
-                        console.log('spo2',this.resultData)
+                    getDataSpo2s(chooseDate).then( res => {
+                        var data = res.data.result.spo2s.spo2Value1;
+                        that.drawLine(data);
                     })
                     break;
             }
 
         },
-        //数组日期 转化
+        /**
+         **  绘制图表
+         **/ 
+        drawLine(data){
+            var myChartArr ;
+            myChartArr = this.$echarts.init(document.getElementById('myChart'))
+            // 绘制图表
+            var option = {
+                xAxis: {
+                    type: 'category',
+                    data: ['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ]
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: data,
+                    type: 'line'
+                }]
+            };
+            myChartArr.setOption(option);
+        },
+        drawLine2(hightData,lowData){
+            var myChartArr ;
+            myChartArr = this.$echarts.init(document.getElementById('myChart'))
+            // 绘制图表
+            var option = {
+                xAxis: {
+                    type: 'category',
+                    data: ['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ]
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        data: hightData,
+                        type: 'line'
+                    },
+                    {
+                        data: lowData,
+                        type: 'line'
+                    }
+
+                ]
+            };
+            myChartArr.setOption(option);
+        },
+        //数组日期 day 转化 
         arrTurnDate (homeDate,chooseDate) {
             const nDay = 3;
             var getHomeDay = new Date(homeDate);
@@ -291,37 +472,42 @@ export default {
             console.log(dateDayBuf2)
 
         },
-        arrTurnWeek () {
+        // 日期周转化
+        arrTurnWeek (homeDate,chooseDate) {
             /**
             *	nDay          日期数组的长度
             *   nWeek         周的长度
             *   getHomeDay    最终的日期,可以设置为当前日期
             *   dateDayBuf    日期数组
-            *   dateWeekBuf   周的数组
+            *   dateWeekBuf1   周的数组
+            *   dateWeekBuf2   周的数组
             */
             const nDay = 15;
             const nWeek = 3;
-            var getHomeDay = new Date('2018-11-09');
+            var getHomeDay = new Date(homeDate);
 
             var dateDayBuf = new Array(nDay);
-            var dateWeekBuf = new Array(nWeek);
+            var dateWeekBuf1 = new Array(nWeek);
+            var dateWeekBuf2 = new Array(nWeek);
 
             function initDateWeek(date){
                 var dateDemo = new Date(date);
                 dateDemo.setDate(dateDemo.getDate() + parseInt(nWeek/2)*7);
                 for(var i=nWeek-1;i>=0; i--){
-                    dateWeekBuf[i] = getDateOfWeek(dateDemo);
+                    dateWeekBuf1[i] = getDateOfWeek(dateDemo);
+                    dateWeekBuf2[i] = getDateOfWeek2(dateDemo);
+
                     dateDemo.setDate(dateDemo.getDate() - 7);
                     
                 }
 
                 for(var i=0; i<nWeek; i++){
-                    console.log(dateWeekBuf[i]);
+                    console.log(dateWeekBuf1[i]);
                 }
             }
 
             //刷新数组
-            function refreshDateWeek(date){
+            (function refreshDateWeek(date){
                 var dateDemo = new Date(date);
                 var dateDemoParam = new Date(date);
 
@@ -332,7 +518,7 @@ export default {
                 }
 
                 initDateWeek(dateDemoParam);
-            }
+            })(chooseDate)
 
 
             function getDateOfWeek(dateDemo) {  
@@ -346,15 +532,33 @@ export default {
 
                 return dateBegin.Format("MM.dd") + '-' + dateEnd.Format("MM.dd");
             }
-	        refreshDateWeek('2018-10-01');
+            function getDateOfWeek2 (dateDemo) {  
+                var dateBegin = new Date(dateDemo);  
+                var dateEnd = new Date(dateDemo);
+                var nInvDay = dateBegin.getDay();  
 
+                dateBegin.setDate(dateBegin.getDate() - nInvDay);
+                dateEnd.setDate(dateEnd.getDate() - nInvDay + 6);
+                var obj = {
+                    dayBegin : dateBegin.Format("yyyy-MM-dd"),
+                    dayEnd : dateEnd.Format("yyyy-MM-dd")
+                }
+                return obj;
+            }
+            this.dateWeekBuf1 = dateWeekBuf1;
+            this.dateWeekBuf2 = dateWeekBuf2;
+
+            console.log(this.dateWeekBuf2)
         },
         /**
          * 获取数据
          * */
-        getData () {
-
-
+        getPrevWeek () {
+            var date = new Date(this.homeDate);//获取当前时间
+            date.setDate(date.getDate()-7);//设置天数 -1 天
+            var time = date.Format("yyyy-MM-dd");
+            return time;
+            // alert(time)
         },
 
         /***
@@ -398,6 +602,7 @@ export default {
     .detail-wrap{
         height: 418px;
         .zanwrap{
+            overflow: hidden;
             text-align: center;
         }
         .zanNo{
@@ -555,6 +760,23 @@ export default {
             }
         }
     }
+    .table{
+        // border:1px solid #fff;
+        margin:0 auto;
+        margin-top:70px;
+        td {
+            width:220px;height:70px;
+            text-align: center;
+            color:#fff;font-size:40px;
+            border-bottom:1px solid #fff;
+        }
+        tr td:first-of-type{
+            border-right:1px solid #fff;
+        }
+        tr:last-of-type td{
+            border-bottom:none;
+        }
+    }
     .date-wrap{
         height: 100px;
         .swiper-wrapper{
@@ -573,9 +795,19 @@ export default {
             .swiper-slide-active{
                 font-size:40px;
                 opacity: 1;
-            line-height: 82px;
-
+                line-height: 82px;
             }
+        }
+    }
+    .date-wrap.week{
+        .swiper-slide{
+            width:210px !important;
+        }
+        .swiper-slide-active{
+            font-size:40px;
+            opacity: 1;
+            width:230px!important;
+            line-height: 82px;
         }
     }
 </style>

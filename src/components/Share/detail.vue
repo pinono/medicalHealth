@@ -23,11 +23,18 @@
     </div>
 </template>
 <script>
+import { getShareDetail } from '@/api/data/share.js'
 export default {
     data () {
         return {
-
+            id : this.$route.query.artical
         }
+    },
+    mounted () {
+        alert(this.id)
+        getShareDetail(this.id).then( res => {
+
+        })
     },
     methods : {
         zan () {

@@ -11,7 +11,7 @@ const getShareList = params  => {
 
 // 医患分享详情
 const getShareDetail = params  => {
-    return axios.get(HOST + '/api/v1/articals/1',{params:params});
+    return axios.get(HOST + '/api/v1/articals/'+ params);
 }
 
 

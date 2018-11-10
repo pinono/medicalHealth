@@ -14,69 +14,34 @@
         <p>2018-08-11  21:35:59</p>
       </div>
     </div>
-    <div class="item" @click="goDetail('shareDetail')">
-      <img class="img" src="../../assets/images/goodsImg.png">
-      <div class="text">
-        <p>中国人民解放军第302医院体检中心</p>
-        <p>2018-08-11  21:35:59</p>
+    <section class="shareList">
+      <div  class="item" v-for="(item,i) in arrActs" :key="i" @click="goDetail('shareDetail',arrActs[i].articalId)">
+        <img class="img" src="../../assets/images/goodsImg.png">
+        <div class="text">
+          <p>{{item.title}}</p>
+          <p>{{item.author}}</p>
+          <p>{{item.readed}}人已看{{item.articalId}}</p>
+        </div>
       </div>
-    </div>
-    <div class="item" @click="goDetail('shareDetail')">
-      <img class="img" src="../../assets/images/goodsImg.png">
-      <div class="text">
-        <p>中国人民解放军第302医院体检中心</p>
-        <p>2018-08-11  21:35:59</p>
-      </div>
-    </div>
-    <div class="item" @click="goDetail('shareDetail')">
-      <img class="img" src="../../assets/images/goodsImg.png">
-      <div class="text">
-        <p>中国人民解放军第302医院体检中心</p>
-        <p>2018-08-11  21:35:59</p>
-      </div>
-    </div>
-    <div class="item" @click="goDetail('shareDetail')">
-      <img class="img" src="../../assets/images/goodsImg.png">
-      <div class="text">
-        <p>中国人民解放军第302医院体检中心</p>
-        <p>2018-08-11  21:35:59</p>
-      </div>
-    </div>
-    <div class="item" @click="goDetail('shareDetail')">
-      <img class="img" src="../../assets/images/goodsImg.png">
-      <div class="text">
-        <p>中国人民解放军第302医院体检中心</p>
-        <p>2018-08-11  21:35:59</p>
-      </div>
-    </div>
-    <div class="item" @click="goDetail('shareDetail')">
-      <img class="img" src="../../assets/images/goodsImg.png">
-      <div class="text">
-        <p>中国人民解放军第302医院体检中心</p>
-        <p>2018-08-11  21:35:59</p>
-      </div>
-    </div>
-    <div class="item" @click="goDetail('shareDetail')">
-      <img class="img" src="../../assets/images/goodsImg.png">
-      <div class="text">
-        <p>中国人民解放军第302医院体检中心</p>
-        <p>2018-08-11  21:35:59</p>
-      </div>
-    </div>
+    </section>
   </div>
 </template>
 <script>
 export default {
+    props : ['arrActs'],
     data () {
         return {
 
         }
     },
+    mounted () {
+      // console.log(this.arrActs)
+    },
     methods : {
-        goDetail (purpose) {
+        goDetail (purpose,id) {
             switch (purpose) {
                 case 'shareDetail' :
-                    this.$router.push({path: '/shareDetail'})
+                    this.$router.push({path: '/shareDetail?artical=' + id})
                     break;
             }
         }
@@ -124,7 +89,14 @@ export default {
       bottom: 0px;
     }
   }
-
+  .shareList {
+    .item .text>p:nth-child(3) {
+      font-size: 0.32rem;
+      color: #888888;
+      position: absolute;
+      bottom: -3px;right:0;
+    }
+  }
 </style>
 
 

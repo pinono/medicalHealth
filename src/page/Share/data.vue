@@ -9,7 +9,7 @@
           </ul>
         </div>
         <section>
-            <manage-list></manage-list>
+            <manage-list :arrActs="articals"></manage-list>
         </section>
         <Footer :nowStatus="nowStatus"></Footer>
 
@@ -29,11 +29,14 @@ export default {
         return {
             nowStatus : 'share',
             curIndex : 1,
+            articals : [],
         }
     },
     mounted () {
       getShareList().then( res => {
-        console.log(res)
+        this.articals = res.data.result.articals;
+        console.log(this.acticals)
+
       })
       // getShareDetail().then( res => {
       //   console.log(res)
