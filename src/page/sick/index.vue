@@ -9,22 +9,84 @@
     <div class="addItemBtn" @click="addManItemFn">
       <img src="../../assets/images/manage/addmanageItem.png" alt="">
     </div>
-    <!--列表组件-->
+    <!--列表-->
     <div class="emptyBlock"></div>
-    <manage-list></manage-list>
+    <div class="contList">
+      <div class="item" @click="goForm()">
+        <img class="img" src="../../assets/images/goodsImg.png">
+        <div class="text">
+          <p>中国人民解放军第302医院体检中心</p>
+          <p>2018-08-11  21:35:59</p>
+        </div>
+      </div>
+      <div class="item" @click="goForm()">
+        <img class="img" src="../../assets/images/goodsImg.png">
+        <div class="text">
+          <p>中国人民解放军第302医院体检中心</p>
+          <p>2018-08-11  21:35:59</p>
+        </div>
+      </div>
+      <div class="item" @click="goForm()">
+        <img class="img" src="../../assets/images/goodsImg.png">
+        <div class="text">
+          <p>中国人民解放军第302医院体检中心</p>
+          <p>2018-08-11  21:35:59</p>
+        </div>
+      </div>
+      <div class="item" @click="goForm()">
+        <img class="img" src="../../assets/images/goodsImg.png">
+        <div class="text">
+          <p>中国人民解放军第302医院体检中心</p>
+          <p>2018-08-11  21:35:59</p>
+        </div>
+      </div>
+      <div class="item" @click="goForm()">
+        <img class="img" src="../../assets/images/goodsImg.png">
+        <div class="text">
+          <p>中国人民解放军第302医院体检中心</p>
+          <p>2018-08-11  21:35:59</p>
+        </div>
+      </div>
+      <div class="item" @click="goForm()">
+        <img class="img" src="../../assets/images/goodsImg.png">
+        <div class="text">
+          <p>中国人民解放军第302医院体检中心</p>
+          <p>2018-08-11  21:35:59</p>
+        </div>
+      </div>
+      <div class="item" @click="goForm()">
+        <img class="img" src="../../assets/images/goodsImg.png">
+        <div class="text">
+          <p>中国人民解放军第302医院体检中心</p>
+          <p>2018-08-11  21:35:59</p>
+        </div>
+      </div>
+      <div class="item" @click="goForm()">
+        <img class="img" src="../../assets/images/goodsImg.png">
+        <div class="text">
+          <p>中国人民解放军第302医院体检中心</p>
+          <p>2018-08-11  21:35:59</p>
+        </div>
+      </div>
+      <div class="item" @click="goForm()">
+        <img class="img" src="../../assets/images/goodsImg.png">
+        <div class="text">
+          <p>中国人民解放军第302医院体检中心</p>
+          <p>2018-08-11  21:35:59</p>
+        </div>
+      </div>
+    </div>
     <!--底部Strip-->
     <Footer :nowStatus="nowStatus"></Footer>
   </div>
 </template>
 <script>
 import Footer from '@/components/common/footer.vue'
-import manageList from '@/components/common/manageIndexList.vue'
 import {getDataSick,getPaperModel} from '@/api/data/index.js'
 
 export default {
     components : {
       Footer,
-      manageList,
     },
   data(){
     return {
@@ -49,6 +111,14 @@ export default {
         }
       this.$router.push({path: 'sickFrom',query:obj})
     },
+    //跳转编辑表单
+    goForm(){
+      let obj ={
+        paperId : this.paperId,
+        recordId : this.recordId
+      }
+      this.$router.push({path: 'sickFrom',query:obj})
+    },
     //请求数据
     getDateList(){
       let obj =this.navTapStatu
@@ -63,6 +133,7 @@ export default {
     },
 
 
+
   }
 
 }
@@ -75,6 +146,45 @@ export default {
   .manxingbing_page{
     width: 100%;
     height: 100%;
+    .contList{
+      padding-bottom: 98px;
+      background: #fff;
+      .item{
+        display: block;
+        width: 100%;
+        height: 205px;
+        padding: 20px;
+        box-sizing: border-box;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+      }
+      .item .img{
+        width: 220px;
+        height: 165px;
+      }
+      .item .text{
+        width: 460px;
+        position: relative;
+      }
+      .item .text>p:nth-child(1){
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        /*! autoprefixer: off */
+        -webkit-box-orient: vertical;
+        /* autoprefixer: on */
+        color: #000;
+        font-size: 34px;
+      }
+      .item .text>p:nth-child(2){
+        font-size: 24px;
+        color: #888888;
+        position: absolute;
+        bottom: 0px;
+      }
+    }
   }
   .emptyBlock{
     width:100%;
