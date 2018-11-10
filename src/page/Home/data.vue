@@ -160,7 +160,8 @@ export default {
     },
     mounted () {
         this.switchData();
-        this.arrTurnDate(this.homeDate,this.homeDate);
+        this.arrTurnDate(this.homeDate,this.homeDate);  //day 
+        this.arrTurnWeek();
 
     },
     methods : {
@@ -290,7 +291,64 @@ export default {
             console.log(dateDayBuf2)
 
         },
-        
+        arrTurnWeek () {
+            /**
+            *	nDay          日期数组的长度
+            *   nWeek         周的长度
+            *   getHomeDay    最终的日期,可以设置为当前日期
+            *   dateDayBuf    日期数组
+            *   dateWeekBuf   周的数组
+            */
+            const nDay = 15;
+            const nWeek = 3;
+            var getHomeDay = new Date('2018-11-09');
+
+            var dateDayBuf = new Array(nDay);
+            var dateWeekBuf = new Array(nWeek);
+
+            function initDateWeek(date){
+                var dateDemo = new Date(date);
+                dateDemo.setDate(dateDemo.getDate() + parseInt(nWeek/2)*7);
+                for(var i=nWeek-1;i>=0; i--){
+                    dateWeekBuf[i] = getDateOfWeek(dateDemo);
+                    dateDemo.setDate(dateDemo.getDate() - 7);
+                    
+                }
+
+                for(var i=0; i<nWeek; i++){
+                    console.log(dateWeekBuf[i]);
+                }
+            }
+
+            //刷新数组
+            function refreshDateWeek(date){
+                var dateDemo = new Date(date);
+                var dateDemoParam = new Date(date);
+
+                dateDemo.setDate(dateDemo.getDate() + parseInt(nWeek/2)*7);
+
+                if(dateDemo >= getHomeDay){
+                    dateDemoParam = getHomeDay;
+                }
+
+                initDateWeek(dateDemoParam);
+            }
+
+
+            function getDateOfWeek(dateDemo) {  
+                var dateBegin = new Date(dateDemo);  
+                var dateEnd = new Date(dateDemo);
+
+                var nInvDay = dateBegin.getDay();  
+
+                dateBegin.setDate(dateBegin.getDate() - nInvDay);
+                dateEnd.setDate(dateEnd.getDate() - nInvDay + 6);
+
+                return dateBegin.Format("MM.dd") + '-' + dateEnd.Format("MM.dd");
+            }
+	        refreshDateWeek('2018-10-01');
+
+        },
         /**
          * 获取数据
          * */
