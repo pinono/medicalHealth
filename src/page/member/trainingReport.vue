@@ -4,7 +4,7 @@
       <section class="item">
         <div class="title">
           <p>总体训练报告</p>
-          <p>上一次训练时间：2018.08.04 11:11:11</p>
+          <p>上一次训练时间：{{tranReportObj.lastTranTime}}</p>
         </div>
         <ul class="navCut">
           <li @click="checkNavFn(1,1)" :class="[ checkNav01==1 ? 'checkLi':'']">近1个月</li>
@@ -111,6 +111,7 @@
       //导航切换
       checkNavFn(month,reportType){
           var obj = {};
+          var codeType;
           if(month==1){
             obj.dayBegin='2018-08-01';
             obj.dayEnd='2018-08-30';
@@ -130,7 +131,7 @@
                 getTranReport(obj).then(res=>{
                   //console.log('训练',res)
                   this.tranReportObj=res.data.result;
-
+                  this.detailsDataChartFn()
                   console.log('训练',this.tranReportObj)
                 })
               break;
@@ -139,7 +140,7 @@
                 getBpReport(obj).then( res => {
                   //console.log("血压：",res)
                   this.bpReportObj=res.data.result;
-
+                  this.detailsDataChartFn()
                   console.log('血压',this.bpReportObj)
                 })
               break;
@@ -148,7 +149,7 @@
                 getRsco2Report(obj).then( res => {
                   //console.log("脑氧：",res)
                   this.rsco2ReportObj=res.data.result;
-
+                  this.detailsDataChartFn()
                   console.log('脑氧',this.rsco2ReportObj)
                 })
               break;
@@ -157,7 +158,7 @@
                 getHrReport(obj).then( res => {
                   //console.log("心率：",res)
                   this.HrReportObj=res.data.result;
-
+                  this.detailsDataChartFn()
                   console.log('心率',this.HrReportObj)
                 })
               break;
@@ -166,13 +167,13 @@
                 getspo2Report(obj).then( res => {
                   //console.log("指氧：",res)
                   this.spo2ReportObj=res.data.result;
-
+                  this.detailsDataChartFn()
                   console.log('指氧',this.spo2ReportObj)
                 })
               break;
           }
         this.checkNav=month;
-        this.detailsDataChartFn()
+
       },
       //详情条形图
       detailsDataChartFn(){
@@ -189,7 +190,7 @@
             trigger: 'axis'
           },
           legend: {
-            data:['训练报告'],
+            data:['训练'],
           },
           calculable : true,
           dataZoom : {
@@ -212,7 +213,7 @@
           ],
           series : [
             {
-              name:'训练报告',
+              name:'训练',
               type:'line',
               itemStyle : {color:'#6b4ccf'},
               data: that.tranReportObj.tranValue
@@ -224,7 +225,7 @@
             trigger: 'axis'
           },
           legend: {
-            data:['训练报告'],
+            data:['高压','低压'],
           },
           calculable : true,
           dataZoom : {
@@ -237,7 +238,7 @@
             {
               type : 'category',
               boundaryGap : false,
-              data : ["2018-09-06", "2018-09-07", "2018-09-08", "2018-09-09", "2018-09-10", "2018-09-11", "2018-09-12","2018-09-06", "2018-09-07", "2018-09-08", "2018-09-09", "2018-09-10", "2018-09-11", "2018-09-12"]
+              data : this.bpReportObj.bpDate
             }
           ],
           yAxis : [
@@ -247,11 +248,17 @@
           ],
           series : [
             {
-              name:'训练报告',
+              name:'高压',
               type:'line',
               itemStyle : {color:'#6b4ccf'},
-              data: [2, 322, 4, 33, 43, 414, 0,422, 3, 40, 33, 432, 44, 550]
-            }
+              data: this.bpReportObj.bpHighValue
+            },
+            {
+              name:'低压',
+              type:'line',
+              itemStyle : {color:'#6b4ccf'},
+              data: this.bpReportObj.bpLowValue
+            },
           ]
         })
         myChart3.setOption({
@@ -259,7 +266,7 @@
             trigger: 'axis'
           },
           legend: {
-            data:['训练报告'],
+            data:['脑氧'],
           },
           calculable : true,
           dataZoom : {
@@ -272,7 +279,7 @@
             {
               type : 'category',
               boundaryGap : false,
-              data : ["2018-09-06", "2018-09-07", "2018-09-08", "2018-09-09", "2018-09-10", "2018-09-11", "2018-09-12","2018-09-06", "2018-09-07", "2018-09-08", "2018-09-09", "2018-09-10", "2018-09-11", "2018-09-12"]
+              data : this.rsco2ReportObj.rsco2Date
             }
           ],
           yAxis : [
@@ -282,10 +289,10 @@
           ],
           series : [
             {
-              name:'训练报告',
+              name:'脑氧',
               type:'line',
               itemStyle : {color:'#6b4ccf'},
-              data: [2, 3, 441, 33, 43, 44, 0,422, 3, 441, 33, 43, 44, 0]
+              data: this.rsco2ReportObj.rsco2Value
             }
           ]
         })
@@ -294,7 +301,7 @@
             trigger: 'axis'
           },
           legend: {
-            data:['训练报告'],
+            data:['心率'],
           },
           calculable : true,
           dataZoom : {
@@ -307,7 +314,7 @@
             {
               type : 'category',
               boundaryGap : false,
-              data : ["2018-09-06", "2018-09-07", "2018-09-08", "2018-09-09", "2018-09-10", "2018-09-11", "2018-09-12","2018-09-06", "2018-09-07", "2018-09-08", "2018-09-09", "2018-09-10", "2018-09-11", "2018-09-12"]
+              data : this.HrReportObj.hrDate
             }
           ],
           yAxis : [
@@ -317,10 +324,10 @@
           ],
           series : [
             {
-              name:'训练报告',
+              name:'心率',
               type:'line',
               itemStyle : {color:'#6b4ccf'},
-              data: [2, 3, 441, 33, 43, 44, 0,422, 3, 441, 33, 43, 44, 0]
+              data: this.HrReportObj.hrValue
             }
           ]
         })
@@ -329,7 +336,7 @@
             trigger: 'axis'
           },
           legend: {
-            data:['训练报告'],
+            data:['指氧'],
           },
           calculable : true,
           dataZoom : {
@@ -342,7 +349,7 @@
             {
               type : 'category',
               boundaryGap : false,
-              data : ["2018-09-06", "2018-09-07", "2018-09-08", "2018-09-09", "2018-09-10", "2018-09-11", "2018-09-12","2018-09-06", "2018-09-07", "2018-09-08", "2018-09-09", "2018-09-10", "2018-09-11", "2018-09-12"]
+              data : this.spo2ReportObj.spo2Date
             }
           ],
           yAxis : [
@@ -352,10 +359,10 @@
           ],
           series : [
             {
-              name:'训练报告',
+              name:'指氧',
               type:'line',
               itemStyle : {color:'#6b4ccf'},
-              data: [2, 3, 441, 33, 43, 44, 0,422, 3, 441, 33, 43, 44, 0]
+              data: this.spo2ReportObj.spo2Value
             }
           ]
         })
@@ -363,42 +370,64 @@
       },
       //总训练
       getReportData(){
+          var that =this;
         let obj ={
           dayBegin:'2018-08-01',
           dayEnd:'2018-08-30'
         }
         console.log(obj)
-        getTranReport(obj).then(res=>{
-          //console.log('训练',res)
-          this.tranReportObj=res.data.result;
-          this.reportDataArry.push(res.data.result);
-          console.log('训练',this.tranReportObj)
+
+
+        const promist1 = new Promise((resolve, reject) => {
+          getTranReport(obj).then(res=>{
+            //console.log('训练',res)
+            this.tranReportObj=res.data.result;
+            this.reportDataArry.push(res.data.result);
+            console.log('训练',this.tranReportObj)
+            resolve(res.data.result)
+          })
         })
-        getBpReport(obj).then( res => {
-          //console.log("血压：",res)
-          this.bpReportObj=res.data.result;
-          this.reportDataArry.push(res.data.result);
-          console.log('血压',this.bpReportObj)
+        const promist2 = new Promise((resolve, reject) => {
+          getBpReport(obj).then( res => {
+            //console.log("血压：",res)
+            this.bpReportObj=res.data.result;
+            this.reportDataArry.push(res.data.result);
+            console.log('血压',this.bpReportObj)
+            resolve(res.data.result)
+          })
         })
-        getRsco2Report(obj).then( res => {
-          //console.log("脑氧：",res)
-          this.rsco2ReportObj=res.data.result;
-          this.reportDataArry.push(res.data.result);
-          console.log('脑氧',this.rsco2ReportObj)
+        const promist3 = new Promise((resolve, reject) => {
+          getRsco2Report(obj).then( res => {
+            //console.log("脑氧：",res)
+            this.rsco2ReportObj=res.data.result;
+            this.reportDataArry.push(res.data.result);
+            console.log('脑氧',this.rsco2ReportObj)
+            resolve(res.data.result)
+          })
         })
-        getHrReport(obj).then( res => {
-          //console.log("心率：",res)
-          this.HrReportObj=res.data.result;
-          this.reportDataArry.push(res.data.result);
-          console.log('心率',this.HrReportObj)
+        const promist4 = new Promise((resolve, reject) => {
+          getHrReport(obj).then( res => {
+            //console.log("心率：",res)
+            this.HrReportObj=res.data.result;
+            this.reportDataArry.push(res.data.result);
+            console.log('心率',this.HrReportObj)
+            resolve(res.data.result)
+          })
         })
-        getspo2Report(obj).then( res => {
-          //console.log("指氧：",res)
-          this.spo2ReportObj=res.data.result;
-          this.reportDataArry.push(res.data.result);
-          console.log('指氧',this.spo2ReportObj)
+        const promist5 = new Promise((resolve, reject) => {
+          getspo2Report(obj).then( res => {
+            //console.log("指氧：",res)
+            this.spo2ReportObj=res.data.result;
+            this.reportDataArry.push(res.data.result);
+            console.log('指氧',this.spo2ReportObj)
+            resolve(res.data.result)
+          })
         })
-        this.detailsDataChartFn();
+        Promise.all([promist1, promist2, promist3, promist4, promist5]).then((resultList) => {
+          console.log('results:', resultList)
+          that.detailsDataChartFn();
+        })
+
       },
 
       //血压

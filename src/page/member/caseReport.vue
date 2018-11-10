@@ -5,51 +5,27 @@
       <li class="caseReportItem">
         <h2>基本信息</h2>
         <div class="contentInfo">
-          <p>
-            <span>性别：</span>
-            <span>某某某</span>
-          </p>
-          <p>
-            <span>姓名：</span>
-            <span>男</span>
-          </p>
-          <p>
-            <span>出生日期：</span>
-            <span>1988.07.31</span>
+          <p v-for="item in baseInfo">
+            <span>{{item.fieldName}}：</span>
+            <span>{{item.value}}</span>
           </p>
         </div>
       </li>
       <li class="caseReportItem">
         <h2>既往史</h2>
         <div class="contentInfo">
-          <p>
-            <span>既往史：</span>
-            <span>高热</span>
-          </p>
-          <p>
-            <span>家族史：</span>
-            <span>有</span>
-          </p>
-          <p>
-            <span>药物过敏：</span>
-            <span>有</span>
+          <p v-for="item in historyInfo">
+            <span>{{item.fieldName}}：</span>
+            <span>{{item.value}}</span>
           </p>
         </div>
       </li>
       <li class="caseReportItem">
         <h2>国家脑卒中筛查</h2>
         <div class="contentInfo">
-          <p>
-            <span>既往史：</span>
-            <span>高热</span>
-          </p>
-          <p>
-            <span>家族史：</span>
-            <span>有</span>
-          </p>
-          <p>
-            <span>药物过敏：</span>
-            <span>有</span>
+          <p v-for="item in BrainInfo">
+            <span>{{item.fieldName}}：</span>
+            <span>{{item.value}}</span>
           </p>
         </div>
       </li>
@@ -59,7 +35,7 @@
 
 <script>
   import HeaderTop from '@/components/common/header.vue'
-  import {getBasicData,getHistoricalData,getStrokeData} from '@/api/data/index.js'
+  import {getCaseReport} from '@/api/data/index.js'
 export default {
   components : {
     HeaderTop
@@ -67,6 +43,9 @@ export default {
   data(){
     return {
       title: '病历报告',
+      baseInfo :[],
+      historyInfo :[],
+      BrainInfo :[],
     }
   },
   mounted(){
@@ -74,23 +53,12 @@ export default {
   },
   methods:{
     getDateList(){
-      getBasicData().then( res => {
-        console.log('基本信息='+res)
+      getCaseReport().then( res => {
+        this.baseInfo=res.data.result.jbxx;
+        this.historyInfo=res.data.result.lsbl;
+        this.BrainInfo=res.data.result.nzzsc;
       });
-      let obj1={
-        paperId:2,
-        recordId:0
-      }
-      getHistoricalData(obj1).then( res => {
-        console.log('患病历史='+res)
-      });
-      let obj2={
-        paperId:3,
-        recordId:0
-      }
-      getStrokeData(obj2).then( res => {
-        console.log('脑卒中筛查='+res)
-      });
+
     }
   }
 }
@@ -105,7 +73,7 @@ export default {
       border-top: 2px solid #eee;
       .caseReportItem{
         width: 100%;
-        height: 258px;
+        height: auto;
         background: #fff;
         padding: 0px 20px;
         margin-bottom: 10px;

@@ -2,22 +2,22 @@
   <div class="myManForm">
       <!--表单列表-->
       <ul class="formList">
-        <template v-for="item in fieldList">
+        <template v-for="(item,index) in formArry">
           <input type="hidden" :name="item.fieldCode" value=""/>
           <!--静态标签-->
-          <li v-if="item.fieldType.typeId==0">
+          <li v-if="item.fieldType.typeId==0" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
             <span>静态标签</span>
-            <input type="text" value="1231321" name="" readonly="readonly"/>
+            <input type="text" v-model="staticInp" readonly="readonly"/>
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
           </li>
           <!--数字类型-->
-          <li v-if="item.fieldType.typeId==1">
+          <li v-if="item.fieldType.typeId==2" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
             <span>数字类型</span>
             <input type="number" />
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
           </li>
           <!--单行文本-->
-          <li v-if="item.fieldType.typeId==2">
+          <li v-if="item.fieldType.typeId==2" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
             <span>单行文本</span>
             <input type="text" value="" name=""/>
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
@@ -47,7 +47,7 @@
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
           </li>
           <!--下拉选项-->
-          <li @click="" v-if="item.fieldType.typeId==7">
+          <li v-if="item.fieldType.typeId==7" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
             <span>下拉选项</span>
             <select>
               <option value="1">abc</option>
@@ -65,7 +65,11 @@
 
         </template>
       </ul>
-
+    <!--提交按钮-->
+    <div class="subFormBtn" @click="submitForm()">提交</div>
+<!--
+弹窗部分
+-->
       <div class="pop_background" @click="showOrClosePop(0)" v-if="popStatus==1||popStatus==2||popStatus==3"></div>
       <!--多行文本-弹窗-->
       <div class="pop_supplement" v-if="popStatus==3">
@@ -80,7 +84,7 @@
       <div class="pop_checkBox" v-if="popStatus==2">
         <mt-checklist
           v-model="checkBoxVal"
-          :options="options">
+          :options="checkBoxPop">
         </mt-checklist>
         <div class="popOmen_btn pop_btn">
           <span @click="showOrClosePop(0)">取消</span>
@@ -91,7 +95,7 @@
       <div class="pop_checkBox pop_radio" v-if="popStatus==1">
         <mt-radio
           v-model="radioVal"
-          :options="['选项A', '选项B', '选项C']">
+          :options="radioPop">
         </mt-radio>
         <div class="popOmen_btn pop_btn">
           <span @click="showOrClosePop(0)">取消</span>
@@ -127,6 +131,7 @@
   import moment from 'moment'// 格式化时间
   import {getPaperStruct,getPaperList} from '@/api/data/index.js' //接口
 export default {
+    props:["formArry"],
     data () {
         return {
           paperId : '',
@@ -137,37 +142,63 @@ export default {
           dateTime: '', //发作的时间值
           startDate: new Date('1807'),//设置开始时间根据自己的需要
           //endDate: new Date('2018'),//设置结束时间
-          options:[],//复选框的选项
+          checkBoxPop:[],//复选框的选项
           checkBoxVal:[],//复选框选中的值
           checkBoxStr: '',//发作先兆的值
           radioVal:'',//单选按钮选中的值
+          radioPop:[],
           timeLength: '',//发作时长值
           itemIndex : 0,//弹窗表示
+
+
+          staticInp:'111',//0.静态标签
         }
     },
     mounted(){
         this.checkList();
-        this.getFormInfo();
     },
     methods : {
-      //获取表单信息
-      getFormInfo(){
-        this.paperId=this.$route.query.paperId;
-        //得到表单结构
-        getPaperStruct(this.paperId).then( res => {
-          console.log('结构=',res)
-          this.fieldList=res.data.result.fieldList;
-        });
-        //得到表单数据回显
-        if(this.$route.query.recordId != undefined){
-          let obj ={
-            paperId : this.paperId,
-            recordId : 1
-          }
-          getPaperList(obj).then( res => {
-            console.log('数据回显=',res)
-          });
+      //得到结构
+      getItemInfo(index,fieldCode,typeId,content){//参数按顺序是:1.循环索引,2.参数key,3.结构类型,4.结构内容
+        var subObj = {};
+        switch (typeId){
+            //静态标签
+          case 0:
+            subObj[fieldCode]=this.staticInp;
+
+            break;
+          //数字类型
+          case 1:
+              break;
+          //单行文本
+          case 2:
+            subObj[fieldCode]=this.staticInp;
+            break;
+          //多行文本
+          case 3:
+            break;
+          //日期类型
+          case 4:
+            break;
+          //时间类型
+          case 5:
+            break;
+          //单选按钮
+          case 6:
+            break;
+          //下拉菜单
+          case 7:
+            break;
+          //多选按钮
+          case 8:
+            break;
+
         }
+        console.log(subObj)
+      },
+      //提交表单
+      submitForm(){
+
       },
 
       //显示隐藏弹窗
@@ -208,7 +239,58 @@ export default {
       },
       //复选框组件
       checkList(){
-        this.options = [
+        this.checkBoxPop = [
+          {
+            label: '被禁用',
+            value: '值F',
+          },
+          {
+            label: '选中禁用',
+            value: '选中禁用的值',
+          },
+          {
+            label: '选项A',
+            value: '值A'
+          },
+          {
+            label: '选项B',
+            value: '值B'
+          },
+          {
+            label: '选项A',
+            value: '值A1'
+          },
+          {
+            label: '选项B',
+            value: '值B2'
+          },
+          {
+            label: '选中禁用',
+            value: '选中禁用的值3',
+          },
+          {
+            label: '选项A',
+            value: '值A4'
+          },
+          {
+            label: '选项B',
+            value: '值B5'
+          },
+          {
+            label: '选中禁用',
+            value: '选中禁用的值6',
+          },
+          {
+            label: '选项A',
+            value: '值A7'
+          },
+          {
+            label: '选项B',
+            value: '值B8'
+          }
+
+        ];
+        this.radioPop = [
           {
             label: '被禁用',
             value: '值F',
@@ -260,10 +342,6 @@ export default {
 
         ];
       },
-      //下拉选项
-      dropDownFn(){
-
-      },
 
 
 
@@ -291,12 +369,29 @@ export default {
   }
 
   .myManForm{
-    width: 100%;
+    width: 750px;
     background: #fff;
-    height: 1100px;
+    height: 1334px;
     overflow-y: auto;
     padding-top: 80px;
-      .formList{
+    padding-bottom: 190px;
+    .subFormBtn{
+      width: 700px;
+      height: 88px;
+      line-height: 88px;
+      background: #2B8CFF;
+      border-radius: 4px;
+      font-family: PingFangSC-Regular;
+      font-size: 34px;
+      color: #FFF;
+      text-align: center;
+      position: absolute;
+      bottom: 80px;
+      left: 0px;
+      right: 0px;
+      margin: auto;
+    }
+    .formList{
         li{
             display: flex;
             align-items: center;
@@ -349,7 +444,7 @@ export default {
           border-top: 1px solid #eee;
         }
       }
-      .pop_background{
+    .pop_background{
         width: 100%;
         height: 100%;
         opacity: 0.5;
@@ -357,7 +452,7 @@ export default {
         position: fixed;
         top: 0;
       }
-      .pop_supplement{
+    .pop_supplement{
         width: 600px;
         height: 460px;
         background: #FFFFFF;
@@ -385,7 +480,7 @@ export default {
             color: #333333;
           }
       }
-      .pop_checkBox{
+    .pop_checkBox{
         position: fixed;
         left: 0px;
         right: 0px;
@@ -460,7 +555,7 @@ export default {
           }
 
       }
-      .pop_btn{
+    .pop_btn{
       width: 100%;
       height: 88px;
       line-height: 88px;
