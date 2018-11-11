@@ -1,43 +1,58 @@
 <template>
     <div>
+        <header-top :title="title"></header-top>
         <div class="news-wrap">
-            <section class="video">
+            <section class="video" v-if="isVideo">
                 <video src="../../assets/images/share/movie.ogg" width="100%;" controls="controls"></video>
             </section>
             <section class="top">
-                <h3>缺血预适应训练仪简介</h3>
+                <h3>{{detailData.title}}</h3>
                 <ul>
-                    <li>作者：某某某</li>
-                    <li>123321人已看</li>
-                    <li>3242点赞</li>
+                    <li>作者：{{detailData.author}}</li>
+                    <li>{{detailData.readed}}人已看</li>
+                    <li>{{detailData.liked}}点赞</li>
+
                 </ul>
             </section>
-            <section class="cont">
-                缺血预适应训练仪是在低氧医学研究的基础上，根据中国目前脑卒中发病特点和治疗现状所研发的治疗和预防脑卒中的医疗器械，具有极大的社会效益、经济效益和临床推广应用价值。
-                <h3>1. 中国脑卒中发病情况和治疗现状</h3>
-                <p>我国脑卒中具有高发病率、高致残率、高死亡率和高复发率的特点。在我国，卒中正以每年8.7%的速度快速增长，每年新增卒中患者280万，总数超过750万人。一旦发生卒中，溶栓是有效地治疗手段，由于溶栓时间窗短（3-4.5小时）,仅少数（5%）患者能接受溶栓治疗，我国接受溶栓治疗的患者比例更低(不足1%)。对卒中高危患者进行有效干预是预防我国卒中发生和复发的经济、有效措施。然而，即使给予标准化的抗栓和降脂治疗，卒中的年复发率依然高达18.8%。
-</p>
+            <section class="cont" v-html="detailData.content">
             </section>
-            <footer @click="zan()">赞一下</footer>
+            <!-- <footer @click="zan()">赞一下</footer> -->
         </div>
     </div>
 </template>
 <script>
-import { getShareDetail } from '@/api/data/share.js'
+import HeaderTop from '@/components/common/header.vue'
+
+import { getShareDetail,getVideoDetail} from '@/api/data/share.js'
 export default {
+    components : {
+        HeaderTop,
+    },
     data () {
         return {
-            id : this.$route.query.artical
+            title : '',
+            isVideo : this.$route.query.video ? true : false,
+            artId : this.$route.query.artical ? this.$route.query.artical : this.$route.query.video,
+            detailData : '',
         }
     },
     mounted () {
-        alert(this.id)
-        getShareDetail(this.id).then( res => {
-
-        })
+        if (this.$route.query.artical) {
+            getShareDetail(this.artId).then( res => {
+                this.detailData = res.data.result.artical,
+                this.title = this.detailData.title
+            })
+        } else {
+            getVideoDetail(this.artId).then( res => {
+                this.detailData = res.data.result.video,
+                this.title = this.detailData.title
+            })
+        }
+        
     },
     methods : {
         zan () {
+            // window.ZanCount++
             alert('已点赞')
         }
     }

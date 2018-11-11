@@ -18,6 +18,7 @@ Vue.use(router)
 Vue.use(VueAwesomeSwiper)
 Vue.use(moment)
 Vue.prototype.$echarts = echarts
+
 window.SETDOMAIN = 'cn';
 window.HOST = 'http://60.205.180.79:8002';
 /* eslint-disable no-new */

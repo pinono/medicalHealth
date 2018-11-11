@@ -8,9 +8,11 @@
                     <swiper-slide v-if="curDate == 'day'" v-for="(item,i) in dateDayBuf1" :key="i">{{item}}</swiper-slide>
 
                     <swiper-slide v-if="curDate == 'week'" v-for="(item,i) in dateWeekBuf1" :key="i+'week'">{{item}}</swiper-slide>
+                    <swiper-slide v-if="curDate == 'month'" v-for="(item,i) in dateMonthBuf1" :key="i+'month'">{{item}}</swiper-slide>
+
                 </swiper>
             </section>
-            <section v-show="curDate == 'week'">
+            <section v-show="curDate !== 'day'">
                 <div id="myChart" :style="{width: '300px', height: '220px',margin:'0 auto'}"></div>
             </section>
             <section class="detail-wrap" v-show="curDate == 'day'" >
@@ -175,14 +177,17 @@ export default {
             dateDayBuf1 : [],   //日期 day 模板 08.1
             dateDayBuf2 : [],   //日期模板 2018-08-01 
             dateWeekBuf1 : [] ,  //日期  week 模板  08.05-08.11
-            dateWeekBuf2 : [] ,  //日期  week 模板  08.05-08.11
-
+            dateWeekBuf2 : [] ,  //日期  week 模板  obj ={ begindae :'2018-09-01' , dateEnd : '2018-09-08'}
+            dateMonthBuf1 : [] ,  //日期  week 模板  08.05-08.11
+            dateMonthBuf2 : [] ,  //日期  week 模板  obj ={ begindae :'2018-09-01' , dateEnd : '2018-09-08'}
+            dateMonthBuf3 : [],
         }
     },
     mounted () {
         this.switchData();
         this.arrTurnDate(this.homeDate,this.homeDate);  //day 
         this.arrTurnWeek(this.homeDate,this.homeDate); //week
+        
     },
     methods : {
         /**
@@ -199,7 +204,10 @@ export default {
                 case 'week' :
                     this.arrTurnWeek(this.homeDate,this.homeDate);
                     this.switchArrData(this.dateWeekBuf2[1])
-                break
+                break;
+                case 'month' :
+                    this.arrTurnMonth(this.homeDate,this.homeDate)
+                break;
             }
         },
         // 时间轴配置
@@ -253,6 +261,27 @@ export default {
 
                                     break
                                 }
+                            } else if ( that.curDate == 'month' ) {
+                                switch ( this.activeIndex ) {
+                                    case 0 :
+                                        that.switchArrData(that.dateMonthBuf2[0])
+                                        that.arrTurnMonth(that.homeDate,that.dateMonthBuf2[0].dayBegin);
+                                        this.slideTo(1, 10, false);
+                                    break;
+                                    case 1 :
+                                        that.switchArrData(that.dateMonthBuf2[1])
+                                        that.arrTurnMonth(that.homeDate,that.dateMonthBuf2[1].dayBegin);
+
+                                        this.slideTo(1, 10, false);
+
+                                    break
+                                    case 2 :
+                                        that.switchArrData(that.dateMonthBuf2[2])
+                                        that.arrTurnMonth(that.homeDate,that.dateMonthBuf2[2].dayBegin);
+                                        this.slideTo(1, 10, false);
+
+                                    break
+                                }
                             }
                             
 
@@ -287,7 +316,6 @@ export default {
                     if ( this.curDate == 'day' ) {
                         getDataRsco2(obj).then( res => {
                             this.resultData = res.data.result;
-                            console.log('rsco2',this.resultData)
                         })
                     } else {
 
@@ -299,7 +327,6 @@ export default {
                     if ( this.curDate == 'day' ) {
                         getDataBp(obj).then( res => {
                             this.resultData = res.data.result;
-                            console.log('bps',this.resultData)
                         })
                     } else {
 
@@ -310,7 +337,6 @@ export default {
                     if ( this.curDate == 'day' ) {
                         getDataHr(obj).then( res => {
                             this.resultData = res.data.result;
-                            console.log('hr',this.resultData)
                         })
                     }else {
 
@@ -322,7 +348,6 @@ export default {
                     if ( this.curDate == 'day' ) {
                         getDataSpo2(obj).then( res => {
                             this.resultData = res.data.result;
-                            console.log('spo2',this.resultData)
                         })
                     } else {
                         
@@ -465,25 +490,17 @@ export default {
                         dateDayBuf1[i] = dateDemo.Format("MM.dd");
                     }
 
-                    for(var i=0; i<nDay; i++){
-                        console.log(dateDayBuf1[i]);
-                    }
-                
                     dateDayBuf2[nDay-1] = dateDemo.Format("yyyy-MM-dd");
                     for(var i=nDay-2;i>=0; i--){
                         dateDemo.setDate(dateDemo.getDate()+1);
                         dateDayBuf2[i] = dateDemo.Format("yyyy-MM-dd");
                     }
 
-                    for(var i=0; i<nDay; i++){
-                        console.log(dateDayBuf2[i]);
-                    }
             }
 
             //刷新数组
             (function refreshDate(date){
                 var dateDemo = new Date(date);
-                console.log(dateDemo)
                 if(dateDemo >= getHomeDay){
                     dateDemo = getHomeDay;
                 }
@@ -493,7 +510,6 @@ export default {
             })(chooseDate)
             this.dateDayBuf1 = dateDayBuf1;
             this.dateDayBuf2 = dateDayBuf2.reverse();
-            console.log(dateDayBuf2)
 
         },
         // 日期周转化
@@ -523,10 +539,6 @@ export default {
 
                     dateDemo.setDate(dateDemo.getDate() - 7);
                     
-                }
-
-                for(var i=0; i<nWeek; i++){
-                    console.log(dateWeekBuf1[i]);
                 }
             }
 
@@ -572,7 +584,91 @@ export default {
             this.dateWeekBuf1 = dateWeekBuf1;
             this.dateWeekBuf2 = dateWeekBuf2;
 
-            console.log(this.dateWeekBuf2)
+        },
+        //  日期 月转换
+        arrTurnMonth (homeDate,chooseDate) {
+            /**
+            *	nDay          日期数组的长度
+            *   nWeek         周的长度
+            *   getHomeDay    最终的日期,可以设置为当前日期
+            *   dateDayBuf    日期数组
+            *   dateWeekBuf   周的数组
+            */
+            const nMonth      = 3;
+            var getHomeDay   = new Date(homeDate);
+            var dateMonthBuf1 = new Array(nMonth);
+            var dateMonthBuf2 = new Array(nMonth);
+            var dateMonthBuf3 = new Array(nMonth);
+            var that = this;
+            //date:yyyy-MM
+            function initDateMonth(date){
+                var dateDemo = new Date(date);
+                var dateFlag = new Date(date);
+
+                var nMonthMin = dateDemo.getMonth() - parseInt(nMonth/2);
+
+                for(var i=0; i<nMonth; i++){
+                    var nMonthDemo = nMonthMin + i;
+
+                    if(nMonthDemo < 0) {
+                        dateDemo.setYear(dateFlag.getFullYear() - 1);
+                    }
+                    else if(nMonthDemo <= 11){
+                        dateDemo.setYear(dateFlag.getFullYear());
+                    }else{
+                        
+                        dateDemo.setYear(dateFlag.getFullYear() + 1);
+                    }
+                    dateDemo.setMonth((nMonthDemo + 12) % 12);
+                    dateMonthBuf3[i] = dateDemo.Format("yyyy-MM-dd");
+                    that.dateMonthBuf2[i] = {
+                        dayBegin : getFirstDay(dateMonthBuf3[i]),
+                        dayEnd :getLastDay(dateMonthBuf3[i])
+                    }
+                    that.dateMonthBuf1[i] = new Date (getFirstDay(dateMonthBuf3[i])).Format("MM.dd") + '-' + new Date(getLastDay(dateMonthBuf3[i])).Format("MM.dd");
+                }
+            }
+            function getLastDay(date)   
+            {   
+                var dateDemo = new Date(date);
+
+                var year = dateDemo.getFullYear();
+                var month = dateDemo.getMonth() + 1;
+
+                var new_year = year;      //取当前的年份   
+                var new_month = month++;  //取下一个月的第一天，方便计算（最后一天不固定） 
+
+                if(month>12)              //如果当前大于12月，则年份转到下一年   
+                {   
+                    new_month -=12;       //月份减   
+                    new_year++;           //年份增   
+                }   
+                var new_date = new Date(new_year,new_month,1);        //取当年当月中的第一天   
+
+                return (new Date(new_date.getTime()-1000*60*60*24)).Format("yyyy-MM-dd");//获取当月最后一天日期   
+            }
+            function getFirstDay(date){
+                var mydate=new Date(date);
+                mydate.setDate(1);
+                return mydate.Format("yyyy-MM-dd");
+            }
+            //刷新数组
+            (function refreshDateMonth(date){
+                var dateDemo = new Date(date);
+                var dateDemoParam = new Date(date);
+
+                if(dateDemo >= getHomeDay){
+                    dateDemoParam = getHomeDay;
+                }
+
+                initDateMonth(dateDemoParam);
+            })(chooseDate)
+
+            // this.dateMonthBuf1  = dateMonthBuf1;
+            console.log(this.dateMonthBuf1)
+            console.log(this.dateMonthBuf2)
+            console.log(this.dateMonthBuf3)
+            // refreshDateMonth('2018-05-07');
         },
         /**
          * 获取数据
@@ -827,6 +923,17 @@ export default {
         }
     }
     .date-wrap.week{
+        .swiper-slide{
+            width:210px !important;
+        }
+        .swiper-slide-active{
+            font-size:40px;
+            opacity: 1;
+            width:230px!important;
+            line-height: 82px;
+        }
+    }
+    .date-wrap.month{
         .swiper-slide{
             width:210px !important;
         }

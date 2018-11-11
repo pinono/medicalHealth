@@ -35,7 +35,7 @@ export default {
         }
     },
     mounted () {
-      // console.log(this.arrActs)
+      console.log(this.arrActs)
     },
     methods : {
         goDetail (purpose,id) {
