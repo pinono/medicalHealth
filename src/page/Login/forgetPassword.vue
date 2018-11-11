@@ -7,29 +7,31 @@
           <span class="icon">
             <img src="../../assets/images/login/phone.png" alt="">
           </span>
-          <input class="inp" type="number" placeholder="购买设备预留手机号" >
+          <input class="inp" type="number" v-model="phone" placeholder="购买设备预留手机号" >
         </li>
         <li>
           <span class="icon">
             <img src="../../assets/images/login/password.png" alt="">
           </span>
-          <input class="inp" type="password" placeholder="6位密码" >
+          <input class="inp" type="password" v-model="password" placeholder="6位密码" >
         </li>
         <li>
           <span class="icon">
             <img src="../../assets/images/login/password.png" alt="">
           </span>
-          <input class="inp" type="password" placeholder="再输一遍6位密码" >
+          <input class="inp" type="password" v-model="againPwd" placeholder="再输一遍6位密码" >
         </li>
       </ul>
     </section>
     <div class="footer">
-      <a class="okBtn" @click="subBtn(1)">确定</a>
-      <a class="noBtn" @click="subBtn(2)">返回</a>
+      <a class="okBtn" @click="beSure()">确定</a>
+      <a class="noBtn" @click="beReturn()">返回</a>
     </div>
   </div>
 </template>
 <script>
+import { Toast } from 'mint-ui';
+import { GoChangePwd } from '@/api/data/login.js'
   import HeaderTop from '@/components/common/header.vue'
 export default {
   components : {
@@ -37,18 +39,39 @@ export default {
   },
     data () {
         return {
-          title: '忘记密码'
+          title: '忘记密码',
+          phone :'',
+          password :'',
+          againPwd : '',
         }
     },
     mounted () {
 
     },
     methods : {
-      subBtn(subFlag){//subFlag 1.确定 2.返回
-          let obj = {
-            loginStatus : 'login',
+      beSure () {
+        var that = this;
+        if ( this.phone == '' ) {
+          Toast('预留手机号不能为空!')
+        } else if ( this.password == '' || this.againPwd == '') {
+          Toast('密码不能为空!')
+        }else if ( this.password !== this.againPwd ) {
+          Toast('两次密码不一致!')
+          this.againPwd = '';
+          this.password = '';
+        }else {
+
+          var obj = {
+            phone : that.phone,
+            newPWD : that.password,
           }
-        this.$router.push({path: 'login' , query:obj})
+          GoChangePwd( obj ).then( res => {
+            Toast('请求接口成功')
+          })
+        }
+      },
+      beReturn(){
+        this.$router.push({path: '/login' })
       }
 
     },

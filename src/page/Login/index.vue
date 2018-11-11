@@ -8,27 +8,31 @@
                 <li :class="status == 'login' ? 'on' : ''" @click="tabCut('login')">登录</li>
             </ul>
         </div>
+
+        <!-- 注册 -->
         <form v-if="status=='register'" class="register-wrap form-wrap">
-            <span class="checkPhone" @click="checkPhone()">系统检测</span>
-            <mt-field  placeholder="购买设备预留手机号" type="number" v-model="phone" :class="wrongTip == true ? 'on' : ''"  >
+            <span class="checkPhone" @click="checkPhone(phone)">系统检测</span>
+            <mt-field  placeholder="购买设备预留手机号" type="number"  v-model="phone" :class="wrongTip == true ? 'on' : ''"  >
                 <span class="icon-phone icon"></span>
             </mt-field>
             <div class="wrong-tip" v-if="wrongTip">
                 <p>*为保障您的数据安全，请填写购买设备时登记手机号；</p>
                 <p>*若是忘记手机号，请拨打客服电话。</p>
             </div>
-            <mt-field  placeholder="请输入密码" type="password" v-model="password">
+            <mt-field  placeholder="请输入6位密码" type="password" :attr="{ maxlength: 6,minlength:6 }" v-model="password">
                 <span class="icon-psw icon"></span>
 
             </mt-field>
-            <mt-field  placeholder="再输一遍6位密码" type="password" v-model="againPassword">
+            <mt-field  placeholder="再输一遍6位密码" type="password" :attr="{ maxlength: 6,minlength:6 }" v-model="againPassword">
                 <span class="icon-psw icon"></span>
             </mt-field>
-            <mt-field  placeholder="设备SN号" type="text" v-model="goodsNum" readonly="readonly">
+            <mt-field  placeholder="设备SN号" type="text" v-model="deviceSN" readonly="readonly">
                 <span class="icon-goods icon"></span>
             </mt-field>
-            <p class="registerBtn">注册</p>
+            <p class="registerBtn" @click="register()">注册</p>
         </form>
+
+        <!-- 登录 -->
         <form v-else class="login-wrap form-wrap">
             <mt-field  placeholder="购买设备预留手机号" type="number" v-model="phone"  >
                 <span class="icon-phone icon"></span>
@@ -36,16 +40,15 @@
             <mt-field  placeholder="请输入密码" type="password" v-model="password">
                 <span class="icon-psw icon"></span>
             </mt-field>
-            <!-- <a href="/home"> -->
-                <p class="registerBtn" @click="goLogin()">登录</p>
-            <!-- </a> -->
+            <p class="registerBtn" @click="goLogin()">登录</p>
             <a class="tip" @click="forgetPassword">忘记登录密码？</a>
         </form>
     </div>
 </template>
 <script>
+import { Toast } from 'mint-ui';
 import HeaderTop from '@/components/common/header.vue'
-import { GoMemLoin } from '@/api/data/index.js'
+import { GoMemLogin,GocheckPhone,GoRegister } from '@/api/data/login.js'
 export default {
     components : {
        HeaderTop
@@ -57,35 +60,111 @@ export default {
             phone :'',  //手机号
             password : '' , //密码
             againPassword : '' ,  //再次输入密码
-            goodsNum : '' , //设备号
+            deviceSN : '' , //设备号
             status:'login',
             wrongTip : false,   //设备错误提示
         }
     },
     mounted () {
-        var obj = {
-            "phone" : '13678965467',
-            "tuserPwd" : '123456'
-        }
-        GoMemLoin(obj).then( res => {
-            console.log(res.data.result)
-            var result = res.data.result;
-            this.setCookie('baseTuserId',result.baseTuserId);
-            this.setCookie('deviceId',result.deviceId)
-            this.setCookie('tuserId',result.tuserId)
-        })
         this.status == 'register' ? this.title = '注册' : this.title = '登录';
+        
     },
+    // 自定义指令  blur
+    // directives: {
+    //     'mtfblur' (el, binding, vnode) {
+    //         let mtinput = el.querySelector('input')
+    //         mtinput.onblur = function () {
+
+    //         }
+    //     }
+    // },
     methods : {
+        //切换
         tabCut (status) {
             this.$set(this,'status',status);
             this.status == 'register' ? this.title = '注册' : this.title = '登录';
+            this.phone = null;
+            this.password = null;
         },
+        // 检查是否预留手机号
         checkPhone () {
-            this.wrongTip = true;
+            var phone = this.phone;
+            var obj = {
+                phone : phone
+            }
+            if ( !phone ) {
+                Toast('手机号不能为空!')
+                return false;
+
+            }else {
+                GocheckPhone(obj).then( res => {
+                    if ( res.data.code == 200 ) {
+                        this.deviceSN = res.data.result.device.deviceSN;
+                        // Toast('验证通过~')
+                    } else {
+                        this.wrongTip = true;
+                        Toast('手机号输入错误~')
+                        this.phone = null;
+                        return false;
+
+                    }
+                })
+            }
+            
         },
+        // 登录
         goLogin () {
-            this.$router.push({path: '/home'})
+            // var obj = {
+            //     "phone" : '13678965467',
+            //     "tuserPwd" : '123456'
+            // }
+            var that = this;
+            var obj = {
+                phone : that.phone,
+                tuserPwd : that.password
+            }
+            GoMemLoin(obj).then( res => {
+                console.log(res)
+                if ( res.data.code == 200 ) {
+                    Toast('登录成功!');
+                    this.$router.push({path: '/home'})
+                } else {
+                    Toast('账号或密码错误,请重新输入~');
+                    that.phone = null;
+                    that.password = null;
+                }
+                // var result = res.data.result;
+                // this.setCookie('baseTuserId',result.baseTuserId);
+                // this.setCookie('deviceId',result.deviceId)
+                // this.setCookie('tuserId',result.tuserId)
+            })
+        },
+        // 注册
+        register () {
+            var that = this;
+            this.checkPhone();
+            if ( this.password !== this.againPassword ) {
+                Toast('密码不一致!')
+                return false;
+            }else if ( this.password == '' ||  this.againPassword == ''){
+                Toast('密码不能为空!')
+                return false;
+            }else if ( this.password.length !== 6 || this.againPassword.length !== 6){ 
+                Toast('密码只能为6位')
+                return false;
+            }else if (this.deviceSN !== '' ) {
+                Toast('预留手机号未检测!')
+            }else {
+                var obj = {
+                    deviceSN : that.deviceSN,
+                    phone : that.phone,
+                    tuserPwd : that.password
+                }
+                GoRegister(obj).then( res => {
+                    Toast('注册成功');
+                    that.goLogin();
+                })
+            }
         },
         //忘记密码
         forgetPassword(){
@@ -94,11 +173,8 @@ export default {
         setCookie (name,value) {
             // var exdate=new Date();
             // exdate.setDate(exdate.getDate()+expiredays);
-            document.cookie=name+ "=" +escape(value)
+            // document.cookie=name+ "=" +escape(value)
         }
-
-
-
     },
     watch : {
         wrongTip () {
