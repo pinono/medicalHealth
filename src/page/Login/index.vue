@@ -152,7 +152,7 @@ export default {
             }else if ( this.password.length !== 6 || this.againPassword.length !== 6){ 
                 Toast('密码只能为6位')
                 return false;
-            }else if (this.deviceSN !== '' ) {
+            }else if (this.deviceSN == '' ) {
                 Toast('预留手机号未检测!')
             }else {
                 var obj = {
@@ -168,7 +168,7 @@ export default {
         },
         //忘记密码
         forgetPassword(){
-          this.$router.push({path: 'forgetPassword'})
+          this.$router.push({path: '/forgetPassword'})
         },
         setCookie (name,value) {
             // var exdate=new Date();

@@ -14,7 +14,7 @@
             <div class="text">
               <p>{{item.title}}</p>
               <p>{{item.author}}</p>
-              <p>{{item.readed}}人已看{{item.articalId}}</p>
+              <p>{{item.readed}}人已看</p>
             </div>
           </div>
         </section>
@@ -25,7 +25,7 @@
               <div class="text">
                 <p>{{item.title}}</p>
                 <p>{{item.author}}</p>
-                <p>{{item.readed}}人已看{{item.articalId}}</p>
+                <p>{{item.readed}}人已看</p>
               </div>
             </div>
         </section>
@@ -92,7 +92,8 @@ export default {
         .banner{
           width:100%;
           height:282px;
-          background:#ccc;
+          background:url('../../assets/images/share/ban1.png') no-repeat;
+          background-size: 100%;
         }
         .tab{
           width:100%;

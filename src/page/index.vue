@@ -11,13 +11,14 @@
                 <div class="zan">
                     <p v-if="homeData.tran">
                         <span :class="'zanNo' + homeData.tran.effect"></span>
-                        训练效果非常棒！
+                        <span v-if="homeData.tran.effect == 0">没有训练哦~</span>
+                        <span v-else>训练效果非常棒！</span>
                     </p>
                 </div>
             </div>
         </div>
 
-        <section>
+        <section class="homeData-wrap">
             <ul v-if="homeData">
                 <li @click="goTrain('train')" >
                         <p v-if="homeData.tran">
@@ -148,6 +149,9 @@ export default {
 }
 </script>
 <style lang="scss">
+    .homeData-wrap{
+        padding-bottom:100px;
+    }
     .Train{
         a{color:#333;}
         .banner-wrap{background:#fff;}
@@ -178,6 +182,22 @@ export default {
                 text-align: center;
                 p{
                     font-size: 28px;
+                }
+                .zanNo0{
+                    width:90px;
+                    height:90px;
+                    display: block;
+                    background:url('../assets/images/home/cryface.png') no-repeat;
+                    background-size:100%;
+                    margin:50px auto 30px;
+                }
+                .zanNo1{
+                    width:90px;
+                    height:90px;
+                    display: block;
+                    background:url('../assets/images/home/zan-white.png') no-repeat;
+                    background-size:100%;
+                    margin:50px auto 30px;
                 }
                 .zanNo1{
                     width:90px;
@@ -348,7 +368,6 @@ export default {
 
         }
         .goNews.userNews{
-            margin-bottom:98px;
             background:url('../assets/images/home/userBg.png') no-repeat;
             background-size:100%;
             color:#fff;

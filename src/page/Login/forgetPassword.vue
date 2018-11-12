@@ -60,13 +60,20 @@ export default {
           this.againPwd = '';
           this.password = '';
         }else {
-
+          var that = this;
           var obj = {
             phone : that.phone,
             newPWD : that.password,
           }
           GoChangePwd( obj ).then( res => {
-            Toast('请求接口成功')
+            if( res.data.code == 200 ) {
+              Toast('更改密码成功~')
+              setTimeout(function(){
+                that.$router.push({path: '/login'})
+              },2000)
+            }else {
+              Toast('操作失败，请检查手机号是否正确！')
+            }
           })
         }
       },

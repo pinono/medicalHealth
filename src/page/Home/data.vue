@@ -81,7 +81,7 @@
                 <li>
                    <p class="result">
                        <!-- <span class="zan"></span> -->
-                       <span class="num">+{{resultData.param.rsco2NoNormal}}</span>
+                       <span class="num">{{resultData.param.rsco2NoNormal}}</span>
                     </p> 
                    <p class="name">不正常次数</p>
                 </li>
@@ -99,7 +99,7 @@
                 <li>
                    <p class="result">
                        <!-- <span class="zan"></span> -->
-                       <span class="num">+{{resultData.param.bpNoNormal}}</span>
+                       <span class="num">{{resultData.param.bpNoNormal}}</span>
                     </p> 
                    <p class="name">不正常次数</p>
                 </li>
@@ -117,13 +117,13 @@
                 <li>
                    <p class="result">
                        <!-- <span class="zan"></span> -->
-                       <span class="num">+{{resultData.param.hrNoNormal}}</span>
+                       <span class="num">{{resultData.param.hrNoNormal}}</span>
                     </p> 
                    <p class="name">不正常次数</p>
                 </li>
             </ul>
             <!-- 指氧 -->
-            <ul class="trainData" v-if="resultData.spo2">
+            <ul class="trainData" v-if="resultData.spo2 || resultData.spo2s">
                 <li>
                    <p class="times">{{resultData.param.spo2Total}}</p> 
                    <p class="name">测量次数</p>
@@ -135,7 +135,7 @@
                 <li>
                    <p class="result">
                        <!-- <span class="zan"></span> -->
-                       <span class="num">+{{resultData.param.spo2NoNormal}}</span>
+                       <span class="num">{{resultData.param.spo2NoNormal}}</span>
                     </p> 
                    <p class="name">不正常次数</p>
                 </li>
@@ -699,7 +699,7 @@ export default {
     }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
     .swiper.train{
         background: #2B8CFF;
     }
@@ -900,6 +900,7 @@ export default {
             border-bottom:none;
         }
     }
+    
     .date-wrap{
         height: 100px;
         .swiper-wrapper{
@@ -943,6 +944,12 @@ export default {
             width:230px!important;
             line-height: 82px;
         }
+    }
+    .date-wrap.week .swiper-wrapper,.date-wrap.month .swiper-wrapper{
+        position: relative;left:-240px;
+    }
+    .date-wrap .swiper-wrapper{
+        left : -60px;
     }
 </style>
 
