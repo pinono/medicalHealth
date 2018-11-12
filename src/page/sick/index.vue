@@ -6,75 +6,21 @@
       <div class="mxb_navItem" :class="[navTapStatu==2 ? 'navChecke' : '']" @click="navTapCut(2)">随访管理</div>
     </div>
     <!--添加事件-->
-    <div class="addItemBtn" @click="addManItemFn">
+    <div class="addItemBtn" @click="goForm('save')">
       <img src="../../assets/images/manage/addmanageItem.png" alt="">
     </div>
     <!--列表-->
     <div class="emptyBlock"></div>
     <div class="contList">
-      <div class="item" @click="goForm()">
-        <img class="img" src="../../assets/images/goodsImg.png">
-        <div class="text">
-          <p>中国人民解放军第302医院体检中心</p>
-          <p>2018-08-11  21:35:59</p>
+      <template v-for="item in paperArry">
+        <div class="item" @click="goForm('update',item)">
+          <img class="img" src="../../assets/images/goodsImg.png">
+          <div class="text">
+            <p>{{item.paperTitle}}</p>
+            <p>{{item.updateOn}}</p>
+          </div>
         </div>
-      </div>
-      <div class="item" @click="goForm()">
-        <img class="img" src="../../assets/images/goodsImg.png">
-        <div class="text">
-          <p>中国人民解放军第302医院体检中心</p>
-          <p>2018-08-11  21:35:59</p>
-        </div>
-      </div>
-      <div class="item" @click="goForm()">
-        <img class="img" src="../../assets/images/goodsImg.png">
-        <div class="text">
-          <p>中国人民解放军第302医院体检中心</p>
-          <p>2018-08-11  21:35:59</p>
-        </div>
-      </div>
-      <div class="item" @click="goForm()">
-        <img class="img" src="../../assets/images/goodsImg.png">
-        <div class="text">
-          <p>中国人民解放军第302医院体检中心</p>
-          <p>2018-08-11  21:35:59</p>
-        </div>
-      </div>
-      <div class="item" @click="goForm()">
-        <img class="img" src="../../assets/images/goodsImg.png">
-        <div class="text">
-          <p>中国人民解放军第302医院体检中心</p>
-          <p>2018-08-11  21:35:59</p>
-        </div>
-      </div>
-      <div class="item" @click="goForm()">
-        <img class="img" src="../../assets/images/goodsImg.png">
-        <div class="text">
-          <p>中国人民解放军第302医院体检中心</p>
-          <p>2018-08-11  21:35:59</p>
-        </div>
-      </div>
-      <div class="item" @click="goForm()">
-        <img class="img" src="../../assets/images/goodsImg.png">
-        <div class="text">
-          <p>中国人民解放军第302医院体检中心</p>
-          <p>2018-08-11  21:35:59</p>
-        </div>
-      </div>
-      <div class="item" @click="goForm()">
-        <img class="img" src="../../assets/images/goodsImg.png">
-        <div class="text">
-          <p>中国人民解放军第302医院体检中心</p>
-          <p>2018-08-11  21:35:59</p>
-        </div>
-      </div>
-      <div class="item" @click="goForm()">
-        <img class="img" src="../../assets/images/goodsImg.png">
-        <div class="text">
-          <p>中国人民解放军第302医院体检中心</p>
-          <p>2018-08-11  21:35:59</p>
-        </div>
-      </div>
+      </template>
     </div>
     <!--底部Strip-->
     <Footer :nowStatus="nowStatus"></Footer>
@@ -93,6 +39,7 @@ export default {
       navTapStatu : 1,//导航的切换状态
       nowStatus : 'sickIndex',//底部组件跳转地址
       paperId : '',
+      paperArry : [],
     }
   },
   mounted(){
@@ -104,30 +51,45 @@ export default {
       this.navTapStatu=tapFlag;
       this.getDateList();
     },
-    //添加管理事件
-    addManItemFn(){
-        let obj ={
-          paperId : this.paperId
+    //跳转表单
+    goForm(myForm,paperItem){
+      var obj ={};
+      var titleNav = '';
+      if(myForm=='save'){ //添加
+        if(this.navTapStatu==1){
+          titleNav='慢病管理填写';
+        }else if(this.navTapStatu==2){
+          titleNav='随访信息填写';
         }
-      this.$router.push({path: 'sickFrom',query:obj})
-    },
-    //跳转编辑表单
-    goForm(){
-      let obj ={
-        paperId : this.paperId,
-        recordId : this.recordId
+        obj.paperId = this.paperId;
+        obj.fromStatus = 'save';
+      }else{      //编辑
+        if(this.navTapStatu==1){
+          titleNav='慢病管理编辑';
+        }else if(this.navTapStatu==2){
+          titleNav='随访信息编辑';
+        }
+        obj.paperId = paperItem.paperId;
+        obj.recordId = paperItem.recordId
+        obj.fromStatus = 'update';
       }
+      obj.titleNav = titleNav
       this.$router.push({path: 'sickFrom',query:obj})
     },
     //请求数据
     getDateList(){
       let obj =this.navTapStatu
       getDataSick(obj).then( res => {
-        console.log('Sick',res)
+        if(res.data.result.paperList.length>0) {
+          this.paperArry = res.data.result.paperList;
+        }
       })
       getPaperModel(obj).then( res => {
-        /*console.log('表单结构=',res)*/
-        this.paperId = res.data.result.papers[0].paperId;
+        if(res.data.result.papers.length==0){
+          this.paperId=null;
+        }else{
+          this.paperId = res.data.result.papers[0].paperId;
+        }
 
       })
     },

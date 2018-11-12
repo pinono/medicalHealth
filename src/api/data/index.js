@@ -48,12 +48,12 @@ const getPaperList = params => {
   return axios.get(HOST + '/api/v1/paperList',{params:params})
 }
 //慢病保存问卷
-const addDataPaper = params => {
-  return axios.post(HOST + '/api/v1/InsertPaper/:paperId',{params:params})
+const addDataPaper = (paperId,params) => {
+  return axios.post(HOST + '/api/v1/insertPaper/'+paperId,params)
 }
 //慢病修改编剧问卷
-const updateDataPaper = params => {
-  return axios.post(HOST + 'api/v1/updatePaper/:paperId/:recordId',{params:params})
+const updateDataPaper = (paperId,recordId,params) => {
+  return axios.post(HOST + 'api/v1/updatePaper/'+paperId+'/'+recordId,params)
 }
 
 /*
