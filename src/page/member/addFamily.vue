@@ -140,7 +140,7 @@ export default {
             console.log("添加亲属："+res)
           })
         }
-        
+
       }
     },
   }
@@ -247,7 +247,7 @@ export default {
     .footer{
       width: 100%;
       text-align: center;
-      position: fixed;
+      position: absolute;
       bottom: 0px;
       left: 0px;
       padding-bottom: 200px;

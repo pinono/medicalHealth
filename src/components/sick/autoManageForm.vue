@@ -7,32 +7,43 @@
           <!--静态标签-->
           <li v-if="item.fieldType.typeId==0" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
             <span>静态标签</span>
-            <input type="text" v-model="staticInp" readonly="readonly"/>
+            <input type="text" v-model="subObj[item.fieldType]" readonly="readonly"/>
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
           </li>
           <!--数字类型-->
           <li v-if="item.fieldType.typeId==1" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
             <span>数字类型</span>
-            <input type="number" v-model="numInp" />
+            <input type="number" v-model="subObj[item.fieldCode]" />
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
           </li>
           <!--单行文本-->
           <li v-if="item.fieldType.typeId==2" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
             <span>单行文本</span>
-            <input type="text" v-model="aSingleInp" />
+            <input type="text" v-model="subObj[item.fieldCode]" />
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
           </li>
           <!--多行文本-->
-          <li v-if="item.fieldType.typeId==3" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
+          <li v-if="item.fieldType.typeId==2" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
             <span>多行文本</span>
-            <p>{{supplementText}}</p>
+            <p>{{subObj[item.fieldCode]}}</p>
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
+            <!--多行文本-弹窗-->
+            <div class="pop_supplement" v-if="popStatus==3">
+              <p class="popsup_title">补充说明</p>
+              <textarea placeholder="请填写补充说明" v-model="subObj[item.fieldCode]"></textarea>
+              <div class="popsup_btn pop_btn">
+                <span @click="showOrClosePop(0)" @click.stop>取消</span>
+                <span @click="supplementFn" @click.stop>确定</span>
+              </div>
+            </div>
           </li>
           <!--日期类型-->
           <li v-if="item.fieldType.typeId==4" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
             <span>日期类型</span>
             <p>{{dateVal}}</p>
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
+
+
           </li>
           <!--时间类型-->
           <li v-if="item.fieldType.typeId==5" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
@@ -43,13 +54,13 @@
           <!--单选-->
           <li v-if="item.fieldType.typeId==6" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
             <span>单选按钮</span>
-            <p>{{radioValText}}</p>
+            <p>{{radioVal}}</p>
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
           </li>
           <!--下拉选项-->
           <li v-if="item.fieldType.typeId==7" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
             <span>下拉选项</span>
-            <select v-model="selectVal">
+            <select v-model="subObj[item.fieldCode]">
               <template v-for="item in selectContent">
                 <option :value="item.value">{{item.label}}</option>
               </template>
@@ -72,15 +83,7 @@
 弹窗部分
 -->
       <div class="pop_background" @click="showOrClosePop(0)" v-if="popStatus==3||popStatus==6||popStatus==8"></div>
-      <!--多行文本-弹窗-->
-      <div class="pop_supplement" v-if="popStatus==3">
-        <p class="popsup_title">补充说明</p>
-        <textarea placeholder="请填写补充说明" v-model="supplementPopText"></textarea>
-        <div class="popsup_btn pop_btn">
-          <span @click="showOrClosePop(0)">取消</span>
-          <span @click="supplementFn">确定</span>
-        </div>
-      </div>
+
       <!--多选框-弹窗-->
       <div class="pop_checkBox" v-if="popStatus==8">
         <mt-checklist
@@ -132,7 +135,7 @@
   import moment from 'moment'// 格式化时间
   import {addDataPaper,updateDataPaper} from '@/api/data/index.js' //接口
 export default {
-    props:["formArry","recordObj"],
+    props:["formArry","subObj"],
     data () {
         return {
           paperId : '',
@@ -144,7 +147,6 @@ export default {
 
           /*value*/
           popStatus : 0,//弹窗显示与隐藏(0是隐藏弹窗,6单选按钮,8复选框,3多行文本)
-          subObj:{},//提交表单的参数
           staticInp:'',//0.静态标签
           numInp:null,//1.数字类型
           aSingleInp:'',//2.单行文本
@@ -173,21 +175,11 @@ export default {
           itemContent:'',
 
 
-
-
-
-
         }
     },
-    mounted(){
-      var that = this;
-      if(JSON.stringify(that.subObj) != '{}'){
-        this.formArry.forEach(function (item) {
-          that.subObj[item.fieldCode]=that.recordObj[item.fieldCode];
+  mounted(){
+    console.log(this.subObj)
 
-        })
-      }
-      console.log(that.subObj)
     },
     methods : {
       //提交表单
@@ -195,18 +187,6 @@ export default {
         let myfrom=this.subObj;
         this.$emit('myfromEvent',myfrom);
         console.log('提交',this.subObj);
-        /*if(this.$route.query.fromStatus=='save'){
-          let paperId = this.$route.query.paperId;
-          addDataPaper(paperId,this.subObj).then( res => {
-            console.log('添加表单',res)
-          })
-        }else{
-          let paperId = this.$route.query.paperId;
-          let recordId = this.$route.query.recordId;
-          updateDataPaper(paperId,recordId,this.subObj).then( res => {
-            console.log('编辑表单',res)
-          })
-        }*/
       },
       //赋值
       getItemInfo(index,fieldCode,typeId,content){//参数按顺序是:1.循环索引,2.参数key,3.结构类型,4.结构内容
@@ -219,19 +199,21 @@ export default {
         switch (typeId){
             //静态标签
           case 0:
-            this.subObj[fieldCode]=this.staticInp;
+            //this.subObj[fieldCode]=this.staticInp;
             break;
           //数字类型
           case 1:
-            this.subObj[fieldCode]=this.numInp;
+            //this.subObj[fieldCode]=this.numInp;
               break;
           //单行文本
           case 2:
-            this.subObj.fieldCode=this.aSingleInp;
+            //this.subObj[fieldCode]=this.aSingleInp;
+            this.popStatus=3;
             break;
           //多行文本
           case 3:
             this.popStatus=typeId;
+
             break;
           //日期类型
           case 4:
@@ -249,7 +231,7 @@ export default {
             break;
           //下拉菜单
           case 7:
-            this.subObj[fieldCode]=this.selectVal;
+            //this.subObj[fieldCode]=this.selectVal;
             break;
           //多选按钮
           case 8:
@@ -268,9 +250,8 @@ export default {
       supplementFn(data){
         this.popStatus=0;//确定后隐藏弹框
         switch (this.itemTypeId){
-          case 3://多行文本
-            this.supplementText=this.supplementPopText;
-            this.subObj[this.itemFieldCode]=this.supplementText;
+          case 2://多行文本
+            this.popStatus=0;
             break;
           case 4://日期
             let date = moment(data).format("YYYY-MM-DD HH:mm")
@@ -488,6 +469,7 @@ export default {
         margin: auto;
         font-size: 34px;
         color: #333333;
+        z-index: 10;
         text-align: center;
           .popsup_title{
             font-size: 34px;
