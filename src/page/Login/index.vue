@@ -123,7 +123,7 @@ export default {
                 phone : that.phone,
                 tuserPwd : that.password
             }
-            GoMemLoin(obj).then( res => {
+            GoMemLogin(obj).then( res => {
                 console.log(res)
                 if ( res.data.code == 200 ) {
                     Toast('登录成功!');
