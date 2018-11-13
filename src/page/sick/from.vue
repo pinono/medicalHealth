@@ -2,7 +2,7 @@
   <div class="manxingbing_page">
     <header-top :title="title"></header-top>
     <!--表单组件-->
-    <manage-form @myfromEvent="myfromEvent" :formArry="formArry" :subObj="subObj"></manage-form>
+    <manage-form @myfromEvent="myfromEvent" :formArry="formArry" :subObj="subObj" :allContentArry="allContentArry"></manage-form>
 
   </div>
 </template>
@@ -21,6 +21,7 @@ export default {
       title : '异常事件填写',//头部组件title名
       formArry : [],     //表单结构--传给组件
       subObj:{},//需要提交的数据对象
+      allContentArry : {},
       paperId : '',
       recordId : '',
 
@@ -39,6 +40,10 @@ export default {
       //得到表单结构
         getPaperStruct(this.paperId).then( res => {
           this.formArry=res.data.result.fieldList;
+          this.formArry.forEach(function (item) {
+            that.$set(that.allContentArry,item.fieldCode, item.fieldType.content)
+          })
+          console.log('content',this.allContentArry)
         });
       //得到表单数据回显
         if(this.$route.query.recordId != undefined){
@@ -50,7 +55,7 @@ export default {
             this.subObj = res.data.result.record;
           });
         }
-        console.log('表单提交的参数',that.subObj)
+        //console.log('表单提交的参数',that.subObj)
     },
     //提交表单
     myfromEvent(data){
