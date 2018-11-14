@@ -53,7 +53,7 @@ const addDataPaper = (paperId,params) => {
 }
 //慢病修改编剧问卷
 const updateDataPaper = (paperId,recordId,params) => {
-  return axios.post(HOST + 'api/v1/updatePaper/'+paperId+'/'+recordId,params)
+  return axios.post(HOST + '/api/v1/updatePaper/'+paperId+'/'+recordId,params)
 }
 
 /*
@@ -145,7 +145,6 @@ const getspo2Report = params => {
 export{
     getDataHome,
     getDataTrain,
-    GoMemLoin,
     getDataSick,
     getPaperModel,
     getPaperStruct,
