@@ -31,19 +31,19 @@
     <div class="popBg" v-show="isPopBg"  @click="ChoosePicture()">
     </div>
     <ul class="popList" :style="{bottom:popBottom+'px'}">
-      <li @click="ChoosePicture('0')">
+      <li @click="ChoosePicture(0)">
         <img src="../../assets/images/center/man.png" alt="">
         <p>默认一</p>
       </li>
-      <li @click="ChoosePicture('1')">
+      <li @click="ChoosePicture(1)">
         <img src="../../assets/images/center/woman.png" alt="">
         <p>默认二</p>
       </li>
-      <li @click="ChoosePicture('2')">
+      <li @click="ChoosePicture(2)">
         <img src="../../assets/images/center/oldMan.png" alt="">
         <p>默认三</p>
       </li>
-      <li @click="ChoosePicture('3')">
+      <li @click="ChoosePicture(3)">
         <img src="../../assets/images/center/oldWoman.png" alt="">
         <p>默认四</p>
       </li>
@@ -95,13 +95,13 @@ export default {
       this.isPopBg=false;
       this.popBottom=-150;
       switch (imgFlag){
-        case '0' : this.navImgSrc = require('../../assets/images/center/man.png');
+        case 0 : this.navImgSrc = require('../../assets/images/center/man.png');
           break;
-        case '1' : this.navImgSrc = require('../../assets/images/center/woman.png');
+        case 1 : this.navImgSrc = require('../../assets/images/center/woman.png');
           break;
-        case '2' : this.navImgSrc = require('../../assets/images/center/oldMan.png');
+        case 2 : this.navImgSrc = require('../../assets/images/center/oldMan.png');
           break;
-        case '3' : this.navImgSrc = require('../../assets/images/center/oldWoman.png');
+        case 3 : this.navImgSrc = require('../../assets/images/center/oldWoman.png');
           break;
       }
     },
@@ -132,11 +132,18 @@ export default {
         console.log(obj)
         if(this.$route.query.relativeId != undefined){
           obj.relativeId=parseInt(this.$route.query.relativeId);
-          updateRelative(obj).then( res => {//新增亲属
-            console.log("添加亲属："+res)
+          updateRelative(obj).then( res => {//修改亲属
+            if(res.data.code==200){
+                Toast('修改成功!')
+            }
+
+            console.log("修改亲属："+res)
           })
         }else{
           addRelative(obj).then( res => {//新增亲属
+            if(res.data.code==200){
+              Toast('添加成功!')
+            }
             console.log("添加亲属："+res)
           })
         }

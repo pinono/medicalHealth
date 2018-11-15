@@ -10,7 +10,10 @@
         <template v-for="item in relativeList">
           <li @click="updateRelativeFn(item)">
             <div class="listImg">
-              <img  src="" alt="">
+              <img v-if="item.iconTypeId==0" src="../../assets/images/center/man.png" alt="">
+              <img v-if="item.iconTypeId==1" src="../../assets/images/center/woman.png" alt="">
+              <img v-if="item.iconTypeId==2" src="../../assets/images/center/oldMan.png" alt="">
+              <img v-if="item.iconTypeId==3" src="../../assets/images/center/oldWoman.png" alt="">
             </div>
             <div class="listInfo">
               <p>{{item.name}}</p>
