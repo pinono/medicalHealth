@@ -52,7 +52,7 @@
           <!--单选-->
           <li v-if="item.fieldType.typeId==6" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
             <span>{{item.fieldName}}</span>
-            <p>{{subObj[item.fieldCode]}}</p>
+            <p>{{subObj[item.fieldCode] == 'null' ? '': subObj[item.fieldCode] }}</p>
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
           </li>
           <!--下拉选项-->
@@ -68,7 +68,7 @@
           <!--多选-->
           <li v-if="item.fieldType.typeId==8" @click="getItemInfo(index,item.fieldCode,item.fieldType.typeId,item.fieldType.content)">
             <span>{{item.fieldName}}</span>
-            <p>{{subObj[item.fieldCode]}}</p>
+            <p>{{subObj[item.fieldCode] == 'null' ? '': subObj[item.fieldCode] }}</p>
             <img src="../../assets/images/manage/rightarrowicon@2x.png" alt="">
           </li>
 
@@ -203,14 +203,11 @@ export default {
           //单选按钮
           case 6:
             this.popStatus=6;
-            //this.radioContent=content;
             this.radioVal=this.subObj[fieldCode];
             break;
           /*//下拉框
           case 7:
-            //this.selectContent=this.allContentArry[fieldCode];
             console.log('所有的content=',this.allContentArry)
-            //console.log('自己的content=',this.selectContent)
             break;*/
           //多选按钮
           case 8:
@@ -282,10 +279,9 @@ export default {
   .myManForm{
     width: 750px;
     background: #fff;
-    height: 1334px;
+    height: 1050px;
     overflow-y: auto;
-    padding-top: 80px;
-    padding-bottom: 190px;
+    //padding-bottom: 190px;
     .footerBox{
       height: 190px;
       width: 100%;

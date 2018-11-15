@@ -43,7 +43,7 @@ export default {
         recordId : 0
       }
       getStrokeData(obj).then( res => {
-        this.subObj = res.data.result.recordList[0];
+        this.subObj = res.data.result.record;
         delete this.subObj['id'];
       });
       console.log('表单提交的参数',that.subObj)
